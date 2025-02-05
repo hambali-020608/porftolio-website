@@ -33,7 +33,7 @@ export default function Projects() {
           className="text-center text-5xl font-bold text-[#00FFFF] mb-16"
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
-          viewport={{ once: true, amount: 0.3 }}
+          viewport={{ once: false, amount: 0.3 }}
           transition={{ duration: 1 }}
         >
           Projects
@@ -51,7 +51,7 @@ export default function Projects() {
             variants={cardVariants}
           >
             <motion.img
-              src="https://storage.googleapis.com/a1aa/image/KpYM0p5ahBjj8s3UJmOBlXGSQCJevI1baCELFvuoZqg.jpg"
+              src="/music.png"
               alt="Screenshot of Project 1"
               className="w-full h-full object-cover transform transition-all duration-500 group-hover:scale-110"
               whileHover={{ scale: 1.05 }}
@@ -61,10 +61,10 @@ export default function Projects() {
                 className="text-3xl font-bold text-[#FF00FF] mb-2"
                 whileHover={{ color: "#00FFFF" }}
               >
-                Project 1
+                Music Downloader
               </motion.h3>
               <motion.p className="text-white px-4 text-center">
-                Deskripsi singkat tentang Project 1.
+                For search and download a music. it also can download with a spotify link
               </motion.p>
             </motion.div>
           </motion.div>
@@ -75,8 +75,8 @@ export default function Projects() {
             variants={cardVariants}
           >
             <motion.img
-              src="https://storage.googleapis.com/a1aa/image/buHajrnpzwwNXx22Nj3V0ckoH8qnxO_uLIOb4CYmeSM.jpg"
-              alt="Screenshot of Project 2"
+              src="/yt.png"
+              alt="ytdownloader"
               className="w-full h-full object-cover transform transition-all duration-500 group-hover:scale-110"
               whileHover={{ scale: 1.05 }}
             />
@@ -85,10 +85,10 @@ export default function Projects() {
                 className="text-3xl font-bold text-[#FF00FF] mb-2"
                 whileHover={{ color: "#00FFFF" }}
               >
-                Project 2
+                Youtube Downloader
               </motion.h3>
               <motion.p className="text-white px-4 text-center">
-                Deskripsi singkat tentang Project 2.
+                a fast youtube downloader, free and no ads
               </motion.p>
             </motion.div>
           </motion.div>
@@ -99,7 +99,7 @@ export default function Projects() {
             variants={cardVariants}
           >
             <motion.img
-              src="https://storage.googleapis.com/a1aa/image/Ss54KK49z3T4sMM4G54ONBc6HUebW1OYa0O5M_ZFF4Q.jpg"
+              src="/coffe.png"
               alt="Screenshot of Project 3"
               className="w-full h-full object-cover transform transition-all duration-500 group-hover:scale-110"
               whileHover={{ scale: 1.05 }}
@@ -109,10 +109,10 @@ export default function Projects() {
                 className="text-3xl font-bold text-[#FF00FF] mb-2"
                 whileHover={{ color: "#00FFFF" }}
               >
-                Project 3
+              CoffeShop Website
               </motion.h3>
               <motion.p className="text-white px-4 text-center">
-                Deskripsi singkat tentang Project 3.
+                an interactive website to buy a coffe
               </motion.p>
             </motion.div>
           </motion.div>

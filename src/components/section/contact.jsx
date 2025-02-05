@@ -34,6 +34,8 @@ const ContactForm = () => {
         initial={{ opacity: 0, y: 50 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.8, ease: 'easeOut' }}
+        whileInView={{ opacity: 1, y: 0 }} // Trigger animation when in view
+        viewport={{ once: false }} // Ensure animation happens only once when the component is in view
         className="bg-gray-800 p-10 rounded-xl shadow-xl w-full max-w-lg space-y-6 transform transition-all"
       >
         <h2 className="text-4xl font-extrabold text-center text-white">Contact Me</h2>
