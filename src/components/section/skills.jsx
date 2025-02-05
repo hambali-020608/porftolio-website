@@ -21,7 +21,7 @@ export default function Skills() {
           <div class="p-6 bg-gray-800 rounded-lg transform hover:scale-105 transition-transform duration-300">
            <img alt="JavaScript icon" class="mx-auto mb-4" height="100" src="https://storage.googleapis.com/a1aa/image/y3vbtgL_WTBVnpYOJ0Vzdom3yNmOhRV09spcs3gVZeM.jpg" width="100"/>
            <h3 class="text-2xl font-bold text-neon-purple">
-            Fullstack Developer
+            Database
            </h3>
           </div>
          </div>
