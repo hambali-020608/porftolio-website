@@ -1,34 +1,83 @@
+import { motion } from "motion/react";
+
 export default function Skills() {
-    return(
-        <section class="py-20" id="skills">
-        <div class="container mx-auto text-center">
-         <h2 class="text-4xl font-bold text-neon-blue mb-10">
-          Skills
-         </h2>
-         <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-          <div class="p-6 bg-gray-800 rounded-lg transform hover:scale-105 transition-transform duration-300">
-           <img alt="HTML5 icon" class="mx-auto mb-4" height="100" src="https://storage.googleapis.com/a1aa/image/TP50qoSsFlZXNjBVCjYRXIusktiyoBQ6aMI2JJ3KIM4.jpg" width="100"/>
-           <h3 class="text-2xl font-bold text-neon-purple">
-            Backend Developer
-           </h3>
-          </div>
-          <div class="p-6 bg-gray-800 rounded-lg transform hover:scale-105 transition-transform duration-300">
-           <img alt="CSS3 icon" class="mx-auto mb-4" height="100" src="https://storage.googleapis.com/a1aa/image/x0s_XMpIST9_nITJ5Ne75XS5zs66-jQ7v64M67sTe6g.jpg" width="100"/>
-           <h3 class="text-2xl font-bold text-neon-purple">
-            FrontEnd Developer
-           </h3>
-          </div>
-          <div class="p-6 bg-gray-800 rounded-lg transform hover:scale-105 transition-transform duration-300">
-           <img alt="JavaScript icon" class="mx-auto mb-4" height="100" src="https://storage.googleapis.com/a1aa/image/y3vbtgL_WTBVnpYOJ0Vzdom3yNmOhRV09spcs3gVZeM.jpg" width="100"/>
-           <h3 class="text-2xl font-bold text-neon-purple">
-            Database
-           </h3>
-          </div>
-         </div>
-        </div>
-       </section>
-       
-      
-    )
-    
+  // Variants untuk container
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: { staggerChildren: 0.2 },
+    },
+  };
+
+  // Variants untuk card dengan efek floating
+  const cardVariants = {
+    hidden: { opacity: 0, y: 50, scale: 0.9 },
+    visible: { opacity: 1, y: 0, scale: 1, transition: { duration: 0.8 } },
+    hover: {
+      scale: 1.05,
+      boxShadow: "0px 10px 30px rgba(0, 255, 255, 0.6)",
+      transition: { duration: 0.3 },
+    },
+  };
+
+  // Floating icon animation
+  const floatingIconVariants = {
+    initial: { y: 0 },
+    animate: {
+      y: [0, -10, 0],
+      transition: { duration: 2, repeat: Infinity, repeatType: "reverse" },
+    },
+  };
+
+  return (
+    <section id="skills" className="py-20 bg-gray-900">
+      <div className="container mx-auto px-4">
+        {/* Judul dengan efek fade-in */}
+        <motion.h2
+          className="text-center text-5xl font-extrabold text-[#00FFFF] mb-16"
+          initial={{ opacity: 0, scale: 0.9 }}
+          whileInView={{ opacity: 1, scale: 1 }}
+          viewport={{ once: true }}
+          transition={{ duration: 1 }}
+        >
+          My Skills
+        </motion.h2>
+
+        {/* Grid Skill Cards */}
+        <motion.div
+          className="grid grid-cols-1 md:grid-cols-3 gap-12"
+          variants={containerVariants}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true }}
+        >
+          {["Backend Developer", "Frontend Developer", "Database"].map((skill, index) => (
+            <motion.div
+              key={index}
+              className="group relative p-8 bg-gray-800 rounded-2xl shadow-xl"
+              variants={cardVariants}
+              whileHover="hover"
+            >
+              <motion.div className="flex justify-center mb-6" variants={floatingIconVariants} initial="initial" animate="animate">
+                <img
+                  src="" // Ganti dengan gambar asli
+                  alt={skill}
+                  className="w-24 h-24 object-contain filter grayscale group-hover:filter-none transition duration-300"
+                />
+              </motion.div>
+              <h3 className="text-center text-2xl font-bold text-[#FF00FF] group-hover:text-[#00FFFF] transition-colors duration-300">
+                {skill}
+              </h3>
+              <p className="mt-4 text-center text-gray-400">
+                {skill === "Backend Developer" && "Expert in Node.js, Express, REST API."}
+                {skill === "Frontend Developer" && "Skilled in React, Vue, and UI/UX design."}
+                {skill === "Database" && "Proficient in SQL, NoSQL, and data modeling."}
+              </p>
+            </motion.div>
+          ))}
+        </motion.div>
+      </div>
+    </section>
+  );
 }
