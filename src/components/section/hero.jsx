@@ -22,17 +22,17 @@ export default function Hero() {
   return (
     <section
     id="home"
-    className="relative h-screen flex flex-col md:flex-row items-center justify-center bg-gradient-to-r from-gray-900 via-gray-800 to-gray-900 overflow-hidden"
+    className="relative  h-screen flex flex-col md:flex-row items-center justify-center bg-gradient-to-r from-gray-900 via-gray-800 to-gray-900 overflow-hidden"
   >
     {/* Konten Teks */}
-    <motion.div
-      className="z-10 md:w-1/2 p-4 text-center md:text-left"
+    <motion.div 
+      className="z-10 md:w-1/2 p-4 text-center md:text-left md:mt-6"
       initial="hidden"
       animate="visible"
       variants={textVariants}
     >
       <motion.h1
-        className="text-5xl md:text-6xl font-bold text-[#00FFFF] drop-shadow-lg"
+        className="text-5xl md:text-6xl  font-bold text-[#00FFFF] drop-shadow-lg"
       >
         Hi, I'm Hambali
       </motion.h1>
