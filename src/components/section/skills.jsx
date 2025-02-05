@@ -59,12 +59,21 @@ export default function Skills() {
               variants={cardVariants}
               whileHover="hover"
             >
+              
               <motion.div className="flex justify-center mb-6" variants={floatingIconVariants} initial="initial" animate="animate">
-                <img
-                  src="" // Ganti dengan gambar asli
-                  alt={skill}
-                  className="w-24 h-24 object-contain filter grayscale group-hover:filter-none transition duration-300"
-                />
+              <img
+  src={
+    skill === "Backend Developer"
+      ? "https://img.icons8.com/nolan/64/backend-development.png"
+      : skill === "Frontend Developer"
+      ? "/frontend.png"
+      :  skill === "Database" 
+      ? "https://img.icons8.com/nolan/64/data-configuration.png":""  // Gambar default jika skill tidak cocok
+  }
+  alt={skill}
+  className="w-24 h-24 object-contain filter grayscale group-hover:filter-none transition duration-300"
+/>
+
               </motion.div>
               <h3 className="text-center text-2xl font-bold text-[#FF00FF] group-hover:text-[#00FFFF] transition-colors duration-300">
                 {skill}
