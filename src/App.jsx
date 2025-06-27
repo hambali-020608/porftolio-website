@@ -8,8 +8,7 @@ import Contact from "./components/section/contact";
 import Footer from "./components/section/footer";
 
 function App() {
-  return (
-    <>
+  return (<>
       {/* Navigation Bar */}
       <NavBar />
       <Hero />

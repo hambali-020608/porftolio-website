@@ -1,4 +1,5 @@
 import { motion } from "framer-motion";
+import { ReactTyped } from "react-typed";
 
 export default function Hero() {
   const textVariants = {
@@ -33,14 +34,21 @@ export default function Hero() {
         <motion.h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-[#00FFFF] drop-shadow-lg">
           Hi, I'm Hambali
         </motion.h1>
-        <motion.h2
-          className="mt-2 text-2xl md:text-3xl lg:text-4xl font-semibold text-white drop-shadow-md"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 0.5, duration: 1 }}
-        >
-          Fullstack Web Developer
-        </motion.h2>
+            <ReactTyped
+      strings={[
+        "Fullstack Web Developer",
+        "Game Developer",
+        "Software engineer",
+        "Ai engineer",
+        "Data analyst",
+        "Data scientis",
+      ]}
+      className="mt-2 text-2xl md:text-3xl lg:text-4xl font-semibold text-white drop-shadow-md"
+      typeSpeed={40}
+      backSpeed={50}
+      
+      loop
+    ></ReactTyped>
         <motion.p
           className="mt-4 text-base md:text-lg lg:text-xl text-gray-300 max-w-md mx-auto md:mx-0"
           initial={{ opacity: 0 }}
