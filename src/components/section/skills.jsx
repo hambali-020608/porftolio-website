@@ -107,32 +107,32 @@ export default function Skills() {
     {
       title: "Game Developer",
       img: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/godot/godot-original.svg",
-      desc: "Experienced in building 2D and 3D games using Unity and Godot, focusing on gameplay, physics, and immersive user experience.",
+      desc: "Experienced in building 2D and 3D games using Game engine, focusing on gameplay, physics, storyline, and immersive user experience.",
     },
     {
       title: "Fullstack Web Developer",
       img: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg",
-      desc: "Proficient in modern fullstack development using React, Laravel, Node.js, and Express with a strong grasp of RESTful architecture.",
+      desc: "Proficient in modern fullstack development using modern framework and library.",
     },
     {
       title: "Data Analyst",
       img: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg",
-      desc: "Adept in data visualization, cleaning, and business intelligence using tools like Excel, Pandas, Matplotlib, and SQL.",
+      desc: "Adept in data visualization, cleaning, and statistics",
     },
     {
       title: "Data Scientist",
       img: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/tensorflow/tensorflow-original.svg",
-      desc: "Specialized in building predictive models using Python, TensorFlow, and Scikit-learn, turning complex data into actionable insights.",
+      desc: "Specialized in building predictive models and turning complex data into actionable insights.",
     },
     {
       title: "Software Engineer",
       img: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/cplusplus/cplusplus-original.svg",
-      desc: "Strong foundation in software architecture and engineering principles, experienced in C++ and software lifecycle management.",
+      desc: "Strong foundation in software architecture and engineering principles",
     },
     {
       title: "AI Engineer",
       img: "https://pytorch.org/assets/images/pytorch-logo.png",
-      desc: "Focused on building intelligent systems using machine learning, deep learning, and NLP with tools like PyTorch and HuggingFace.",
+      desc: "Focused on building intelligent systems using machine learning, and deep learning",
     },
   ].map((skill, index) => (
     <motion.div
