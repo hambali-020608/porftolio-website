@@ -115,7 +115,31 @@ export default function Projects() {
                 an interactive website to buy a coffe
               </motion.p>
             </motion.div>
+            
           </motion.div>
+           <motion.div
+            className="relative group overflow-hidden rounded-2xl shadow-2xl"
+            variants={cardVariants}
+          >
+            <motion.img
+              src="/movie.png"
+              alt="Screenshot of Project 1"
+              className="w-full h-full object-cover transform transition-all duration-500 group-hover:scale-110"
+              whileHover={{ scale: 1.05 }}
+            />
+            <motion.div className="absolute inset-0 bg-black bg-opacity-60 flex flex-col items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-500">
+              <motion.h3
+                className="text-3xl font-bold text-[#FF00FF] mb-2"
+                whileHover={{ color: "#00FFFF" }}
+              >
+                Movies Website
+              </motion.h3>
+              <motion.p className="text-white px-4 text-center">
+               For streaming, search, and get latest and popular movies, it's free
+              </motion.p>
+            </motion.div>
+          </motion.div>
+
         </motion.div>
       </div>
     </section>
