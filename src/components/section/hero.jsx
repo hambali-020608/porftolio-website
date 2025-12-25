@@ -11,7 +11,7 @@ export default function Hero() {
       transition: { duration: 0.8, ease: "easeOut" } 
     },
   };
-j
+
   const imageVariants = {
     hidden: { opacity: 0, scale: 0.8, rotate: -5 },
     visible: { 
