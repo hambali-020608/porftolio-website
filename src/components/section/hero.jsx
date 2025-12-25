@@ -1,89 +1,167 @@
 import { motion } from "framer-motion";
 import { ReactTyped } from "react-typed";
+import { FaGithub, FaLinkedin, FaInstagram, FaEnvelope, FaTiktok } from "react-icons/fa";
 
 export default function Hero() {
   const textVariants = {
     hidden: { opacity: 0, x: -50 },
-    visible: { opacity: 1, x: 0, transition: { duration: 1, ease: "easeOut" } },
-  };
-
-  const imageVariants = {
-    hidden: { opacity: 0, scale: 0.8 },
-    visible: { opacity: 1, scale: 1, transition: { duration: 1.2, ease: "easeOut" } },
-  };
-
-  const buttonVariants = {
-    hover: {
-      scale: 1.05,
-      transition: { duration: 0.3, ease: "easeInOut" },
+    visible: { 
+      opacity: 1, 
+      x: 0, 
+      transition: { duration: 0.8, ease: "easeOut" } 
     },
+  };
+j
+  const imageVariants = {
+    hidden: { opacity: 0, scale: 0.8, rotate: -5 },
+    visible: { 
+      opacity: 1, 
+      scale: 1, 
+      rotate: 0,
+      transition: { duration: 1, ease: "easeOut" } 
+    },
+  };
+
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: { 
+        staggerChildren: 0.2,
+        delayChildren: 0.3
+      }
+    }
   };
 
   return (
     <section
       id="home"
-      className="relative min-h-screen flex flex-col-reverse md:flex-row items-center justify-center px-6 md:px-12 lg:px-24 bg-gradient-to-r from-gray-900 via-gray-800 to-gray-900 overflow-hidden"
+      className="relative min-h-screen flex items-center justify-center px-6 md:px-12 lg:px-24 bg-gray-950 overflow-hidden"
     >
-      {/* Konten Teks */}
-      <motion.div
-        className="z-10 w-full md:w-1/2 text-center md:text-left mt-8 md:mt-0"
-        initial="hidden"
-        animate="visible"
-        variants={textVariants}
-      >
-        <motion.h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-[#00FFFF] drop-shadow-lg">
-          Hi, I'm Hambali
-        </motion.h1>
-            <ReactTyped
-      strings={[
-        "Fullstack Web Developer",
-        "Game Developer",
-        "Software engineer",
-        "Ai engineer",
-        "Data analyst",
-        "Data scientis",
-      ]}
-      className="mt-2 text-2xl md:text-3xl lg:text-4xl font-semibold text-white drop-shadow-md"
-      typeSpeed={40}
-      backSpeed={50}
-      
-      loop
-    ></ReactTyped>
-        <motion.p
-          className="mt-4 text-base md:text-lg lg:text-xl text-gray-300 max-w-md mx-auto md:mx-0"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 0.8, duration: 1 }}
+      {/* Background Ambience */}
+      <div className="absolute top-[-20%] left-[-10%] w-[400px] h-[400px] md:w-[600px] md:h-[600px] bg-purple-700/20 rounded-full blur-[120px] mix-blend-screen opacity-60 animate-pulse"></div>
+      <div className="absolute bottom-[-20%] right-[-10%] w-[400px] h-[400px] md:w-[600px] md:h-[600px] bg-cyan-600/20 rounded-full blur-[120px] mix-blend-screen opacity-60 animate-pulse delay-75"></div>
+      <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-full h-full bg-[radial-gradient(circle_at_center,rgba(0,0,0,0)_0%,rgba(3,7,18,0.8)_100%)] z-0 pointer-events-none"></div>
+
+      <div className="container mx-auto flex flex-col-reverse md:flex-row items-center justify-between z-10 w-full max-w-7xl">
+        
+        {/* Left Content: Text */}
+        <motion.div
+          className="w-full md:w-1/2 text-center md:text-left mt-10 md:mt-0 space-y-6"
+          initial="hidden"
+          animate="visible"
+          variants={containerVariants}
         >
-          I create websites using fast and latest technologies.
-        </motion.p>
-        <motion.div className="mt-6" variants={buttonVariants} whileHover="hover">
-          <a
-            href="#projects"
-            className="px-5 py-2 md:px-6 md:py-3 bg-[#FF00FF] text-white font-medium rounded-full shadow-lg hover:bg-[#CC00CC] transition duration-300"
+          <motion.h1 
+            className="text-4xl md:text-6xl lg:text-7xl font-extrabold text-white leading-tight font-orbitron"
+            variants={textVariants}
           >
-            View My Work
-          </a>
+            Hi, I'm <br />
+            <span className="bg-clip-text text-transparent bg-gradient-to-r from-cyan-400 via-purple-500 to-pink-500 drop-shadow-md">
+              Hambali
+            </span>
+          </motion.h1>
+
+          <motion.div className="h-12 md:h-16 overflow-hidden" variants={textVariants}>
+             <span className="text-2xl md:text-3xl lg:text-4xl font-semibold text-gray-300">
+                I am a{" "}
+                <ReactTyped
+                  strings={[
+                    "Fullstack Web Dev",
+                    "Game Developer",
+                    "Software Engineer",
+                    "AI Engineer",
+                    "Data Analyst",
+                    "Data Scientist",
+                  ]}
+                  typeSpeed={50}
+                  backSpeed={40}
+                  className="text-cyan-300 drop-shadow-[0_0_10px_rgba(34,211,238,0.5)]"
+                  loop
+                />
+             </span>
+          </motion.div>
+
+          <motion.p
+            className="text-base md:text-lg text-gray-400 max-w-lg mx-auto md:mx-0 leading-relaxed max-w-xl"
+            variants={textVariants}
+          >
+            Crafting immersive digital experiences with cutting-edge technologies. I build scalable webs, intelligent AI systems, and engaging games.
+          </motion.p>
+          
+          {/* Social & CTA */}
+          <motion.div 
+            className="flex flex-col md:flex-row items-center gap-6 mt-8"
+            variants={textVariants}
+          >
+            <a
+              href="#projects"
+              className="group relative px-8 py-3 bg-gradient-to-r from-cyan-600 to-blue-600 text-white font-bold rounded-full shadow-lg shadow-cyan-500/20 overflow-hidden transition-all hover:scale-105 hover:shadow-cyan-500/40"
+            >
+              <div className="absolute inset-0 w-full h-full bg-white/20 group-hover:translate-x-full transition-transform duration-500 -skew-x-12 -translate-x-full"></div>
+              View My Work
+            </a>
+            
+            <div className="flex items-center gap-5 text-gray-400">
+               <a href="https://github.com/hambali-020608" className="hover:text-white hover:scale-110 transition-all duration-300 text-2xl">
+                 <FaGithub />
+               </a>
+               <a href="#" className="hover:text-blue-400 hover:scale-110 transition-all duration-300 text-2xl">
+                 <FaLinkedin />
+               </a>
+               <a href="#" className="hover:text-pink-400 hover:scale-110 transition-all duration-300 text-2xl">
+                 <FaTiktok />
+               </a>
+               {/* <a href="#" className="hover:text-pink-400 hover:scale-110 transition-all duration-300 text-2xl">
+                 <FaInstagram />
+               </a> */}
+               <a href="mailto:subastianhambali@gmail.com" className="hover:text-green-400 hover:scale-110 transition-all duration-300 text-2xl">
+                 <FaEnvelope />
+               </a>
+            </div>
+          </motion.div>
         </motion.div>
-      </motion.div>
 
-      {/* Gambar Karakter */}
-      <motion.div
-        className="relative w-full md:w-1/2 flex justify-center md:justify-end items-center"
-        initial="hidden"
-        animate="visible"
-        variants={imageVariants}
+        {/* Right Content: Image */}
+        <motion.div
+          className="w-full md:w-1/2 flex justify-center md:justify-end relative"
+          initial="hidden"
+          animate="visible"
+          variants={imageVariants}
+        >
+          <div className="relative w-72 h-72 md:w-[450px] md:h-[450px] lg:w-[550px] lg:h-[550px]">
+             {/* Fluid Blob Background behind image */}
+            <div className="absolute inset-0 bg-gradient-to-tr from-cyan-500 to-purple-600 rounded-full blur-[20px] opacity-40 animate-pulse"></div>
+            <div className="absolute -inset-4 bg-gradient-to-bl from-pink-600 to-blue-600 rounded-full blur-[40px] opacity-30 -z-10"></div>
+            
+            <motion.img
+              src="people.webp"
+              alt="Hambali - Fullstack Developer"
+              className="relative w-full h-full object-contain drop-shadow-[0_0_30px_rgba(0,255,255,0.3)] z-10 hover:drop-shadow-[0_0_50px_rgba(168,85,247,0.5)] transition-all duration-500"
+              animate={{
+                y: [0, -20, 0],
+              }}
+              transition={{
+                duration: 6,
+                repeat: Infinity,
+                ease: "easeInOut",
+              }}
+            />
+          </div>
+        </motion.div>
+
+      </div>
+      
+      {/* Scroll Down Indicator */}
+      <motion.div 
+         className="absolute bottom-10 left-1/2 transform -translate-x-1/2 text-gray-500 flex flex-col items-center gap-2"
+         initial={{ opacity: 0 }}
+         animate={{ opacity: 1, y: [0, 10, 0] }}
+         transition={{ delay: 2, duration: 1.5, repeat: Infinity }}
       >
-        <img
-          src="people.webp"
-          alt="Cyberpunk character standing in a neon-lit environment, wearing a high-tech jacket with glowing lines and a transparent visor displaying digital data"
-          width={400}
-          className="rounded-lg w-3/4 md:w-[500px] lg:w-[600px]"
-        />
+        <span className="text-sm uppercase tracking-widest text-xs">Scroll Down</span>
+        <div className="w-[1px] h-12 bg-gradient-to-b from-cyan-500 to-transparent"></div>
       </motion.div>
-
-      {/* Overlay Transparan */}
-      <div className="absolute inset-0 bg-black opacity-30"></div>
     </section>
   );
 }

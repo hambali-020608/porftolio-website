@@ -1,37 +1,73 @@
-import { motion } from "motion/react";
+import { motion } from "framer-motion";
+import { FaGithub, FaLinkedin, FaInstagram, FaHeart, FaChevronUp } from "react-icons/fa";
 
 export default function Footer() {
+  const scrollToTop = () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
   return (
-    <footer className="relative py-12 bg-gray-900 text-center overflow-hidden">
-      {/* Efek Neon Glow Background */}
-      <div className="absolute inset-0 overflow-hidden">
-        <div className="absolute w-72 h-72 bg-blue-500 opacity-20 blur-3xl rounded-full top-10 left-1/4 animate-pulse" />
-        <div className="absolute w-96 h-96 bg-purple-500 opacity-20 blur-3xl rounded-full bottom-10 right-1/4 animate-pulse" />
+    <footer className="relative bg-gray-950 pt-20 pb-10 overflow-hidden border-t border-gray-800">
+      {/* Background Gradient */}
+      <div className="absolute top-0 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-cyan-500 to-transparent"></div>
+
+      <div className="container mx-auto px-6 md:px-12 relative z-10">
+        <div className="flex flex-col md:flex-row justify-between items-center gap-10 mb-16">
+
+          {/* Brand Section */}
+          <div className="text-center md:text-left">
+            <h2 className="text-3xl font-orbitron font-bold text-white mb-2">
+              HAM<span className="text-cyan-400">BALI</span>
+            </h2>
+            <p className="text-gray-400 text-sm max-w-xs">
+              Building digital experiences with code, creativity, and passion.
+            </p>
+          </div>
+
+          {/* Quick Links */}
+          <div className="flex gap-8 text-sm font-medium text-gray-400 uppercase tracking-widest">
+            <a href="#home" className="hover:text-cyan-400 transition-colors">Home</a>
+            <a href="#about" className="hover:text-cyan-400 transition-colors">About</a>
+            <a href="#skills" className="hover:text-cyan-400 transition-colors">Skills</a>
+            <a href="#projects" className="hover:text-cyan-400 transition-colors">Projects</a>
+          </div>
+
+          {/* Socials */}
+          <div className="flex items-center gap-4">
+            {[
+              { icon: FaGithub, href: "#" },
+              { icon: FaLinkedin, href: "#" },
+              { icon: FaInstagram, href: "#" },
+            ].map((social, idx) => (
+              <motion.a
+                key={idx}
+                href={social.href}
+                whileHover={{ y: -5, color: "#22d3ee" }}
+                className="w-10 h-10 rounded-full bg-gray-900 border border-gray-700 flex items-center justify-center text-gray-400 transition-colors hover:border-cyan-500/50 hover:bg-cyan-500/10"
+              >
+                <social.icon size={18} />
+              </motion.a>
+            ))}
+          </div>
+        </div>
+
+        <div className="border-t border-gray-800 pt-8 flex flex-col md:flex-row items-center justify-between gap-4">
+          <p className="text-gray-500 text-sm flex items-center gap-2">
+
+          </p>
+
+          <motion.button
+            onClick={scrollToTop}
+            whileHover={{ y: -5 }}
+            className="flex items-center gap-2 text-gray-400 hover:text-cyan-400 transition-colors text-sm font-medium group"
+          >
+            Back to Top
+            <span className="p-2 rounded-full bg-gray-900 border border-gray-700 group-hover:border-cyan-500 transition-colors">
+              <FaChevronUp className="text-xs" />
+            </span>
+          </motion.button>
+        </div>
       </div>
-
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 1 }}
-        className="relative z-10"
-      >
-        <h3 className="text-3xl font-bold text-[#00FFFF] mb-4 drop-shadow-lg">
-          Let's Connect
-        </h3>
-        <p className="text-gray-400 mb-6 max-w-lg mx-auto">
-          Feel free to reach out for collaborations, projects, or just to say hi!
-        </p>
-
-        <nav className="flex justify-center gap-6 text-gray-300 mb-6">
-          <a href="#projects" className="hover:text-[#00FFFF] transition">Projects</a>
-          <a href="#skills" className="hover:text-[#00FFFF] transition">Skills</a>
-          <a href="#contact" className="hover:text-[#00FFFF] transition">Contact</a>
-        </nav>
-
-        <p className="text-gray-500 text-sm">
-          © {new Date().getFullYear()} MyPortfolio. All rights reserved.
-        </p>
-      </motion.div>
     </footer>
   );
 }

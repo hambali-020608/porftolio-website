@@ -1,67 +1,124 @@
-import { motion } from "motion/react";
+import { motion } from "framer-motion";
+import { FaCode, FaBrain, FaGamepad, FaRocket, FaEnvelope, FaMapMarkerAlt } from "react-icons/fa";
 
 export default function About() {
+  const stats = [
+    { label: "Years Experience", value: "3+" },
+    { label: "Projects Completed", value: "20+" },
+    { label: "Technologies Mastered", value: "15+" },
+  ];
+
   return (
-    <section className="py-24 bg-gray-900">
-      <div className="max-w-6xl mx-10 px-6">
-        {/* Judul */}
-        <motion.h2
-          className="text-center text-5xl font-extrabold text-[#00FFFF] mb-20"
-          initial={{ opacity: 0, y: -30 }}
+    <section id="about" className="relative py-24 bg-gray-950 overflow-hidden">
+      {/* Background Elements */}
+      <div className="absolute top-0 right-0 w-1/3 h-full bg-gradient-to-l from-cyan-900/10 to-transparent pointer-events-none"></div>
+      <div className="absolute bottom-0 left-0 w-96 h-96 bg-purple-900/10 rounded-full blur-[100px] animate-pulse pointer-events-none"></div>
+
+      <div className="container mx-auto px-6 md:px-12 relative z-10">
+
+        {/* Section Header */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, ease: "easeOut" }}
-          viewport={{ once: true, amount: 0.4 }}
+          viewport={{ once: true }}
+          className="text-center mb-16"
         >
-          About Me
-        </motion.h2>
+       
+          <h2 className="text-4xl md:text-5xl font-extrabold text-white mt-4 font-orbitron">
+            About <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-purple-500">Me</span>
+          </h2>
+        </motion.div>
 
-        {/* Konten: Gambar + Teks */}
-        <div className="flex flex-col md:flex-row items-center justify-center gap-12">
-          {/* Gambar dengan animasi */}
-          <motion.div
-            initial={{ opacity: 0, scale: 0.8 }}
-            whileInView={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.8, ease: "easeOut" }}
-            viewport={{ once: true }}
-            className="flex-shrink-0"
-          >
-            <img
-              src="/my.jpg"
-              alt="My Profile"
-              className="w-64 h-64 md:w-64 md:h-64  object-cover rounded-full border-4 border-[#00FFFF] shadow-2xl"
-            />
-          </motion.div>
+        <div className="flex flex-col lg:flex-row items-center gap-16">
 
-          {/* Deskripsi teks dengan animasi */}
-          
+          {/* Left Column: Image Area */}
           <motion.div
-            initial={{ opacity: 0, x: 40 }}
+            initial={{ opacity: 0, x: -50 }}
             whileInView={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.8, delay: 0.3, ease: "easeOut" }}
+            transition={{ duration: 0.8 }}
             viewport={{ once: true }}
-            className="text-white text-xs md:text-xl leading-relaxed max-w-2xl"
+            className="w-full lg:w-1/2 relative"
           >
-          <p className="font-bold mb-10 text-xl text-[#FF00FF]">  I'm Hambali Subastian </p>
-            <p>
-              Saya adalah seorang{" "}
-              <strong className="text-[#00FFFF]">Fullstack Developer</strong>,{" "}
-              <strong className="text-[#00FFFF]">AI Engineer</strong>,{" "}
-              <strong className="text-[#00FFFF]">Data Analyst</strong>,{" "}
-              <strong className="text-[#00FFFF]">Data Scientist</strong>, dan{" "}
-              <strong className="text-[#00FFFF]">Game Developer</strong> asal Indonesia.
-            </p>
-            <p className="mt-5">
-              Saya sangat tertarik dan terobsesi dengan dunia ilmu komputer dan teknologi, pemrograman,
-              kecerdasan buatan, dan matematika.
+            <div className="relative w-72 h-72 md:w-96 md:h-96 mx-auto lg:mx-0">
+              {/* Rotating Border */}
+              <div className="absolute inset-0 rounded-full border-2 border-dashed border-cyan-500/30 animate-[spin_10s_linear_infinite]"></div>
+              <div className="absolute inset-4 rounded-full border-2 border-dashed border-purple-500/30 animate-[spin_15s_linear_infinite_reverse]"></div>
+
+              {/* Main Image Container */}
+              <div className="absolute inset-8 rounded-full overflow-hidden border-4 border-gray-800 shadow-[0_0_50px_rgba(34,211,238,0.2)]">
+                <img
+                  src="/my.jpg"
+                  alt="Hambali Subastian"
+                  className="w-full h-full object-cover hover:scale-110 transition-transform duration-500"
+                />
+              </div>
+
+              {/* Floating Badge */}
+              <motion.div
+                initial={{ scale: 0 }}
+                whileInView={{ scale: 1 }}
+                transition={{ delay: 0.5, type: "spring" }}
+                className="absolute bottom-0 right-10 bg-gray-900 border border-gray-700 p-3 rounded-2xl shadow-xl flex items-center gap-3"
+              >
+                <div className="bg-cyan-500/20 p-2 rounded-full text-cyan-400">
+                  <FaRocket />
+                </div>
+                <div>
+                  <p className="text-xs text-gray-400">Status</p>
+                  <p className="text-sm font-bold text-white">Open to Work</p>
+                </div>
+              </motion.div>
+            </div>
+          </motion.div>
+
+          {/* Right Column: Content */}
+          <motion.div
+            initial={{ opacity: 0, x: 50 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.8 }}
+            viewport={{ once: true }}
+            className="w-full lg:w-1/2 space-y-6"
+          >
+            <h3 className="text-3xl font-bold text-white">
+              Driven by <span className="text-purple-400">Innovation</span> & <span className="text-cyan-400">Technology</span>
+            </h3>
+
+            <p className="text-gray-400 leading-relaxed text-lg">
+              I'm <span className="text-white font-semibold">Hambali Subastian</span>, a passionate technologist based in Indonesia.
+              My journey spans across <span className="text-cyan-400">Fullstack Development</span>, <span className="text-purple-400">Game Dev</span>, and <span className="text-pink-400">AI</span>.
             </p>
 
-            <p className="mt-5">
-                <ul>
-                    <li>Email: subastianhambali@gmail.com</li>
-                    <li>Place:  Hambali, Indonesia +6288298909654</li>
-                </ul>
+            <p className="text-gray-400 leading-relaxed">
+              I am obsessed with the intersection of code, mathematics, and creativity. Whether I'm building complex web systems, training neural networks, or crafting immersive game worlds, I always strive for excellence and innovation.
             </p>
+
+            {/* Stats Grid */}
+            <div className="grid grid-cols-3 gap-4 py-6 border-y border-gray-800">
+              {stats.map((stat, idx) => (
+                <div key={idx} className="text-center">
+                  <h4 className="text-2xl md:text-3xl font-bold text-white font-orbitron">{stat.value}</h4>
+                  <p className="text-xs md:text-sm text-gray-500 uppercase tracking-wide mt-1">{stat.label}</p>
+                </div>
+              ))}
+            </div>
+
+            {/* Contact Info */}
+            <div className="flex flex-col sm:flex-row gap-6 pt-2">
+              <a href="mailto:subastianhambali@gmail.com" className="flex items-center gap-3 text-gray-300 hover:text-cyan-400 transition-colors group">
+                <div className="w-10 h-10 rounded-lg bg-gray-800 flex items-center justify-center group-hover:bg-cyan-500/20 transition-colors">
+                  <FaEnvelope />
+                </div>
+                <span className="text-sm">subastianhambali@gmail.com</span>
+              </a>
+              <div className="flex items-center gap-3 text-gray-300 group">
+                <div className="w-10 h-10 rounded-lg bg-gray-800 flex items-center justify-center">
+                  <FaMapMarkerAlt />
+                </div>
+                <span className="text-sm">Indonesia (+62 882-9890-9654)</span>
+              </div>
+            </div>
           </motion.div>
+
         </div>
       </div>
     </section>

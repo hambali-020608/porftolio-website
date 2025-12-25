@@ -1,8 +1,42 @@
-@import "tailwindcss" ;
+@import "tailwindcss";
 @plugin "daisyui";
 
+/* Import Google Fonts: Outfit (Modern/Clean) & Orbitron (Cyberpunk Headings) */
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&family=Outfit:wght@100..900&display=swap');
+
+:root {
+    --font-body: 'Outfit', sans-serif;
+    --font-heading: 'Orbitron', sans-serif;
+}
 
 body {
-            font-family: 'Orbitron', sans-serif;
-            
-        }
+    font-family: var(--font-body);
+    background-color: #030712;
+    /* gray-950 base */
+    color: #f3f4f6;
+    /* gray-100 text */
+    overflow-x: hidden;
+}
+
+/* Utility class for specific cyberpunk headings */
+.font-orbitron {
+    font-family: var(--font-heading);
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+    width: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: #111827;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #22d3ee;
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #0891b2;
+}
