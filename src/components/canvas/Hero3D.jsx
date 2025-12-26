@@ -1,14 +1,34 @@
-import React, { Suspense } from "react";
-import { Canvas } from "@react-three/fiber";
+import React, { Suspense, useEffect, useState, useRef } from "react";
+import { Canvas, useFrame } from "@react-three/fiber";
 import { OrbitControls, Preload, useGLTF, Float } from "@react-three/drei";
+import * as THREE from "three";
 
 const Computer = () => {
     const computer = useGLTF("/desktop-port2.glb");
+    const meshRef = useRef();
+
+    useFrame((state) => {
+        // Animation: Smoothly interpret scale from 0 to 0.5
+        const targetScale = 0.5;
+        // Optimization: stop calculating if close enough
+        if (meshRef.current) {
+            const currentScale = meshRef.current.scale.x;
+            if (Math.abs(currentScale - targetScale) > 0.001) {
+                const lerpedValue = THREE.MathUtils.lerp(
+                    currentScale,
+                    targetScale,
+                    0.1
+                );
+                meshRef.current.scale.set(lerpedValue, lerpedValue, lerpedValue);
+            }
+        }
+    });
 
     return (
         <primitive
+            ref={meshRef}
             object={computer.scene}
-            scale={0.5}
+            scale={0.01} // Initial small scale
             position={[0, -1, 0]}
             rotation={[0, 1, 0]}
         />
@@ -19,9 +39,10 @@ const Hero3D = () => {
     return (
         <Canvas
             frameloop="demand"
-            shadows
+            // shadows removed for performance
+            dpr={[1, 2]}
             camera={{ position: [20, 3, 5], fov: 25 }}
-            gl={{ preserveDrawingBuffer: true }}
+            gl={{ preserveDrawingBuffer: false }}
             className="w-full h-full z-10"
         >
             <Suspense fallback={null}>
@@ -36,9 +57,8 @@ const Hero3D = () => {
                 <spotLight
                     position={[10, 10, 10]}
                     angle={0.5}
-                    penumbra={1}
                     intensity={2}
-                    castShadow
+                // castShadow removed
                 />
                 <pointLight position={[-10, 5, -10]} intensity={1} />
 
