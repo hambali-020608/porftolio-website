@@ -1,6 +1,5 @@
 import { useState, useEffect } from "react";
 import { FaBars, FaTimes } from "react-icons/fa";
-import { motion, AnimatePresence } from "framer-motion";
 
 export default function NavBar() {
   const [isOpen, setIsOpen] = useState(false);
@@ -23,13 +22,12 @@ export default function NavBar() {
   ];
 
   return (
-    <motion.nav
-      initial={{ y: -100 }}
-      animate={{ y: 0 }}
-      transition={{ duration: 0.5 }}
+    <nav
+      data-aos="fade-down"
+      data-aos-duration="1000"
       className={`fixed top-0 left-0 w-full z-50 transition-all duration-300 ${scrolled
-          ? "bg-gray-950/80 backdrop-blur-md border-b border-white/10 shadow-lg"
-          : "bg-transparent backdrop-blur-sm"
+        ? "bg-gray-950/80 backdrop-blur-md border-b border-white/10 shadow-lg"
+        : "bg-transparent backdrop-blur-sm"
         }`}
     >
       <div className="container mx-auto px-6 md:px-12 py-4 flex justify-between items-center">
@@ -54,49 +52,37 @@ export default function NavBar() {
               </a>
             </li>
           ))}
-          <motion.button
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-            className="px-5 py-2 rounded-full border border-cyan-500/30 text-cyan-400 text-sm font-semibold hover:bg-cyan-500/10 transition-all"
+          <button
+            className="px-5 py-2 rounded-full border border-cyan-500/30 text-cyan-400 text-sm font-semibold hover:bg-cyan-500/10 transition-all hover:scale-105 active:scale-95"
           >
             Hire Me
-          </motion.button>
+          </button>
         </ul>
 
         {/* Mobile Hamburger */}
-        <div className="md:hidden z-50">
-          <button onClick={() => setIsOpen(!isOpen)} className="text-white focus:outline-none">
+        <div className="md:hidden z-50 relative">
+          {/* z-50 ensures button is above the menu if needed, though menu is also z something */}
+          <button onClick={() => setIsOpen(!isOpen)} className="text-white focus:outline-none relative z-50">
             {isOpen ? <FaTimes className="text-2xl" /> : <FaBars className="text-2xl" />}
           </button>
         </div>
       </div>
 
       {/* Mobile Menu Overlay */}
-      <AnimatePresence>
-        {isOpen && (
-          <motion.div
-            initial={{ opacity: 0, height: 0 }}
-            animate={{ opacity: 1, height: "100vh" }}
-            exit={{ opacity: 0, height: 0 }}
-            transition={{ duration: 0.3 }}
-            className="absolute top-0 left-0 w-full bg-gray-950 flex flex-col items-center justify-center space-y-8 md:hidden overflow-hidden"
+      <div
+        className={`fixed inset-0 bg-gray-950 flex flex-col items-center justify-center space-y-8 md:hidden transition-transform duration-300 z-40 ${isOpen ? "translate-y-0" : "-translate-y-full"}`}
+      >
+        {navLinks.map((link, index) => (
+          <a
+            key={index}
+            href={link.href}
+            onClick={() => setIsOpen(false)}
+            className="text-2xl font-orbitron text-gray-300 hover:text-cyan-400 tracking-wide"
           >
-            {navLinks.map((link, index) => (
-              <motion.a
-                key={index}
-                href={link.href}
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.1 * index }}
-                onClick={() => setIsOpen(false)}
-                className="text-2xl font-orbitron text-gray-300 hover:text-cyan-400 tracking-wide"
-              >
-                {link.name}
-              </motion.a>
-            ))}
-          </motion.div>
-        )}
-      </AnimatePresence>
-    </motion.nav>
+            {link.name}
+          </a>
+        ))}
+      </div>
+    </nav>
   );
 }

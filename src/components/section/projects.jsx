@@ -1,4 +1,3 @@
-import { motion } from "framer-motion";
 import { FaGithub, FaExternalLinkAlt } from "react-icons/fa";
 
 export default function Projects() {
@@ -41,23 +40,6 @@ export default function Projects() {
     },
   ];
 
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: { staggerChildren: 0.2 }
-    },
-  };
-
-  const cardVariants = {
-    hidden: { opacity: 0, y: 50 },
-    visible: {
-      opacity: 1,
-      y: 0,
-      transition: { type: "spring", stiffness: 50, damping: 20 }
-    },
-  };
-
   return (
     <section id="projects" className="py-24 bg-gray-950 relative overflow-hidden">
       {/* Background Ambience */}
@@ -69,10 +51,9 @@ export default function Projects() {
       <div className="container mx-auto px-6 md:px-12 relative z-10">
 
         {/* Header */}
-        <motion.div
-          initial={{ opacity: 0, y: -20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
+        <div
+          data-aos="fade-down"
+          data-aos-duration="1000"
           className="text-center mb-20"
         >
           <span className="text-cyan-400 font-medium tracking-wider uppercase text-sm border border-cyan-500/30 px-4 py-1 rounded-full bg-cyan-500/5">
@@ -82,27 +63,23 @@ export default function Projects() {
             Featured <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-400 via-pink-400 to-cyan-400">Projects</span>
           </h2>
           <div className="w-24 h-1 bg-gradient-to-r from-purple-500 to-cyan-500 mx-auto mt-6 rounded-full"></div>
-        </motion.div>
+        </div>
 
         {/* Projects Grid */}
-        <motion.div
+        <div
           className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-10 max-w-6xl mx-auto"
-          variants={containerVariants}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, amount: 0.1 }}
         >
           {projects.map((project, index) => (
-            <motion.div
+            <div
               key={index}
-              className="group relative rounded-2xl overflow-hidden bg-gray-900/50 border border-gray-800 hover:border-gray-700 transition-all duration-300"
-              variants={cardVariants}
-              whileHover={{ y: -5 }}
+              data-aos="fade-up"
+              data-aos-delay={index * 200}
+              className="group relative rounded-2xl overflow-hidden bg-gray-900/50 border border-gray-800 hover:border-gray-700 transition-all duration-300 hover:-translate-y-2"
             >
               {/* Image Section */}
               <div className="relative h-64 overflow-hidden">
                 <div className={`absolute inset-0 bg-gradient-to-b ${project.color} opacity-20 mix-blend-overlay z-10`}></div>
-                <motion.img
+                <img
                   src={project.image}
                   alt={project.title}
                   className="w-full h-full object-cover transform transition-transform duration-700 group-hover:scale-110"
@@ -110,22 +87,20 @@ export default function Projects() {
 
                 {/* Overlay on Hover */}
                 <div className="absolute inset-0 bg-gray-950/80 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center gap-6 z-20 backdrop-blur-sm">
-                  <motion.a
+                  <a
                     href={project.github}
-                    whileHover={{ scale: 1.1, rotate: 5 }}
-                    className="p-3 bg-white/10 rounded-full text-white hover:bg-white hover:text-black transition-colors"
+                    className="p-3 bg-white/10 rounded-full text-white hover:bg-white hover:text-black transition-all hover:scale-110 hover:rotate-6"
                     title="View Code"
                   >
                     <FaGithub size={24} />
-                  </motion.a>
-                  <motion.a
+                  </a>
+                  <a
                     href={project.live}
-                    whileHover={{ scale: 1.1, rotate: -5 }}
-                    className="p-3 bg-cyan-500/20 rounded-full text-cyan-400 hover:bg-cyan-500 hover:text-white transition-colors"
+                    className="p-3 bg-cyan-500/20 rounded-full text-cyan-400 hover:bg-cyan-500 hover:text-white transition-all hover:scale-110 hover:-rotate-6"
                     title="Live Demo"
                   >
                     <FaExternalLinkAlt size={22} />
-                  </motion.a>
+                  </a>
                 </div>
               </div>
 
@@ -153,15 +128,14 @@ export default function Projects() {
                   ))}
                 </div>
               </div>
-            </motion.div>
+            </div>
           ))}
-        </motion.div>
+        </div>
 
         {/* View All Button */}
-        <motion.div
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          transition={{ delay: 0.6 }}
+        <div
+          data-aos="fade-up"
+          data-aos-delay="600"
           className="text-center mt-20"
         >
           <a
@@ -170,7 +144,7 @@ export default function Projects() {
           >
             View All Archives <FaExternalLinkAlt className="text-sm" />
           </a>
-        </motion.div>
+        </div>
 
       </div>
     </section>

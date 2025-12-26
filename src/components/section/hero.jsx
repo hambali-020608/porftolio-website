@@ -1,49 +1,8 @@
-import { useState, useEffect } from "react";
-import { motion } from "framer-motion";
 import { ReactTyped } from "react-typed";
 import { FaGithub, FaLinkedin, FaInstagram, FaEnvelope, FaTiktok } from "react-icons/fa";
 import Hero3D from "../canvas/Hero3D";
 
 export default function Hero() {
-  const [is3DLoaded, setIs3DLoaded] = useState(false);
-
-  useEffect(() => {
-    // Delay loading 3D model to prioritize text animation and page load performance
-    const timer = setTimeout(() => {
-      setIs3DLoaded(true);
-    }, 2000); // 2000ms delay to let initial DOM paint finish
-    return () => clearTimeout(timer);
-  }, []);
-
-  const textVariants = {
-    hidden: { opacity: 0, x: -50 },
-    visible: {
-      opacity: 1,
-      x: 0,
-      transition: { duration: 0.8, ease: "easeOut" }
-    },
-  };
-
-  const imageVariants = {
-    hidden: { opacity: 0, scale: 0.8, rotate: -5 },
-    visible: {
-      opacity: 1,
-      scale: 1,
-      rotate: 0,
-      transition: { duration: 1, ease: "easeOut" }
-    },
-  };
-
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.2,
-        delayChildren: 0.3
-      }
-    }
-  };
 
   return (
     <section
@@ -58,23 +17,27 @@ export default function Hero() {
       <div className="container mx-auto flex flex-col-reverse md:flex-row items-center justify-between z-10 w-full max-w-7xl">
 
         {/* Left Content: Text */}
-        <motion.div
+        <div
           className="w-full md:w-1/2 text-center md:text-left mt-10 md:mt-0 space-y-6"
-          initial="hidden"
-          animate="visible"
-          variants={containerVariants}
+          data-aos="fade-right"
+          data-aos-duration="1000"
         >
-          <motion.h1
+          <h1
             className="text-4xl md:text-6xl lg:text-7xl font-extrabold text-white leading-tight font-orbitron"
-            variants={textVariants}
+            data-aos="fade-up"
+            data-aos-delay="200"
           >
             Hi, I'm <br />
             <span className="bg-clip-text text-transparent bg-gradient-to-r from-cyan-400 via-purple-500 to-pink-500 drop-shadow-md">
               Hambali
             </span>
-          </motion.h1>
+          </h1>
 
-          <motion.div className="h-12 md:h-16 overflow-hidden" variants={textVariants}>
+          <div
+            className="h-12 md:h-16 overflow-hidden"
+            data-aos="fade-up"
+            data-aos-delay="400"
+          >
             <span className="text-2xl md:text-3xl lg:text-4xl font-semibold text-gray-300">
               I am a{" "}
               <ReactTyped
@@ -92,19 +55,21 @@ export default function Hero() {
                 loop
               />
             </span>
-          </motion.div>
+          </div>
 
-          <motion.p
+          <p
             className="text-base md:text-lg text-gray-400 max-w-lg mx-auto md:mx-0 leading-relaxed max-w-xl"
-            variants={textVariants}
+            data-aos="fade-up"
+            data-aos-delay="600"
           >
             Crafting immersive digital experiences with cutting-edge technologies. I build scalable webs, intelligent AI systems, and engaging games.
-          </motion.p>
+          </p>
 
           {/* Social & CTA */}
-          <motion.div
+          <div
             className="flex flex-col md:flex-row items-center gap-6 mt-8"
-            variants={textVariants}
+            data-aos="fade-up"
+            data-aos-delay="800"
           >
             <a
               href="#projects"
@@ -131,33 +96,29 @@ export default function Hero() {
                 <FaEnvelope />
               </a>
             </div>
-          </motion.div>
-        </motion.div>
+          </div>
+        </div>
 
         {/* Right Content: Image */}
-        <motion.div
+        <div
           className="w-full md:w-1/2 flex justify-center md:justify-end relative"
-          initial="hidden"
-          animate="visible"
-          variants={imageVariants}
+          data-aos="fade-left"
+          data-aos-duration="1200"
         >
           {/* 3D Model Container */}
           <div className="relative w-full h-[400px] md:h-[500px] lg:h-[600px] xl:h-[700px] cursor-grab active:cursor-grabbing">
-            {is3DLoaded && <Hero3D />}
+            <Hero3D />
           </div>
-        </motion.div>
+        </div>
       </div>
 
       {/* Scroll Down Indicator */}
-      <motion.div
-        className="absolute bottom-10 left-1/2 transform -translate-x-1/2 text-gray-500 flex flex-col items-center gap-2"
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1, y: [0, 10, 0] }}
-        transition={{ delay: 2, duration: 1.5, repeat: Infinity }}
+      <div
+        className="absolute bottom-10 left-1/2 transform -translate-x-1/2 text-gray-500 flex flex-col items-center gap-2 animate-bounce"
       >
         <span className="text-sm uppercase tracking-widest text-xs">Scroll Down</span>
         <div className="w-[1px] h-12 bg-gradient-to-b from-cyan-500 to-transparent"></div>
-      </motion.div>
+      </div>
     </section>
   );
 }
