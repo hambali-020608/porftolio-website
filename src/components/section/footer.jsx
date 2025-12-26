@@ -1,4 +1,3 @@
-import { motion } from "framer-motion";
 import { FaGithub, FaLinkedin, FaInstagram, FaHeart, FaChevronUp } from "react-icons/fa";
 
 export default function Footer() {
@@ -15,7 +14,10 @@ export default function Footer() {
         <div className="flex flex-col md:flex-row justify-between items-center gap-10 mb-16">
 
           {/* Brand Section */}
-          <div className="text-center md:text-left">
+          <div
+            data-aos="fade-up"
+            className="text-center md:text-left"
+          >
             <h2 className="text-3xl font-orbitron font-bold text-white mb-2">
               HAM<span className="text-cyan-400">BALI</span>
             </h2>
@@ -25,7 +27,11 @@ export default function Footer() {
           </div>
 
           {/* Quick Links */}
-          <div className="flex gap-8 text-sm font-medium text-gray-400 uppercase tracking-widest">
+          <div
+            data-aos="fade-up"
+            data-aos-delay="200"
+            className="flex gap-8 text-sm font-medium text-gray-400 uppercase tracking-widest"
+          >
             <a href="#home" className="hover:text-cyan-400 transition-colors">Home</a>
             <a href="#about" className="hover:text-cyan-400 transition-colors">About</a>
             <a href="#skills" className="hover:text-cyan-400 transition-colors">Skills</a>
@@ -33,20 +39,23 @@ export default function Footer() {
           </div>
 
           {/* Socials */}
-          <div className="flex items-center gap-4">
+          <div
+            data-aos="fade-up"
+            data-aos-delay="400"
+            className="flex items-center gap-4"
+          >
             {[
               { icon: FaGithub, href: "#" },
               { icon: FaLinkedin, href: "#" },
               { icon: FaInstagram, href: "#" },
             ].map((social, idx) => (
-              <motion.a
+              <a
                 key={idx}
                 href={social.href}
-                whileHover={{ y: -5, color: "#22d3ee" }}
-                className="w-10 h-10 rounded-full bg-gray-900 border border-gray-700 flex items-center justify-center text-gray-400 transition-colors hover:border-cyan-500/50 hover:bg-cyan-500/10"
+                className="w-10 h-10 rounded-full bg-gray-900 border border-gray-700 flex items-center justify-center text-gray-400 transition-all hover:border-cyan-500/50 hover:bg-cyan-500/10 hover:-translate-y-1 hover:text-cyan-400"
               >
                 <social.icon size={18} />
-              </motion.a>
+              </a>
             ))}
           </div>
         </div>
@@ -56,16 +65,15 @@ export default function Footer() {
 
           </p>
 
-          <motion.button
+          <button
             onClick={scrollToTop}
-            whileHover={{ y: -5 }}
-            className="flex items-center gap-2 text-gray-400 hover:text-cyan-400 transition-colors text-sm font-medium group"
+            className="flex items-center gap-2 text-gray-400 hover:text-cyan-400 transition-all text-sm font-medium group hover:-translate-y-1"
           >
             Back to Top
             <span className="p-2 rounded-full bg-gray-900 border border-gray-700 group-hover:border-cyan-500 transition-colors">
               <FaChevronUp className="text-xs" />
             </span>
-          </motion.button>
+          </button>
         </div>
       </div>
     </footer>

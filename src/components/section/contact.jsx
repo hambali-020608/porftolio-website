@@ -1,5 +1,4 @@
 import { useState } from "react";
-import { motion } from "framer-motion";
 import { FaUser, FaEnvelope, FaCommentAlt, FaPaperPlane } from "react-icons/fa";
 
 export default function Contact() {
@@ -39,10 +38,9 @@ export default function Contact() {
       <div className="container mx-auto px-6 md:px-12 relative z-10">
 
         {/* Header */}
-        <motion.div
-          initial={{ opacity: 0, y: -20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
+        <div
+          data-aos="fade-down"
+          data-aos-duration="1000"
           className="text-center mb-16"
         >
           <span className="text-cyan-400 font-medium tracking-wider uppercase text-sm border border-cyan-500/30 px-4 py-1 rounded-full bg-cyan-500/5">
@@ -51,15 +49,14 @@ export default function Contact() {
           <h2 className="text-4xl md:text-5xl font-extrabold text-white mt-4 font-orbitron">
             Contact <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-cyan-400">Me</span>
           </h2>
-        </motion.div>
+        </div>
 
         <div className="flex flex-col lg:flex-row gap-12 max-w-6xl mx-auto">
 
           {/* Left Column: Info Card */}
-          <motion.div
-            initial={{ opacity: 0, x: -50 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
+          <div
+            data-aos="fade-right"
+            data-aos-duration="1000"
             className="w-full lg:w-1/3 space-y-8"
           >
             <div className="p-8 rounded-3xl bg-gray-900/50 border border-gray-800 backdrop-blur-sm">
@@ -82,13 +79,12 @@ export default function Contact() {
                 {/* Add more info if needed */}
               </div>
             </div>
-          </motion.div>
+          </div>
 
           {/* Right Column: Form */}
-          <motion.div
-            initial={{ opacity: 0, x: 50 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
+          <div
+            data-aos="fade-left"
+            data-aos-duration="1000"
             className="w-full lg:w-2/3"
           >
             <form onSubmit={handleSubmit} className="p-8 md:p-10 rounded-3xl bg-gray-900/50 border border-gray-800 backdrop-blur-sm relative overflow-hidden group">
@@ -158,21 +154,19 @@ export default function Contact() {
 
               {/* Success Message */}
               {isSuccess && (
-                <motion.div
-                  initial={{ opacity: 0, y: 10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  className="absolute top-0 left-0 w-full h-full bg-gray-900/95 flex flex-col items-center justify-center z-20 backdrop-blur-md"
+                <div
+                  className="absolute top-0 left-0 w-full h-full bg-gray-900/95 flex flex-col items-center justify-center z-20 backdrop-blur-md animate-pulse"
                 >
                   <div className="w-16 h-16 bg-green-500/20 rounded-full flex items-center justify-center text-green-400 text-3xl mb-4 border border-green-500/50">
                     ✓
                   </div>
                   <h3 className="text-2xl font-bold text-white mb-2">Message Sent!</h3>
                   <p className="text-gray-400">I'll get back to you as soon as possible.</p>
-                </motion.div>
+                </div>
               )}
 
             </form>
-          </motion.div>
+          </div>
 
         </div>
       </div>

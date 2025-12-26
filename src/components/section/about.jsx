@@ -1,4 +1,3 @@
-import { motion } from "framer-motion";
 import { FaCode, FaBrain, FaGamepad, FaRocket, FaEnvelope, FaMapMarkerAlt } from "react-icons/fa";
 
 export default function About() {
@@ -17,26 +16,23 @@ export default function About() {
       <div className="container mx-auto px-6 md:px-12 relative z-10">
 
         {/* Section Header */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
+        <div
+          data-aos="fade-down"
+          data-aos-duration="1000"
           className="text-center mb-16"
         >
-       
+
           <h2 className="text-4xl md:text-5xl font-extrabold text-white mt-4 font-orbitron">
             About <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-purple-500">Me</span>
           </h2>
-        </motion.div>
+        </div>
 
         <div className="flex flex-col lg:flex-row items-center gap-16">
 
           {/* Left Column: Image Area */}
-          <motion.div
-            initial={{ opacity: 0, x: -50 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.8 }}
-            viewport={{ once: true }}
+          <div
+            data-aos="fade-right"
+            data-aos-duration="1000"
             className="w-full lg:w-1/2 relative"
           >
             <div className="relative w-72 h-72 md:w-96 md:h-96 mx-auto lg:mx-0">
@@ -54,10 +50,9 @@ export default function About() {
               </div>
 
               {/* Floating Badge */}
-              <motion.div
-                initial={{ scale: 0 }}
-                whileInView={{ scale: 1 }}
-                transition={{ delay: 0.5, type: "spring" }}
+              <div
+                data-aos="zoom-in"
+                data-aos-delay="500"
                 className="absolute bottom-0 right-10 bg-gray-900 border border-gray-700 p-3 rounded-2xl shadow-xl flex items-center gap-3"
               >
                 <div className="bg-cyan-500/20 p-2 rounded-full text-cyan-400">
@@ -67,16 +62,14 @@ export default function About() {
                   <p className="text-xs text-gray-400">Status</p>
                   <p className="text-sm font-bold text-white">Open to Work</p>
                 </div>
-              </motion.div>
+              </div>
             </div>
-          </motion.div>
+          </div>
 
           {/* Right Column: Content */}
-          <motion.div
-            initial={{ opacity: 0, x: 50 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.8 }}
-            viewport={{ once: true }}
+          <div
+            data-aos="fade-left"
+            data-aos-duration="1000"
             className="w-full lg:w-1/2 space-y-6"
           >
             <h3 className="text-3xl font-bold text-white">
@@ -117,7 +110,7 @@ export default function About() {
                 <span className="text-sm">Indonesia (+62 882-9890-9654)</span>
               </div>
             </div>
-          </motion.div>
+          </div>
 
         </div>
       </div>
