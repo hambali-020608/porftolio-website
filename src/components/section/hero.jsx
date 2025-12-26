@@ -1,9 +1,20 @@
+import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { ReactTyped } from "react-typed";
 import { FaGithub, FaLinkedin, FaInstagram, FaEnvelope, FaTiktok } from "react-icons/fa";
 import Hero3D from "../canvas/Hero3D";
 
 export default function Hero() {
+  const [is3DLoaded, setIs3DLoaded] = useState(false);
+
+  useEffect(() => {
+    // Delay loading 3D model to prioritize text animation and page load performance
+    const timer = setTimeout(() => {
+      setIs3DLoaded(true);
+    }, 2000); // 2000ms delay to let initial DOM paint finish
+    return () => clearTimeout(timer);
+  }, []);
+
   const textVariants = {
     hidden: { opacity: 0, x: -50 },
     visible: {
@@ -132,10 +143,9 @@ export default function Hero() {
         >
           {/* 3D Model Container */}
           <div className="relative w-full h-[400px] md:h-[500px] lg:h-[600px] xl:h-[700px] cursor-grab active:cursor-grabbing">
-            <Hero3D />
+            {is3DLoaded && <Hero3D />}
           </div>
         </motion.div>
-
       </div>
 
       {/* Scroll Down Indicator */}

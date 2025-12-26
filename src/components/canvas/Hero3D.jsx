@@ -4,7 +4,7 @@ import { OrbitControls, Preload, useGLTF, Float } from "@react-three/drei";
 import * as THREE from "three";
 
 const Computer = () => {
-    const computer = useGLTF("/desktop-port2.glb");
+    const computer = useGLTF("/desktop-port2-compressed.glb");
     const meshRef = useRef();
 
     useFrame((state) => {
@@ -38,7 +38,7 @@ const Computer = () => {
 const Hero3D = () => {
     return (
         <Canvas
-            frameloop="demand"
+
             // shadows removed for performance
             dpr={[1, 2]}
             camera={{ position: [20, 3, 5], fov: 25 }}
