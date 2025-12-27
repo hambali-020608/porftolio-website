@@ -2,8 +2,8 @@ import { FaCode, FaBrain, FaGamepad, FaRocket, FaEnvelope, FaMapMarkerAlt } from
 
 export default function About() {
   const stats = [
-    { label: "Years Experience", value: "3+" },
-    { label: "Projects Completed", value: "20+" },
+    { label: "Years Experience", value: "1+" },
+    { label: "Projects Completed", value: "10+" },
     { label: "Technologies Mastered", value: "15+" },
   ];
 
@@ -43,9 +43,9 @@ export default function About() {
               {/* Main Image Container */}
               <div className="absolute inset-8 rounded-full overflow-hidden border-4 border-gray-800 shadow-[0_0_50px_rgba(34,211,238,0.2)]">
                 <img
-                  src="/my.jpg"
+                  src="/my2.jpeg"
                   alt="Hambali Subastian"
-                  className="w-full h-full object-cover hover:scale-110 transition-transform duration-500"
+                  className="w-96 h-96 object-cover hover:scale-110 transition-transform duration-500"
                 />
               </div>
 
