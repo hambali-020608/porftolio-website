@@ -1,41 +1,53 @@
+import { useState } from "react";
 import { FaGithub, FaExternalLinkAlt } from "react-icons/fa";
 
 export default function Projects() {
+  const [showAll, setShowAll] = useState(false);
+
   const projects = [
     {
       title: "Music Downloader",
       desc: "A powerful tool to search and download music including Spotify support. Features a clean UI and fast processing.",
-      tech: ["React", "Node.js", "API"],
+      domain: ["musical-down.vercel.app"],
       image: "/music.png",
       github: "#",
-      live: "#",
+      live: "https://musical-down.vercel.app",
       color: "from-pink-500 to-rose-500"
     },
     {
       title: "Youtube Downloader",
       desc: "Fast, ad-free Youtube video and audio downloader. Supports multiple formats and high-quality resolutions.",
-      tech: ["Next.js", "Python", "FFmpeg"],
+      domain: ["ytdl-prof.vercel.app"],
       image: "/yt.png",
       github: "#",
-      live: "#",
+      live: "https://ytdl-prof.vercel.app",
       color: "from-red-600 to-red-500"
     },
     {
       title: "CoffeeShop Website",
       desc: "An interactive and modern e-commerce platform for ordering premium coffee with real-time cart functionality.",
-      tech: ["Vue.js", "Firebase", "Tailwind"],
+      domain: ["senja-kita.vercel.app"],
       image: "/coffe.png",
       github: "#",
-      live: "#",
+      live: "https://senja-kita.vercel.app",
+      color: "from-amber-600 to-orange-500"
+    },
+    {
+      title: "Tiktok Downloader",
+      desc: "Fast, ad-free Tiktok video and audio downloader. Supports multiple formats and without watermarks.",
+      domain: ["tik-down-seven.vercel.app"],
+      image: "/coffe.png",
+      github: "#",
+      live: "https://tik-down-seven.vercel.app",
       color: "from-amber-600 to-orange-500"
     },
     {
       title: "Movies Platform",
       desc: "Stream the latest and most popular movies for free. Features category filtering, search, and detailed info.",
-      tech: ["React", "TMDB API", "Redux"],
+      domain: ["nonton-yuk21.vercel.app"],
       image: "/movie.png",
       github: "#",
-      live: "#",
+      live: "https://nonton-yuk21.vercel.app",
       color: "from-cyan-500 to-blue-500"
     },
   ];
@@ -52,24 +64,26 @@ export default function Projects() {
 
         {/* Header */}
         <div
-          data-aos="fade-down"
-          data-aos-duration="1000"
           className="text-center mb-20"
         >
-          <span className="text-cyan-400 font-medium tracking-wider uppercase text-sm border border-cyan-500/30 px-4 py-1 rounded-full bg-cyan-500/5">
+          <span data-aos="fade-down"
+          data-aos-duration="1000"
+           className="text-cyan-400 font-medium tracking-wider uppercase text-sm border border-cyan-500/30 px-4 py-1 rounded-full bg-cyan-500/5">
             Portfolio
           </span>
-          <h2 className="text-4xl md:text-5xl font-extrabold text-white mt-4 font-orbitron">
+          <h2 data-aos="fade-down"
+          data-aos-duration="1000" className="text-4xl md:text-5xl font-extrabold text-white mt-4 font-orbitron">
             Featured <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-400 via-pink-400 to-cyan-400">Projects</span>
           </h2>
-          <div className="w-24 h-1 bg-gradient-to-r from-purple-500 to-cyan-500 mx-auto mt-6 rounded-full"></div>
+          <div data-aos="zoom-in"
+          data-aos-duration="1000" className="w-24 h-1 bg-gradient-to-r from-purple-500 to-cyan-500 mx-auto mt-6 rounded-full"></div>
         </div>
 
         {/* Projects Grid */}
         <div
           className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-10 max-w-6xl mx-auto"
         >
-          {projects.map((project, index) => (
+          {projects.slice(0, showAll ? projects.length : 4).map((project, index) => (
             <div
               key={index}
               data-aos="fade-up"
@@ -80,9 +94,18 @@ export default function Projects() {
               <div className="relative h-64 overflow-hidden">
                 <div className={`absolute inset-0 bg-gradient-to-b ${project.color} opacity-20 mix-blend-overlay z-10`}></div>
                 <img
-                  src={project.image}
+                  src={
+                    project.live && project.live !== "#"
+                      ? `https://api.microlink.io/?url=${encodeURIComponent(project.live)}&screenshot=true&meta=false&embed=screenshot.url&waitFor=3000`
+                      : project.image
+                  }
                   alt={project.title}
                   className="w-full h-full object-cover transform transition-transform duration-700 group-hover:scale-110"
+                  onError={(e) => {
+                    // Fallback to manual image if API fails
+                    e.target.onerror = null;
+                    e.target.src = project.image || "https://via.placeholder.com/800x600?text=No+Image";
+                  }}
                 />
 
                 {/* Overlay on Hover */}
@@ -116,15 +139,18 @@ export default function Projects() {
                   {project.desc}
                 </p>
 
-                {/* Tech Stack Tags */}
+                {/* domain Stack Tags */}
                 <div className="flex flex-wrap gap-2">
-                  {project.tech.map((tech, idx) => (
-                    <span
+                  {project.domain.map((domain, idx) => (
+                    <a
                       key={idx}
+                      href={"https://" + domain}
+                      target="_blank"
+                      rel="noopener noreferrer"
                       className="px-3 py-1 text-xs font-medium text-cyan-300 bg-cyan-900/20 border border-cyan-500/20 rounded-full"
                     >
-                      {tech}
-                    </span>
+                      {domain}
+                    </a>
                   ))}
                 </div>
               </div>
@@ -138,12 +164,12 @@ export default function Projects() {
           data-aos-delay="600"
           className="text-center mt-20"
         >
-          <a
-            href="#"
+          <button
+            onClick={() => setShowAll(!showAll)}
             className="inline-flex items-center gap-2 px-8 py-3 rounded-full bg-gradient-to-r from-cyan-600 to-purple-600 text-white font-bold hover:shadow-[0_0_20px_rgba(34,211,238,0.4)] hover:scale-105 transition-all duration-300"
           >
-            View All Archives <FaExternalLinkAlt className="text-sm" />
-          </a>
+            {showAll ? "Show Less" : "View All Archives"} <FaExternalLinkAlt className={`text-sm transition-transform duration-300 ${showAll ? 'rotate-180' : ''}`} />
+          </button>
         </div>
 
       </div>

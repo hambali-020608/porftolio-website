@@ -52,7 +52,7 @@ export default function About() {
               {/* Floating Badge */}
               <div
                 data-aos="zoom-in"
-                data-aos-delay="500"
+                // data-aos-delay="100"
                 className="absolute bottom-0 right-10 bg-gray-900 border border-gray-700 p-3 rounded-2xl shadow-xl flex items-center gap-3"
               >
                 <div className="bg-cyan-500/20 p-2 rounded-full text-cyan-400">
