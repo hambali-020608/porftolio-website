@@ -14,6 +14,9 @@ export default function Skills() {
 
   const techStack = [
     // Web Development
+    { tech: "HTML", img: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/html5/html5-original.svg", category: "web" },
+    { tech: "CSS", img: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/css3/css3-original.svg", category: "web" },
+    { tech: "JavaScript", img: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg", category: "web" },
     { tech: "React", img: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg", category: "web" },
     { tech: "Next.js", img: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nextjs/nextjs-line.svg", category: "web" },
     { tech: "Vue.js", img: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/vuejs/vuejs-original.svg", category: "web" },
@@ -85,17 +88,18 @@ export default function Skills() {
 
         {/* Header */}
         <div
-          data-aos="fade-down"
-          data-aos-duration="1000"
+         
           className="text-center mb-20"
         >
 
-          <h2 className="text-4xl md:text-5xl font-extrabold text-white mt-4 font-orbitron">
+          <h2  data-aos="fade-down"
+          data-aos-duration="1000" className="text-4xl md:text-5xl font-extrabold text-white mt-4 font-orbitron">
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-white via-cyan-100 to-gray-400">
               My Expertise & Skills
             </span>
           </h2>
-          <div className="w-24 h-1 bg-gradient-to-r from-cyan-500 to-purple-500 mx-auto mt-6 rounded-full"></div>
+          <div  data-aos="zoom-in"
+          data-aos-duration="1000" className="w-24 h-1 bg-gradient-to-r from-cyan-500 to-purple-500 mx-auto mt-6 rounded-full"></div>
         </div>
 
         {/* Top Feature Cards (Expertise) */}

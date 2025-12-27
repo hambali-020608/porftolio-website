@@ -34,17 +34,17 @@ export default function Hero() {
           </h1>
 
           <div
-            className="h-12 md:h-16 overflow-hidden"
+            className="h-20 md:h-16"
             data-aos="fade-up"
             data-aos-delay="400"
           >
-            <span className="text-2xl md:text-3xl lg:text-4xl font-semibold text-gray-300">
+            <span className="text-2xl md:text-3xl lg:text-3xl font-semibold text-gray-300">
               I am a{" "}
               <ReactTyped
                 strings={[
-                  "Fullstack Web Dev",
+                  "Fullstack Web Developer",
                   "Game Developer",
-                  "Software Engineer",
+                  // "Software Engineer",
                   "AI Engineer",
                   "Data Analyst",
                   "Data Scientist",
@@ -59,8 +59,7 @@ export default function Hero() {
 
           <p
             className="text-base md:text-lg text-gray-400 max-w-lg mx-auto md:mx-0 leading-relaxed max-w-xl"
-            data-aos="fade-up"
-            data-aos-delay="600"
+       
           >
             Crafting immersive digital experiences with cutting-edge technologies. I build scalable webs, intelligent AI systems, and engaging games.
           </p>
@@ -83,16 +82,16 @@ export default function Hero() {
               <a href="https://github.com/hambali-020608" className="hover:text-white hover:scale-110 transition-all duration-300 text-2xl">
                 <FaGithub />
               </a>
-              <a href="#" className="hover:text-blue-400 hover:scale-110 transition-all duration-300 text-2xl">
+              {/* <a href="#" className="hover:text-blue-400 hover:scale-110 transition-all duration-300 text-2xl">
                 <FaLinkedin />
-              </a>
-              <a href="#" className="hover:text-pink-400 hover:scale-110 transition-all duration-300 text-2xl">
+              </a> */}
+              <a href="https://www.tiktok.com/@tyan.dev?is_from_webapp=1&sender_device=pc" className="hover:text-pink-400 hover:scale-110 transition-all duration-300 text-2xl">
                 <FaTiktok />
               </a>
               {/* <a href="#" className="hover:text-pink-400 hover:scale-110 transition-all duration-300 text-2xl">
                  <FaInstagram />
                </a> */}
-              <a href="mailto:subastianhambali@gmail.com" className="hover:text-green-400 hover:scale-110 transition-all duration-300 text-2xl">
+              <a href="https://mail.google.com/mail/?view=cm&fs=1&to=subastianhambali@gmail.com&su=Tanya%20Project&body=Halo%20Hambali," className="hover:text-green-400 hover:scale-110 transition-all duration-300 text-2xl">
                 <FaEnvelope />
               </a>
             </div>

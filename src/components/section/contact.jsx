@@ -1,31 +1,32 @@
-import { useState } from "react";
-import { FaUser, FaEnvelope, FaCommentAlt, FaPaperPlane } from "react-icons/fa";
+import { FaEnvelope, FaTiktok, FaGithub, FaExternalLinkAlt } from "react-icons/fa";
 
 export default function Contact() {
-  const [formData, setFormData] = useState({
-    name: "",
-    email: "",
-    message: "",
-  });
-
-  const [isSubmitting, setIsSubmitting] = useState(false);
-  const [isSuccess, setIsSuccess] = useState(false);
-
-  const handleChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
-  };
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    setIsSubmitting(true);
-    // Simulate API Call
-    setTimeout(() => {
-      setIsSubmitting(false);
-      setIsSuccess(true);
-      setFormData({ name: "", email: "", message: "" });
-      setTimeout(() => setIsSuccess(false), 3000);
-    }, 2000);
-  };
+  const contactInfo = [
+    {
+      icon: <FaEnvelope className="text-2xl" />,
+      label: "Email",
+      value: "subastianhambali@gmail.com",
+      link: "https://mail.google.com/mail/?view=cm&fs=1&to=subastianhambali@gmail.com&su=Tanya%20Project&body=Halo%20Hambali,",
+      color: "from-green-500/20 to-emerald-500/20",
+      textColor: "text-green-400"
+    },
+    {
+      icon: <FaTiktok className="text-2xl" />,
+      label: "TikTok",
+      value: "@tyan.dev",
+      link: "https://www.tiktok.com/@tyan.dev?is_from_webapp=1&sender_device=pc",
+      color: "from-pink-500/20 to-purple-500/20",
+      textColor: "text-pink-400"
+    },
+    {
+      icon: <FaGithub className="text-2xl" />,
+      label: "Github",
+      value: "hambali-020608",
+      link: "https://github.com/hambali-020608",
+      color: "from-gray-500/20 to-slate-500/20",
+      textColor: "text-gray-300"
+    }
+  ];
 
   return (
     <section id="contact" className="relative py-24 bg-gray-950 overflow-hidden">
@@ -39,136 +40,70 @@ export default function Contact() {
 
         {/* Header */}
         <div
-          data-aos="fade-down"
-          data-aos-duration="1000"
-          className="text-center mb-16"
+          
+          className="text-center mb-20"
         >
-          <span className="text-cyan-400 font-medium tracking-wider uppercase text-sm border border-cyan-500/30 px-4 py-1 rounded-full bg-cyan-500/5">
+          <span data-aos="fade-down"
+          data-aos-duration="1000" className="text-cyan-400 font-medium tracking-wider uppercase text-sm border border-cyan-500/30 px-4 py-1 rounded-full bg-cyan-500/5">
             Get In Touch
           </span>
-          <h2 className="text-4xl md:text-5xl font-extrabold text-white mt-4 font-orbitron">
-            Contact <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-cyan-400">Me</span>
+          <h2 data-aos="fade-down"
+          data-aos-duration="1000" className="text-4xl md:text-5xl font-extrabold text-white mt-4 font-orbitron">
+            Let's <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-cyan-400">Connect</span>
           </h2>
+          <div data-aos="zoom-in"
+          data-aos-duration="1000" className="w-24 h-1 bg-gradient-to-r from-purple-500 to-cyan-500 mx-auto mt-6 rounded-full"></div>
         </div>
 
-        <div className="flex flex-col lg:flex-row gap-12 max-w-6xl mx-auto">
-
-          {/* Left Column: Info Card */}
+        <div className="max-w-4xl mx-auto">
           <div
-            data-aos="fade-right"
+            data-aos="fade-up"
             data-aos-duration="1000"
-            className="w-full lg:w-1/3 space-y-8"
+            className="grid grid-cols-1 md:grid-cols-3 gap-6"
           >
-            <div className="p-8 rounded-3xl bg-gray-900/50 border border-gray-800 backdrop-blur-sm">
-              <h3 className="text-2xl font-bold text-white mb-6 font-orbitron">Let's Collaborate</h3>
-              <p className="text-gray-400 mb-8 leading-relaxed">
-                Looking for a developer to bring your idea to life?
-                I'm available for freelance work and open to new opportunities.
-              </p>
-
-              <div className="space-y-6">
-                <div className="flex items-center gap-4 text-gray-300">
-                  <div className="w-12 h-12 rounded-full bg-gray-800 flex items-center justify-center text-cyan-400">
-                    <FaEnvelope />
-                  </div>
-                  <div>
-                    <p className="text-xs text-gray-500 uppercase">Email</p>
-                    <p className="font-medium">subastianhambali@gmail.com</p>
-                  </div>
-                </div>
-                {/* Add more info if needed */}
-              </div>
-            </div>
-          </div>
-
-          {/* Right Column: Form */}
-          <div
-            data-aos="fade-left"
-            data-aos-duration="1000"
-            className="w-full lg:w-2/3"
-          >
-            <form onSubmit={handleSubmit} className="p-8 md:p-10 rounded-3xl bg-gray-900/50 border border-gray-800 backdrop-blur-sm relative overflow-hidden group">
-              {/* Form Glow Effect on Hover */}
-              <div className="absolute inset-0 bg-gradient-to-r from-cyan-500/5 to-purple-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"></div>
-
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
-                <div className="relative">
-                  <label className="text-gray-400 text-sm font-medium mb-2 block">Name</label>
-                  <div className="relative">
-                    <FaUser className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-500" />
-                    <input
-                      type="text"
-                      name="name"
-                      value={formData.name}
-                      onChange={handleChange}
-                      required
-                      className="w-full bg-gray-950 border border-gray-800 rounded-xl py-4 pl-12 pr-4 text-white focus:border-cyan-500 focus:ring-1 focus:ring-cyan-500 transition-all outline-none"
-                      placeholder="Your Name"
-                    />
-                  </div>
-                </div>
-                <div className="relative">
-                  <label className="text-gray-400 text-sm font-medium mb-2 block">Email</label>
-                  <div className="relative">
-                    <FaEnvelope className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-500" />
-                    <input
-                      type="email"
-                      name="email"
-                      value={formData.email}
-                      onChange={handleChange}
-                      required
-                      className="w-full bg-gray-950 border border-gray-800 rounded-xl py-4 pl-12 pr-4 text-white focus:border-cyan-500 focus:ring-1 focus:ring-cyan-500 transition-all outline-none"
-                      placeholder="email@example.com"
-                    />
-                  </div>
-                </div>
-              </div>
-
-              <div className="mb-6 relative">
-                <label className="text-gray-400 text-sm font-medium mb-2 block">Message</label>
-                <div className="relative">
-                  <FaCommentAlt className="absolute left-4 top-6 text-gray-500" />
-                  <textarea
-                    name="message"
-                    rows="5"
-                    value={formData.message}
-                    onChange={handleChange}
-                    required
-                    className="w-full bg-gray-950 border border-gray-800 rounded-xl py-4 pl-12 pr-4 text-white focus:border-cyan-500 focus:ring-1 focus:ring-cyan-500 transition-all outline-none resize-none"
-                    placeholder="Tell me about your project..."
-                  ></textarea>
-                </div>
-              </div>
-
-              <button
-                type="submit"
-                disabled={isSubmitting}
-                className="w-full py-4 bg-gradient-to-r from-cyan-600 to-blue-600 hover:from-cyan-500 hover:to-blue-500 text-white font-bold rounded-xl shadow-lg shadow-cyan-500/20 transition-all duration-300 transform hover:scale-[1.02] flex items-center justify-center gap-2 disabled:opacity-70 disabled:cursor-not-allowed"
+            {contactInfo.map((info, idx) => (
+              <a
+                key={idx}
+                href={info.link}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="group relative p-8 rounded-3xl bg-gray-900/50 border border-gray-800 hover:border-gray-700 transition-all duration-300 flex flex-col items-center text-center overflow-hidden"
               >
-                {isSubmitting ? (
-                  <>Sending...</>
-                ) : (
-                  <>Send Message <FaPaperPlane /></>
-                )}
-              </button>
+                {/* Hover Glow */}
+                <div className={`absolute inset-0 bg-gradient-to-br ${info.color} opacity-0 group-hover:opacity-100 transition-opacity duration-500`}></div>
 
-              {/* Success Message */}
-              {isSuccess && (
-                <div
-                  className="absolute top-0 left-0 w-full h-full bg-gray-900/95 flex flex-col items-center justify-center z-20 backdrop-blur-md animate-pulse"
-                >
-                  <div className="w-16 h-16 bg-green-500/20 rounded-full flex items-center justify-center text-green-400 text-3xl mb-4 border border-green-500/50">
-                    ✓
-                  </div>
-                  <h3 className="text-2xl font-bold text-white mb-2">Message Sent!</h3>
-                  <p className="text-gray-400">I'll get back to you as soon as possible.</p>
+                <div className={`w-16 h-16 rounded-2xl bg-gray-800 flex items-center justify-center mb-6 ${info.textColor} group-hover:scale-110 transition-transform duration-300 relative z-10 shadow-lg`}>
+                  {info.icon}
                 </div>
-              )}
 
-            </form>
+                <div className="relative z-10">
+                  <p className="text-xs text-gray-500 uppercase tracking-widest mb-1 font-bold">{info.label}</p>
+                  <p className="text-white font-medium mb-4">{info.value}</p>
+
+                  <div className={`inline-flex items-center gap-2 text-sm ${info.textColor} font-semibold`}>
+                    Contact Me <FaExternalLinkAlt className="text-xs" />
+                  </div>
+                </div>
+
+                {/* Bottom Line Decor */}
+                <div className={`absolute bottom-0 left-0 h-1 w-full bg-gradient-to-r ${info.color.replace('/20', '')} transform scale-x-0 group-hover:scale-x-100 transition-transform duration-500`}></div>
+              </a>
+            ))}
           </div>
 
+          <div
+            data-aos="fade-up"
+            data-aos-duration="1000"
+            data-aos-delay="200"
+            className="mt-16 text-center"
+          >
+            <p className="text-gray-400 text-lg max-w-2xl mx-auto leading-relaxed">
+              I'm always open to new projects, collaborations, or even just a friendly chat.
+              Feel free to reach out through any of these platforms!
+            </p>
+          </div>
         </div>
+
       </div>
     </section>
   );

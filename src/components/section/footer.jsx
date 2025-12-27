@@ -1,4 +1,4 @@
-import { FaGithub, FaLinkedin, FaInstagram, FaHeart, FaChevronUp } from "react-icons/fa";
+import { FaGithub, FaLinkedin, FaInstagram, FaHeart, FaChevronUp,FaTiktok,FaEnvelope } from "react-icons/fa";
 
 export default function Footer() {
   const scrollToTop = () => {
@@ -44,10 +44,12 @@ export default function Footer() {
             data-aos-delay="400"
             className="flex items-center gap-4"
           >
-            {[
-              { icon: FaGithub, href: "#" },
-              { icon: FaLinkedin, href: "#" },
-              { icon: FaInstagram, href: "#" },
+            { [
+              { icon: FaGithub, href: "https://github.com/hambali-020608" },
+              { icon: FaTiktok, href: "https://www.tiktok.com/@tyan.dev?is_from_webapp=1&sender_device=pc" },
+              { icon: FaEnvelope, href: "https://mail.google.com/mail/?view=cm&fs=1&to=subastianhambali@gmail.com&su=Tanya%20Project&body=Halo%20Hambali," }, 
+              // { icon: FaLinkedin, href: "#" },
+              // { icon: FaInstagram, href: "#" },
             ].map((social, idx) => (
               <a
                 key={idx}
