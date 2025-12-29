@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { FaGithub, FaExternalLinkAlt } from "react-icons/fa";
-
+import DecryptText from "../Decrypt";
 export default function Projects() {
   const [showAll, setShowAll] = useState(false);
 
@@ -12,7 +12,6 @@ export default function Projects() {
       image: "/music.png",
       github: "#",
       live: "https://musical-down.vercel.app",
-      color: "from-pink-500 to-rose-500"
     },
     {
       title: "Youtube Downloader",
@@ -21,7 +20,6 @@ export default function Projects() {
       image: "/yt.png",
       github: "#",
       live: "https://ytdl-prof.vercel.app",
-      color: "from-red-600 to-red-500"
     },
     {
       title: "CoffeeShop Website",
@@ -30,16 +28,6 @@ export default function Projects() {
       image: "/coffe.png",
       github: "#",
       live: "https://senja-kita.vercel.app",
-      color: "from-amber-600 to-orange-500"
-    },
-    {
-      title: "Tiktok Downloader",
-      desc: "Fast, ad-free Tiktok video and audio downloader. Supports multiple formats and without watermarks.",
-      domain: ["tik-down-seven.vercel.app"],
-      image: "/coffe.png",
-      github: "#",
-      live: "https://tik-down-seven.vercel.app",
-      color: "from-amber-600 to-orange-500"
     },
     {
       title: "Movies Platform",
@@ -47,131 +35,119 @@ export default function Projects() {
       domain: ["nonton-yuk21.vercel.app"],
       image: "/movie.png",
       github: "#",
-      live: "https://nonton-yuk21.vercel.app",
-      color: "from-cyan-500 to-blue-500"
-    },
+      live: "#",
+    }
   ];
 
   return (
-    <section id="projects" className="py-24 bg-gray-950 relative overflow-hidden">
-      {/* Background Ambience */}
-      <div className="absolute inset-0 pointer-events-none">
-        <div className="absolute top-0 left-1/4 w-[500px] h-[500px] bg-purple-900/10 rounded-full blur-[100px] animate-pulse"></div>
-        <div className="absolute bottom-0 right-1/4 w-[500px] h-[500px] bg-cyan-900/10 rounded-full blur-[100px] animate-pulse delay-1000"></div>
+    <section id="projects" className="py-24 bg-gray-950 relative overflow-hidden min-h-screen">
+      
+      {/* HUD Background Elements */}
+      <div className="absolute inset-0 hud-grid-bg opacity-20 pointer-events-none"></div>
+      
+      {/* Fixed HUD Frame */}
+      <div className="fixed inset-0 z-20 pointer-events-none flex items-center justify-center p-4 md:p-10">
+        <div className="w-full h-full max-w-7xl border border-cyan-500/10 relative">
+          <div className="absolute top-0 left-0 w-16 h-16 border-t-2 border-l-2 border-cyan-400 opacity-30"></div>
+          <div className="absolute top-0 right-0 w-16 h-16 border-t-2 border-r-2 border-cyan-400 opacity-30"></div>
+          <div className="absolute bottom-0 left-0 w-16 h-16 border-b-2 border-l-2 border-cyan-400 opacity-30"></div>
+          <div className="absolute bottom-0 right-0 w-16 h-16 border-b-2 border-r-2 border-cyan-400 opacity-30"></div>
+        </div>
       </div>
 
-      <div className="container mx-auto px-6 md:px-12 relative z-10">
-
-        {/* Header */}
-        <div
-          className="text-center mb-20"
-        >
-          <span data-aos="fade-down"
-          data-aos-duration="1000"
-           className="text-cyan-400 font-medium tracking-wider uppercase text-sm border border-cyan-500/30 px-4 py-1 rounded-full bg-cyan-500/5">
-            Portfolio
-          </span>
-          <h2 data-aos="fade-down"
-          data-aos-duration="1000" className="text-4xl md:text-5xl font-extrabold text-white mt-4 font-orbitron">
-            Featured <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-400 via-pink-400 to-cyan-400">Projects</span>
+      <div className="container mx-auto px-6 relative z-10">
+        <div className="text-center mb-40" >
+          <h2 className="text-5xl md:text-7xl font-black text-white font-orbitron tracking-widest uppercase">
+            <DecryptText text="System" speed={70} delay={1000} /> <span className="text-cyan-500 animate-pulse">_</span> <DecryptText text="Deploy" speed={70} delay={1000} />
           </h2>
-          <div data-aos="zoom-in"
-          data-aos-duration="1000" className="w-24 h-1 bg-gradient-to-r from-purple-500 to-cyan-500 mx-auto mt-6 rounded-full"></div>
+          <div className="mt-4 flex justify-center items-center gap-4 text-cyan-400 font-mono text-sm">
+            <span className="w-12 h-[1px] bg-cyan-500"></span>
+            <DecryptText text="PROJECT_ARCHIVE_V2.0" speed={60} delay={1000} />
+            <span className="w-12 h-[1px] bg-cyan-500"></span>
+          </div>
         </div>
 
-        {/* Projects Grid */}
-        <div
-          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-10 max-w-6xl mx-auto"
-        >
+        <div className="space-y-[30vh] max-w-5xl mx-auto pb-40">
           {projects.slice(0, showAll ? projects.length : 4).map((project, index) => (
             <div
               key={index}
+              className="relative group"
+              // AOS ANIMATION PROPERTIES
               data-aos="fade-up"
-              data-aos-delay={index * 200}
-              className="group relative rounded-2xl overflow-hidden bg-gray-900/50 border border-gray-800 hover:border-gray-700 transition-all duration-300 hover:-translate-y-2"
+              data-aos-anchor-placement="center-bottom"
+              data-aos-offset="100"
             >
-              {/* Image Section */}
-              <div className="relative h-64 overflow-hidden">
-                <div className={`absolute inset-0 bg-gradient-to-b ${project.color} opacity-20 mix-blend-overlay z-10`}></div>
-                <img
-                  src={
-                    project.live && project.live !== "#"
-                      ? `https://api.microlink.io/?url=${encodeURIComponent(project.live)}&screenshot=true&meta=false&embed=screenshot.url&waitFor=3000`
-                      : project.image
-                  }
-                  alt={project.title}
-                  className="w-full h-full object-cover transform transition-transform duration-700 group-hover:scale-110"
-                  onError={(e) => {
-                    // Fallback to manual image if API fails
-                    e.target.onerror = null;
-                    e.target.src = project.image || "https://via.placeholder.com/800x600?text=No+Image";
-                  }}
-                />
-
-                {/* Overlay on Hover */}
-                <div className="absolute inset-0 bg-gray-950/80 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center gap-6 z-20 backdrop-blur-sm">
-                  <a
-                    href={project.github}
-                    className="p-3 bg-white/10 rounded-full text-white hover:bg-white hover:text-black transition-all hover:scale-110 hover:rotate-6"
-                    title="View Code"
-                  >
-                    <FaGithub size={24} />
-                  </a>
-                  <a
-                    href={project.live}
-                    className="p-3 bg-cyan-500/20 rounded-full text-cyan-400 hover:bg-cyan-500 hover:text-white transition-all hover:scale-110 hover:-rotate-6"
-                    title="Live Demo"
-                  >
-                    <FaExternalLinkAlt size={22} />
-                  </a>
-                </div>
+              {/* Parallax HUD Data Side (AOS zoom-in) */}
+              <div 
+                className="absolute -left-24 top-0 font-mono text-[10px] text-cyan-500 hidden xl:block"
+                data-aos="fade-right"
+                data-aos-delay="200"
+              >
+                <p className="animate-pulse">TRACKING ID: 00{index + 1}</p>
+                <p>STATUS: OPTIMIZED</p>
+                <div className="w-16 h-[1px] bg-cyan-500/40 mt-2"></div>
               </div>
 
-              {/* Content Section */}
-              <div className="p-8 relative">
-                {/* Glow Line */}
-                <div className={`absolute top-0 left-0 w-full h-[2px] bg-gradient-to-r ${project.color} transform scale-x-0 group-hover:scale-x-100 transition-transform duration-500`}></div>
+              {/* Main Project Card */}
+              <div className="relative bg-gray-900/60 backdrop-blur-xl border-l-4 border-gray-800 group-hover:border-cyan-500 transition-all duration-500 group-hover:shadow-[0_0_30px_rgba(6,182,212,0.2)]">
+                
+                {/* Scanline Effect (Only visible on hover or through CSS animation) */}
+                <div className="absolute inset-0 overflow-hidden pointer-events-none z-10 opacity-0 group-hover:opacity-100 transition-opacity">
+                  <div className="w-full h-2 bg-cyan-500/20 shadow-[0_0_15px_rgba(6,182,212,0.5)] animate-[scanline_3s_linear_infinite]"></div>
+                </div>
 
-                <h3 className="text-2xl font-bold text-white mb-3 font-orbitron group-hover:text-cyan-400 transition-colors">
-                  {project.title}
-                </h3>
-                <p className="text-gray-400 mb-6 leading-relaxed line-clamp-3">
-                  {project.desc}
-                </p>
+                <div className="flex flex-col md:flex-row items-stretch">
+                  <div className="relative w-full md:w-2/5 h-64 md:h-auto overflow-hidden border-r border-white/5">
+                    <img 
+                      src={project.image} 
+                      alt={project.title}
+                      className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-700 group-hover:scale-110"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-r from-gray-950/80 to-transparent"></div>
+                  </div>
 
-                {/* domain Stack Tags */}
-                <div className="flex flex-wrap gap-2">
-                  {project.domain.map((domain, idx) => (
-                    <a
-                      key={idx}
-                      href={"https://" + domain}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="px-3 py-1 text-xs font-medium text-cyan-300 bg-cyan-900/20 border border-cyan-500/20 rounded-full"
-                    >
-                      {domain}
-                    </a>
-                  ))}
+                  <div className="flex-1 p-8 md:p-12">
+                    <div className="flex justify-between items-center mb-6">
+                      <span className="px-3 py-1 bg-cyan-500/10 text-cyan-400 text-[10px] font-mono border border-cyan-500/20">
+                        MODULE_0{index + 1}
+                      </span>
+                      <div className="flex gap-4">
+                        <a href={project.github} className="text-gray-400 hover:text-white transition-colors"><FaGithub size={20}/></a>
+                        <a href={project.live} className="text-gray-400 hover:text-cyan-400 transition-colors"><FaExternalLinkAlt size={18}/></a>
+                      </div>
+                    </div>
+
+                    <h3 className="text-3xl font-bold text-white font-orbitron mb-4 group-hover:text-cyan-400 transition-colors">
+                      {project.title}
+                    </h3>
+                    
+                    <p className="text-gray-400 font-light leading-relaxed mb-8">
+                      {project.desc}
+                    </p>
+
+                    <div className="flex flex-wrap gap-2">
+                      {project.domain.map((tag, i) => (
+                        <span key={i} className="text-[10px] font-mono text-cyan-500/60">
+                          #{tag.toUpperCase()}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
           ))}
         </div>
 
-        {/* View All Button */}
-        <div
-          data-aos="fade-up"
-          data-aos-delay="600"
-          className="text-center mt-20"
-        >
+        <div className="mt-20 text-center" data-aos="fade-up">
           <button
             onClick={() => setShowAll(!showAll)}
-            className="inline-flex items-center gap-2 px-8 py-3 rounded-full bg-gradient-to-r from-cyan-600 to-purple-600 text-white font-bold hover:shadow-[0_0_20px_rgba(34,211,238,0.4)] hover:scale-105 transition-all duration-300"
+            className="group relative px-10 py-4 bg-transparent border border-cyan-500/50 text-cyan-400 font-mono tracking-widest text-sm hover:border-cyan-400 transition-all overflow-hidden"
           >
-            {showAll ? "Show Less" : "View All Archives"} <FaExternalLinkAlt className={`text-sm transition-transform duration-300 ${showAll ? 'rotate-180' : ''}`} />
+            <span className="relative z-10">{showAll ? "DEACTIVATE_ARCHIVE" : "ACCESS_FULL_DATABASE"}</span>
+            <div className="absolute inset-0 bg-cyan-500/10 -translate-x-full group-hover:translate-x-0 transition-transform duration-300"></div>
           </button>
         </div>
-
       </div>
     </section>
   );
