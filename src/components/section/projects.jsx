@@ -58,7 +58,7 @@ export default function Projects() {
       <div className="container mx-auto px-6 relative z-10">
         <div className="text-center mb-40" >
           <h2 className="text-5xl md:text-7xl font-black text-white font-orbitron tracking-widest uppercase">
-            <DecryptText text="System" speed={70} delay={1000} /> <span className="text-cyan-500 animate-pulse">_</span> <DecryptText text="Deploy" speed={70} delay={1000} />
+            <DecryptText text="My" speed={70} delay={1000} /> <DecryptText text="Projects" speed={70} delay={1000} />
           </h2>
           <div className="mt-4 flex justify-center items-center gap-4 text-cyan-400 font-mono text-sm">
             <span className="w-12 h-[1px] bg-cyan-500"></span>
@@ -68,7 +68,7 @@ export default function Projects() {
         </div>
 
         <div className="space-y-[30vh] max-w-5xl mx-auto pb-40">
-          {projects.slice(0, showAll ? projects.length : 4).map((project, index) => (
+          {projects.slice(0, showAll ? projects.length : 3).map((project, index) => (
             <div
               key={index}
               className="relative group"
@@ -109,7 +109,7 @@ export default function Projects() {
                   <div className="flex-1 p-8 md:p-12">
                     <div className="flex justify-between items-center mb-6">
                       <span className="px-3 py-1 bg-cyan-500/10 text-cyan-400 text-[10px] font-mono border border-cyan-500/20">
-                        MODULE_0{index + 1}
+                        PROJECT_{index + 1}
                       </span>
                       <div className="flex gap-4">
                         <a href={project.github} className="text-gray-400 hover:text-white transition-colors"><FaGithub size={20}/></a>
@@ -128,7 +128,7 @@ export default function Projects() {
                     <div className="flex flex-wrap gap-2">
                       {project.domain.map((tag, i) => (
                         <span key={i} className="text-[10px] font-mono text-cyan-500/60">
-                          #{tag.toUpperCase()}
+                          {tag.toUpperCase()}
                         </span>
                       ))}
                     </div>

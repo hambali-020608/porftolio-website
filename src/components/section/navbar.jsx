@@ -53,11 +53,11 @@ export default function NavBar() {
                 </a>
               </li>
             ))}
-            <button
+            {/* <button
               className="px-5 py-2 rounded-full border border-cyan-500/30 text-cyan-400 text-sm font-semibold hover:bg-cyan-500/10 transition-all hover:scale-105 active:scale-95"
             >
               Hire Me
-            </button>
+            </button> */}
           </ul>
 
           {/* Mobile Hamburger */}
