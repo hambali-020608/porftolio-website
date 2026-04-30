@@ -1,96 +1,104 @@
 import { ReactTyped } from "react-typed";
 import Hero3D from "../canvas/Hero3D";
 import { socialLinks } from "../../constants";
+import { useLanguage } from "../../context/LanguageContext";
+import { translations } from "../../constants/translations";
 
 export default function Hero() {
+  const { language } = useLanguage();
+  const t = translations[language].hero;
+
   return (
     <section
       id="home"
       aria-label="Hero Section"
-      className="relative min-h-[100svh] flex items-center justify-center px-6 md:px-12 lg:px-24 bg-gray-950 overflow-hidden"
+      className="relative min-h-[100svh] flex items-center justify-center px-6 md:px-12 lg:px-24 overflow-hidden"
     >
-      {/* Background Ambience - More subtle and professional */}
-      <div className="absolute top-[-10%] left-[-5%] w-[300px] h-[300px] md:w-[500px] md:h-[500px] bg-cyan-900/10 rounded-full blur-[100px] opacity-40 animate-pulse pointer-events-none"></div>
-      <div className="absolute bottom-[-10%] right-[-5%] w-[300px] h-[300px] md:w-[500px] md:h-[500px] bg-blue-900/10 rounded-full blur-[100px] opacity-40 animate-pulse delay-75 pointer-events-none"></div>
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,transparent_0%,rgba(3,7,18,0.9)_100%)] z-0 pointer-events-none"></div>
-
-      <div className="container mx-auto flex flex-col-reverse md:flex-row items-center justify-between z-10 w-full max-w-7xl">
+      {/* Refined Background Elements */}
+      <div className="absolute top-0 left-0 w-full h-full blueprint-grid-fine opacity-20 pointer-events-none"></div>
+      
+      <div className="container mx-auto flex flex-col-reverse md:flex-row items-center justify-between z-10 w-full max-w-7xl pt-20">
 
         {/* Left Content: Text */}
         <div
-          className="w-full md:w-1/2 text-center md:text-left mt-12 md:mt-0 space-y-8"
+          className="w-full md:w-1/2 text-center md:text-left mt-12 md:mt-0 space-y-8 md:space-y-10"
           data-aos="fade-right"
           data-aos-duration="1000"
         >
-          <div className="space-y-4">
-            <span className="inline-block px-4 py-1.5 text-xs font-semibold tracking-[0.2em] text-cyan-400 uppercase border border-cyan-500/20 rounded-full bg-cyan-500/5 backdrop-blur-sm mb-4">
-              Welcome to my portfolio
-            </span>
-            <h1 className="text-5xl md:text-6xl lg:text-8xl font-black text-white leading-[1.1] font-orbitron tracking-tight">
-              Hi, I'm <br />
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-blue-500">
-                Hambali
+          <div className="space-y-4 md:space-y-6">
+             <div className="flex items-center justify-center md:justify-start">
+               <span className="px-2 md:px-3 py-1 text-[9px] md:text-[10px] font-bold tracking-[0.2em] text-cyan-400 uppercase border border-cyan-500/20 bg-cyan-500/5 backdrop-blur-sm">
+                {t.status}
               </span>
+            </div>
+            <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-8xl font-black text-white leading-[1.0] font-orbitron tracking-tighter">
+              {t.hi} <br />
+              <span className="text-cyan-400/90">Hambali</span>
             </h1>
           </div>
 
           <div className="h-16 md:h-12">
-            <p className="text-xl md:text-2xl lg:text-3xl font-medium text-gray-300 font-outfit">
-              A professional{" "}
+            <p className="text-base md:text-xl font-medium text-gray-300 font-outfit tracking-wide">
+              {t.iam}{" "}
               <ReactTyped
-                strings={[
-                  "Fullstack Developer",
-                  "Software Engineer",
-                  "Data Analyst",
-                ]}
+                key={language}
+                strings={t.roles}
                 typeSpeed={50}
                 backSpeed={40}
-                className="text-cyan-400 font-bold border-b-2 border-cyan-500/30"
+                className="text-white font-bold border-b border-cyan-500/40"
                 loop
               />
             </p>
           </div>
 
-          <p className="text-lg text-gray-400 max-w-xl mx-auto md:mx-0 leading-relaxed font-light">
-            I specialize in crafting high-performance web applications, architecting robust software solutions, and deriving meaningful insights from data.
+          <p className="text-xs md:text-sm text-gray-400 max-w-md mx-auto md:mx-0 leading-relaxed font-light tracking-widest uppercase">
+            {t.desc}
           </p>
 
-          {/* Social & CTA */}
-          <div className="flex flex-col sm:flex-row items-center gap-8 mt-10">
+          {/* Action & Coordinates */}
+          <div className="flex flex-col sm:flex-row items-center gap-6 md:gap-10 mt-8 md:mt-12">
             <a
               href="#projects"
-              className="group relative px-10 py-4 bg-cyan-600 hover:bg-cyan-500 text-white font-bold rounded-full shadow-lg shadow-cyan-500/20 transition-all duration-300 hover:scale-105 hover:shadow-cyan-500/40 active:scale-95"
+              className="w-full sm:w-auto text-center group relative px-10 py-4 bg-transparent border border-cyan-500/40 text-cyan-400 font-bold text-[10px] tracking-[0.3em] uppercase transition-all duration-300 hover:bg-cyan-500 hover:text-white hover:border-cyan-500 overflow-hidden"
             >
-              Explore My Work
+              <span className="relative z-10 italic">{t.viewWork}</span>
+              <div className="absolute inset-0 bg-cyan-500 -translate-x-full group-hover:translate-x-0 transition-transform duration-300"></div>
             </a>
 
-            <nav className="flex items-center gap-6" aria-label="Social Media Links">
+            <div className="flex items-center gap-6 border-l-0 sm:border-l border-gray-800 pl-0 sm:pl-8">
               {socialLinks.map((link) => (
                 <a 
                   key={link.name}
                   href={link.href} 
                   target="_blank"
                   rel="noopener noreferrer"
-                  aria-label={link.name}
-                  className={`text-2xl text-gray-400 transition-all duration-300 ${link.color} hover:scale-125`}
+                  className={`text-xl text-gray-500 transition-all duration-300 hover:text-cyan-400 hover:-translate-y-1`}
                 >
                   <link.icon />
                 </a>
               ))}
-            </nav>
+            </div>
           </div>
         </div>
 
-        {/* Right Content: 3D Model */}
+        {/* Right Content: 3D Model Viewport */}
         <div
-          className="w-full md:w-1/2 flex justify-center md:justify-end relative"
+          className="w-full md:w-5/12 flex justify-center md:justify-end relative"
           data-aos="fade-left"
           data-aos-duration="1200"
         >
-          <div className="relative w-full h-[350px] md:h-[500px] lg:h-[600px] xl:h-[700px] cursor-grab active:cursor-grabbing">
+          <div className="relative w-full aspect-square max-w-[320px] md:max-w-[500px] border border-white/5 bg-gray-900/10 backdrop-blur-sm">
+            <div className="viewport-bracket viewport-bracket-tl -translate-x-2 -translate-y-2"></div>
+            <div className="viewport-bracket viewport-bracket-tr translate-x-2 -translate-y-2"></div>
+            <div className="viewport-bracket viewport-bracket-bl -translate-x-2 translate-y-2"></div>
+            <div className="viewport-bracket viewport-bracket-br translate-x-2 translate-y-2"></div>
+            
+            <div className="absolute top-3 left-3 font-mono text-[8px] text-gray-600 tracking-widest uppercase">
+              Module: Hero_3D<br/>
+              State: Active
+            </div>
+
             <Hero3D />
-            {/* Subtle glow behind model */}
-            <div className="absolute inset-0 bg-cyan-500/5 rounded-full blur-[100px] -z-10"></div>
           </div>
         </div>
       </div>
@@ -98,11 +106,12 @@ export default function Hero() {
       {/* Scroll Down Indicator */}
       <a
         href="#skills"
-        aria-label="Scroll to Skills section"
-        className="absolute bottom-10 left-1/2 -translate-x-1/2 text-gray-500 flex flex-col items-center gap-3 animate-bounce hover:text-cyan-400 transition-colors"
+        className="absolute bottom-6 md:bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center gap-4 group transition-colors"
       >
-        <span className="text-[10px] uppercase tracking-[0.3em] font-bold">Scroll Down</span>
-        <div className="w-[1.5px] h-10 bg-gradient-to-b from-cyan-500 to-transparent"></div>
+        <span className="font-mono text-[8px] md:text-[9px] text-gray-500 tracking-[0.4em] group-hover:text-cyan-400 transition-colors uppercase">Scroll</span>
+        <div className="w-[1px] h-10 md:h-12 bg-gray-800 relative overflow-hidden">
+          <div className="absolute top-0 left-0 w-full h-1/2 bg-cyan-500 animate-[scanline_2s_linear_infinite]"></div>
+        </div>
       </a>
     </section>
   );

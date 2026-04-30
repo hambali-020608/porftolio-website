@@ -1,14 +1,19 @@
 import { 
   FaGithub, FaTiktok, FaEnvelope, 
-  FaCode, FaDatabase, FaBrain, FaChartBar, FaDesktop, FaServer 
+  FaCode, FaDatabase, FaBrain, FaChartBar, FaDesktop, FaServer, FaMagic
 } from "react-icons/fa";
 import { 
   SiReact, SiNextdotjs, SiTailwindcss, SiNodedotjs, 
   SiExpress, SiLaravel, SiMongodb, SiMysql,  SiPrisma, 
   SiPython, SiTensorflow, SiPytorch, SiPandas, SiDocker, 
   SiGit, SiFigma, SiJavascript, SiTypescript, SiPostgresql, 
-  SiTableau 
+  SiTableau, 
+  SiLangchain, SiN8N, SiOpenai,
+  SiHtml5,
+  SiCss3
 } from "react-icons/si";
+
+import { PiMicrosoftWordLogoFill,PiMicrosoftPowerpointLogoFill,PiMicrosoftExcelLogoFill } from "react-icons/pi";
 
 export const navLinks = [
   { name: "Home", href: "#home" },
@@ -42,30 +47,30 @@ export const socialLinks = [
 export const stats = [
   { label: "Years Experience", value: "1+" },
   { label: "Projects Completed", value: "10+" },
-  { label: "Technologies Mastered", value: "20+" },
+  { label: "Technologies Mastered", value: "25+" },
 ];
 
 export const expertiseCards = [
   {
-    title: "Software Engineer",
-    icon: FaCode,
-    desc: "Architecting robust systems and scalable applications with a focus on performance and reliability.",
-    color: "border-blue-500",
-    glow: "shadow-blue-500/20",
-    role: "SE"
+    title: "AI Engineer",
+    icon: FaBrain,
+    desc: "Developing intelligent agents and automated workflows using LLMs, LangChain, and advanced prompting.",
+    color: "border-cyan-500",
+    glow: "shadow-cyan-500/20",
+    role: "AI"
   },
   {
     title: "Fullstack Developer",
     icon: FaDesktop,
-    desc: "Building seamless digital experiences from intuitive frontends to powerful backend architectures.",
-    color: "border-cyan-500",
-    glow: "shadow-cyan-500/20",
+    desc: "Building modern web applications with focus on clean architecture and high-performance frontends.",
+    color: "border-blue-500",
+    glow: "shadow-blue-500/20",
     role: "FD"
   },
   {
     title: "Data Analyst",
     icon: FaChartBar,
-    desc: "Transforming complex data into actionable insights through advanced analysis and visualization.",
+    desc: "Finding patterns in complex data and building automated tools to extract meaningful insights.",
     color: "border-purple-500",
     glow: "shadow-purple-500/20",
     role: "DA"
@@ -74,6 +79,8 @@ export const expertiseCards = [
 
 export const skillsData = [
   // Web Development
+  { name: "HTML", icon: SiHtml5, category: "web" },
+  { name: "CSS", icon: SiCss3, category: "web" },
   { name: "JavaScript", icon: SiJavascript, category: "web" },
   { name: "TypeScript", icon: SiTypescript, category: "web" },
   { name: "React", icon: SiReact, category: "web" },
@@ -89,21 +96,27 @@ export const skillsData = [
   { name: "MySQL", icon: SiMysql, category: "backend" },
   { name: "Prisma", icon: SiPrisma, category: "backend" },
 
-  // Data Science & AI
+  // Data & AI
   { name: "Python", icon: SiPython, category: "data" },
+  { name: "LangChain", icon: SiLangchain, category: "data" },
+  { name: "n8n", icon: SiN8N, category: "data" },
+  { name: "Prompt Eng", icon: FaMagic, category: "data" },
+  { name: "FastMCP", icon: SiOpenai, category: "data" }, // Using OpenAI icon for MCP context
   { name: "Pandas", icon: SiPandas, category: "data" },
-  { name: "TensorFlow", icon: SiTensorflow, category: "data" },
-  { name: "PyTorch", icon: SiPytorch, category: "data" },
   { name: "Tableau", icon: SiTableau, category: "data" },
+  { name: "Excel", icon: PiMicrosoftExcelLogoFill, category: "data" },
 
   // Tools
   { name: "Docker", icon: SiDocker, category: "tools" },
   { name: "Git", icon: SiGit, category: "tools" },
   { name: "Figma", icon: SiFigma, category: "tools" },
+  { name: "Word", icon: PiMicrosoftWordLogoFill, category: "tools" },
+  { name: "PowerPoint", icon: PiMicrosoftPowerpointLogoFill, category: "tools" },
+  // { name: "Excel", icon: PiMicrosoftExcelLogoFill, category: "tools" },
 ];
 
 export const skillCategories = [
-  { id: "all", label: "All Skills", icon: "⚡" },
+  { id: "all", label: "All_Skills", icon: "⚡" },
   { id: "web", label: "Frontend", icon: "🌐" },
   { id: "backend", label: "Backend", icon: "⚙️" },
   { id: "data", label: "Data/AI", icon: "📊" },

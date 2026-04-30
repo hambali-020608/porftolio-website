@@ -2,106 +2,106 @@ import { useState } from "react";
 import { FaGithub, FaExternalLinkAlt } from "react-icons/fa";
 import SectionHeading from "../shared/SectionHeading";
 import { projects } from "../../constants";
+import { useLanguage } from "../../context/LanguageContext";
+import { translations } from "../../constants/translations";
 
 export default function Projects() {
+  const { language } = useLanguage();
+  const t = translations[language].projects;
   const [showAll, setShowAll] = useState(false);
-  const visibleProjects = showAll ? projects : projects.slice(0, 3);
+  const visibleProjects = showAll ? projects : projects.slice(0, 4);
 
   return (
-    <section id="projects" aria-label="Selected Projects" className="py-24 bg-gray-950 relative overflow-hidden">
-      {/* Background Ambience */}
-      <div className="absolute top-0 inset-x-0 h-px bg-gradient-to-r from-transparent via-cyan-500/20 to-transparent"></div>
-      <div className="absolute inset-0 hud-grid-bg opacity-[0.03] pointer-events-none"></div>
-
+    <section id="projects" aria-label="Selected Projects" className="py-24 relative overflow-hidden">
       <div className="container mx-auto px-6 relative z-10">
         <SectionHeading 
-          badge="Portfolio"
-          title="Recent Projects"
-          subtitle="A collection of my recent works across web development, software engineering, and data analysis."
+          index="02"
+          badge={t.badge}
+          title={t.title}
+          subtitle={t.subtitle}
         />
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 max-w-7xl mx-auto">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-px border border-white/5 bg-white/5 max-w-7xl mx-auto overflow-hidden">
           {visibleProjects.map((project, index) => (
             <article
               key={project.id}
               data-aos="fade-up"
               data-aos-delay={index * 100}
-              className="group relative bg-gray-900/40 border border-gray-800 rounded-[2rem] overflow-hidden transition-all duration-500 hover:border-cyan-500/30 hover:-translate-y-2 shadow-2xl"
+              className="group relative bg-gray-950 p-6 sm:p-8 md:p-12 transition-all duration-500 hover:bg-white/[0.01]"
             >
-              {/* Project Image Container */}
-              <div className="relative h-64 md:h-80 overflow-hidden">
-                <img 
-                  src={project.image} 
-                  alt={project.title}
-                  className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-gray-950 via-gray-950/20 to-transparent opacity-80 transition-opacity group-hover:opacity-60"></div>
-                
-                {/* ID Badge */}
-                <div className="absolute top-6 left-6 px-4 py-1 bg-gray-950/80 backdrop-blur-md border border-white/10 rounded-full text-[10px] font-bold text-cyan-400 font-orbitron tracking-widest">
-                  #{project.id}
-                </div>
-              </div>
-
-              {/* Project Content */}
-              <div className="p-8 md:p-10">
-                <div className="flex justify-between items-start mb-6">
-                  <h3 className="text-2xl md:text-3xl font-bold text-white font-orbitron group-hover:text-cyan-400 transition-colors">
-                    {project.title}
-                  </h3>
-                  <div className="flex gap-4">
-                    <a 
-                      href={project.github} 
-                      target="_blank" 
-                      rel="noopener noreferrer"
-                      aria-label={`${project.title} GitHub repository`}
-                      className="text-gray-400 hover:text-white transition-colors"
-                    >
-                      <FaGithub size={24}/>
-                    </a>
-                    <a 
-                      href={project.live} 
-                      target="_blank" 
-                      rel="noopener noreferrer"
-                      aria-label={`${project.title} Live Demo`}
-                      className="text-gray-400 hover:text-cyan-400 transition-colors"
-                    >
-                      <FaExternalLinkAlt size={22}/>
-                    </a>
+              <div className="flex flex-col sm:flex-row lg:flex-col xl:flex-row gap-8 md:gap-10">
+                {/* Project Image Container */}
+                <div className="relative w-full sm:w-2/5 lg:w-full xl:w-2/5 aspect-[16/9] sm:aspect-[4/3] overflow-hidden border border-white/10 group-hover:border-cyan-500/30 transition-colors duration-500">
+                  <img 
+                    src={project.image} 
+                    alt={project.title}
+                    className="w-full h-full object-cover grayscale opacity-60 group-hover:grayscale-0 group-hover:opacity-100 transition-all duration-700 group-hover:scale-105"
+                  />
+                  <div className="absolute top-2 left-2 px-2 py-1 bg-gray-950/80 border border-white/10 text-[7px] md:text-[8px] font-mono font-bold text-gray-400 tracking-widest uppercase">
+                    ID: {project.id}
                   </div>
                 </div>
-                
-                <p className="text-gray-400 leading-relaxed mb-8 font-light line-clamp-3">
-                  {project.desc}
-                </p>
 
-                <div className="flex flex-wrap gap-3">
-                  {project.tags.map((tag) => (
-                    <span 
-                      key={tag} 
-                      className="px-3 py-1 bg-cyan-500/10 text-cyan-400 text-[11px] font-semibold rounded-md border border-cyan-500/20 uppercase tracking-wider"
-                    >
-                      {tag}
-                    </span>
-                  ))}
+                {/* Project Content */}
+                <div className="flex-1 space-y-4 md:space-y-6">
+                  <div className="flex justify-between items-start gap-4">
+                    <div className="space-y-1">
+                      <div className="flex items-center gap-2">
+                        <span className="w-1.5 h-1.5 rounded-full bg-cyan-500 animate-pulse"></span>
+                        <span className="text-[8px] md:text-[9px] font-mono text-cyan-500/80 tracking-widest uppercase">{t.status}</span>
+                      </div>
+                      <h3 className="text-lg md:text-2xl font-bold text-white font-orbitron group-hover:text-cyan-400 transition-colors">
+                        {project.title}
+                      </h3>
+                    </div>
+                    <div className="flex gap-3 md:gap-4 shrink-0">
+                      <a 
+                        href={project.github} 
+                        target="_blank" 
+                        rel="noopener noreferrer"
+                        className="text-gray-500 hover:text-white transition-colors"
+                      >
+                        <FaGithub size={18}/>
+                      </a>
+                      <a 
+                        href={project.live} 
+                        target="_blank" 
+                        rel="noopener noreferrer"
+                        className="text-gray-500 hover:text-cyan-400 transition-colors"
+                      >
+                        <FaExternalLinkAlt size={16}/>
+                      </a>
+                    </div>
+                  </div>
+                  
+                  <p className="text-gray-400 text-xs md:text-sm leading-relaxed font-light line-clamp-2">
+                    {project.desc}
+                  </p>
+
+                  <div className="flex flex-wrap gap-2">
+                    {project.tags.map((tag) => (
+                      <span 
+                        key={tag} 
+                        className="px-2 py-0.5 bg-transparent border border-white/10 text-gray-500 text-[8px] md:text-[9px] font-bold uppercase tracking-widest"
+                      >
+                        {tag}
+                      </span>
+                    ))}
+                  </div>
                 </div>
               </div>
-              
-              {/* Subtle hover line */}
-              <div className="absolute bottom-0 left-0 h-1 w-0 bg-gradient-to-r from-cyan-500 to-blue-600 transition-all duration-500 group-hover:w-full"></div>
             </article>
           ))}
         </div>
 
         {/* Action Button */}
-        {projects.length > 3 && (
-          <div className="mt-20 text-center" data-aos="fade-up">
+        {projects.length > 4 && (
+          <div className="mt-16 md:mt-20 text-center" data-aos="fade-up">
             <button
               onClick={() => setShowAll(!showAll)}
-              className="group relative px-10 py-4 bg-transparent border-2 border-cyan-500/30 text-cyan-400 font-bold tracking-[0.2em] text-sm hover:border-cyan-500 transition-all rounded-full active:scale-95"
+              className="px-8 md:px-10 py-3 md:py-4 bg-transparent border border-white/10 text-gray-400 text-[9px] md:text-[10px] font-bold tracking-[0.4em] hover:border-cyan-500 hover:text-cyan-400 transition-all uppercase"
             >
-              <span className="relative z-10">{showAll ? "SHOW LESS" : "EXPLORE ALL PROJECTS"}</span>
-              <div className="absolute inset-0 bg-cyan-500/10 -translate-x-full group-hover:translate-x-0 transition-transform duration-300"></div>
+              {showAll ? t.showLess : t.viewAll}
             </button>
           </div>
         )}

@@ -1,14 +1,16 @@
 import { useState, useEffect } from "react";
+import { useLanguage } from "../context/LanguageContext";
 
 const LoadingScreen = ({ onComplete }) => {
     const [text, setText] = useState("");
     const [isFadingOut, setIsFadingOut] = useState(false);
     const [progress, setProgress] = useState(0);
-    const fullText = "Welcome to My Portfolio...";
+    const { language } = useLanguage();
+    const fullText = language === 'en' ? "Welcome to My Portfolio..." : "Selamat Datang di Portfolio Saya...";
 
     useEffect(() => {
         // Trigger progress bar animation
-        const timer = setTimeout(() => setProgress(100), 100);
+        const timer = setTimeout(() => setProgress(100), 50);
 
         // Typing effect logic
         let index = 0;
@@ -21,16 +23,16 @@ const LoadingScreen = ({ onComplete }) => {
                     setIsFadingOut(true);
                     setTimeout(() => {
                         onComplete();
-                    }, 1000); // Wait for fade out animation
-                }, 1000); // Wait a bit after typing finishes before fading
+                    }, 800); // Slightly faster fade
+                }, 600); // Wait less after typing
             }
-        }, 100);
+        }, 70); // Faster typing speed (was 100)
 
         return () => {
             clearInterval(interval);
             clearTimeout(timer);
         };
-    }, [onComplete]);
+    }, [onComplete, fullText]);
 
     return (
         <div

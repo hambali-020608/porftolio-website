@@ -1,25 +1,25 @@
 import { FaExternalLinkAlt } from "react-icons/fa";
 import SectionHeading from "../shared/SectionHeading";
 import { socialLinks } from "../../constants";
+import { useLanguage } from "../../context/LanguageContext";
+import { translations } from "../../constants/translations";
 
 export default function Contact() {
-  return (
-    <section id="contact" aria-label="Contact Information" className="py-24 bg-gray-950 relative overflow-hidden">
-      {/* Background Ambience */}
-      <div className="absolute inset-0 pointer-events-none">
-        <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-blue-900/5 rounded-full blur-[120px] animate-pulse"></div>
-        <div className="absolute bottom-0 left-0 w-[500px] h-[500px] bg-cyan-900/5 rounded-full blur-[120px] animate-pulse delay-1000"></div>
-      </div>
+  const { language } = useLanguage();
+  const t = translations[language].contact;
 
+  return (
+    <section id="contact" aria-label="Contact Information" className="py-24 relative overflow-hidden">
       <div className="container mx-auto px-6 md:px-12 relative z-10">
         <SectionHeading 
-          badge="Inquiry"
-          title="Let's Connect"
-          subtitle="Whether you have a question, a project idea, or just want to say hi, I'm always open to new opportunities."
+          index="04"
+          badge={t.badge}
+          title={t.title}
+          subtitle={t.subtitle}
         />
 
         <div className="max-w-5xl mx-auto">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-px bg-white/5 border border-white/5">
             {socialLinks.map((info, idx) => (
               <a
                 key={info.name}
@@ -28,23 +28,22 @@ export default function Contact() {
                 rel="noopener noreferrer"
                 data-aos="fade-up"
                 data-aos-delay={idx * 100}
-                className="group relative p-10 rounded-[2.5rem] bg-gray-900/30 border border-gray-800 hover:border-cyan-500/30 transition-all duration-500 flex flex-col items-center text-center overflow-hidden hover:-translate-y-2 shadow-xl"
+                className="group relative p-8 md:p-12 bg-gray-950 hover:bg-white/[0.01] transition-all duration-500 flex flex-col items-center text-center overflow-hidden"
               >
-                {/* Subtle Hover Glow */}
-                <div className="absolute inset-0 bg-gradient-to-br from-cyan-500/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-
-                <div className="w-20 h-20 rounded-2xl bg-gray-800/50 flex items-center justify-center mb-8 text-cyan-400 group-hover:scale-110 group-hover:bg-cyan-500 group-hover:text-white transition-all duration-500 relative z-10 shadow-lg group-hover:shadow-cyan-500/20">
-                  <info.icon size={32} />
+                <div className="w-12 h-12 md:w-16 md:h-16 rounded border border-white/10 flex items-center justify-center mb-6 md:mb-10 text-gray-500 group-hover:text-cyan-400 group-hover:border-cyan-500/40 group-hover:scale-110 transition-all duration-500 shadow-xl">
+                  <info.icon size={24} />
                 </div>
 
-                <div className="relative z-10">
-                  <h3 className="text-xs text-gray-500 uppercase tracking-[0.3em] mb-2 font-bold">{info.name}</h3>
-                  <p className="text-white font-medium mb-6 text-sm opacity-80 group-hover:opacity-100 transition-opacity">
+                <div className="space-y-3 md:space-y-4">
+                  <h3 className="font-mono text-[8px] md:text-[9px] text-gray-600 uppercase tracking-[0.4em] mb-2">{info.name}</h3>
+                  <p className="text-white text-xs md:text-sm font-medium opacity-80 group-hover:opacity-100 transition-opacity">
                     {info.name === "Email" ? "subastianhambali@gmail.com" : info.name === "Github" ? "@hambali-020608" : "@tyan.dev"}
                   </p>
 
-                  <div className="inline-flex items-center gap-2 text-xs text-cyan-400 font-bold uppercase tracking-widest group-hover:gap-4 transition-all">
-                    Reach Out <FaExternalLinkAlt className="text-[10px]" />
+                  <div className="pt-4 md:pt-6">
+                    <div className="inline-flex items-center gap-2 text-[9px] md:text-[10px] text-cyan-500/60 font-bold uppercase tracking-[0.2em] group-hover:text-cyan-400 transition-all">
+                      {t.reachOut} <FaExternalLinkAlt className="text-[8px]" />
+                    </div>
                   </div>
                 </div>
               </a>
@@ -54,19 +53,21 @@ export default function Contact() {
           <div
             data-aos="fade-up"
             data-aos-delay="300"
-            className="mt-20 text-center bg-gray-900/20 border border-gray-800/50 p-12 rounded-[3rem] backdrop-blur-sm"
+            className="mt-16 md:mt-24 text-center p-8 md:p-12 border border-white/5 bg-gray-900/10 backdrop-blur-sm relative"
           >
-            <h3 className="text-2xl font-bold text-white mb-6 font-orbitron">Interested in collaborating?</h3>
-            <p className="text-gray-400 text-lg max-w-2xl mx-auto leading-relaxed font-light">
-              I'm currently looking for new opportunities and my inbox is always open. 
-              Let's build something amazing together!
+            <div className="viewport-bracket viewport-bracket-tl -translate-x-1 -translate-y-1"></div>
+            <div className="viewport-bracket viewport-bracket-br translate-x-1 translate-y-1"></div>
+
+            <h3 className="text-xl md:text-2xl font-bold text-white mb-4 md:mb-6 font-orbitron tracking-widest uppercase">{t.workTogether}</h3>
+            <p className="text-gray-400 text-xs md:text-sm max-w-xl mx-auto leading-relaxed font-light tracking-wide uppercase">
+              {t.collabDesc}
             </p>
-            <div className="mt-10">
+            <div className="mt-8 md:mt-10">
               <a 
                 href="mailto:subastianhambali@gmail.com"
-                className="inline-block px-10 py-4 bg-cyan-600 hover:bg-cyan-500 text-white font-bold rounded-full transition-all hover:scale-105 active:scale-95 shadow-xl shadow-cyan-500/20 uppercase tracking-widest text-sm"
+                className="inline-block px-8 md:px-12 py-3 md:py-4 border border-cyan-500/40 text-cyan-400 text-[9px] md:text-[10px] font-bold uppercase tracking-[0.4em] hover:bg-cyan-500 hover:text-white transition-all"
               >
-                Send an Email
+                {t.sendEmail}
               </a>
             </div>
           </div>
