@@ -19,7 +19,7 @@ export default function About() {
     <section id="about" aria-label="About Me" className="py-24 relative overflow-hidden">
       <div className="container mx-auto px-6 md:px-12 relative z-10">
         <SectionHeading 
-          index="03"
+          index="04"
           badge={t.badge}
           title={t.title}
           subtitle={t.subtitle}
@@ -84,7 +84,7 @@ export default function About() {
                 <div className="flex items-center gap-3 md:gap-4 text-gray-500 hover:text-cyan-400 transition-colors group cursor-pointer">
                   <span className="font-mono text-[8px] md:text-[10px] text-gray-700 group-hover:text-cyan-600 transition-colors">01_EMAIL</span>
                   <div className="h-[1px] flex-1 bg-gray-800/50"></div>
-                  <span className="text-[8px] md:text-[10px] font-bold tracking-widest uppercase">subastianhambali@gmail.com</span>
+                  <span className="text-[8px] md:text-[10px] font-bold tracking-widest uppercase">bastian.soltech@gmail.com</span>
                 </div>
                 <div className="flex items-center gap-3 md:gap-4 text-gray-500 group">
                   <span className="font-mono text-[8px] md:text-[10px] text-gray-700">02_LOCATION</span>

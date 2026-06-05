@@ -19,15 +19,40 @@ export const navLinks = [
   { name: "Home", href: "#home" },
   { name: "Skills", href: "#skills" },
   { name: "Projects", href: "#projects" },
+  { name: "Certificates", href: "#certificates" },
   { name: "About", href: "#about" },
   { name: "Contact", href: "#contact" },
+];
+
+export const certificates = [
+  {
+    title: "AI Engineering Fundamentals",
+    issuer: "DeepLearning.AI",
+    date: "2024",
+    id: "CERT-AI-882",
+    image: "/certificates/ai-cert.png", // Path to your images
+  },
+  {
+    title: "Fullstack Web Architecture",
+    issuer: "Meta",
+    date: "2023",
+    id: "CERT-FS-109",
+    image: "/certificates/meta-cert.png",
+  },
+  {
+    title: "Advanced Data Analysis",
+    issuer: "Google",
+    date: "2023",
+    id: "CERT-DA-441",
+    image: "/certificates/google-cert.png",
+  },
 ];
 
 export const socialLinks = [
   {
     name: "Github",
     icon: FaGithub,
-    href: "https://github.com/hambali-020608",
+    href: "https://github.com/bastian-soltech",
     color: "hover:text-gray-100",
   },
   {
@@ -39,7 +64,7 @@ export const socialLinks = [
   {
     name: "Email",
     icon: FaEnvelope,
-    href: "mailto:subastianhambali@gmail.com",
+    href: "mailto:bastian.soltech@gmail.com",
     color: "hover:text-cyan-400",
   },
 ];

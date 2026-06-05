@@ -83,7 +83,7 @@ export default function Footer() {
               I am open to new projects and full-time opportunities.
             </p>
             <a 
-              href="mailto:subastianhambali@gmail.com"
+              href="mailto:bastian.soltech@gmail.com"
               className="inline-block px-6 md:px-8 py-2 md:py-3 border border-cyan-500/30 text-cyan-400 text-[8px] md:text-[9px] font-bold uppercase tracking-[0.3em] hover:bg-cyan-500 hover:text-white transition-all duration-300"
             >
               Contact Me

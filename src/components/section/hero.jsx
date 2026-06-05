@@ -26,11 +26,7 @@ export default function Hero() {
           data-aos-duration="1000"
         >
           <div className="space-y-4 md:space-y-6">
-             <div className="flex items-center justify-center md:justify-start">
-               <span className="px-2 md:px-3 py-1 text-[9px] md:text-[10px] font-bold tracking-[0.2em] text-cyan-400 uppercase border border-cyan-500/20 bg-cyan-500/5 backdrop-blur-sm">
-                {t.status}
-              </span>
-            </div>
+            
             <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-8xl font-black text-white leading-[1.0] font-orbitron tracking-tighter">
               {t.hi} <br />
               <span className="text-cyan-400/90">Hambali</span>

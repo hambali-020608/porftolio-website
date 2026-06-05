@@ -12,7 +12,7 @@ export default function Contact() {
     <section id="contact" aria-label="Contact Information" className="py-24 relative overflow-hidden">
       <div className="container mx-auto px-6 md:px-12 relative z-10">
         <SectionHeading 
-          index="04"
+          index="05"
           badge={t.badge}
           title={t.title}
           subtitle={t.subtitle}
@@ -37,7 +37,7 @@ export default function Contact() {
                 <div className="space-y-3 md:space-y-4">
                   <h3 className="font-mono text-[8px] md:text-[9px] text-gray-600 uppercase tracking-[0.4em] mb-2">{info.name}</h3>
                   <p className="text-white text-xs md:text-sm font-medium opacity-80 group-hover:opacity-100 transition-opacity">
-                    {info.name === "Email" ? "subastianhambali@gmail.com" : info.name === "Github" ? "@hambali-020608" : "@tyan.dev"}
+                    {info.name === "Email" ? "bastian.soltech@gmail.com" : info.name === "Github" ? "@bastian-soltech" : "@tyan.dev"}
                   </p>
 
                   <div className="pt-4 md:pt-6">

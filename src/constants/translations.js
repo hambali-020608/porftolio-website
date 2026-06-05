@@ -44,6 +44,14 @@ export const translations = {
       showLess: "Show Less",
       status: "Live",
     },
+    certificates: {
+      badge: "Credentials",
+      title: "Verification Log",
+      subtitle: "Authenticated records of technical proficiency and professional certifications.",
+      view: "View Certificate",
+      issuer: "Issuer",
+      date: "Date",
+    },
     about: {
       badge: "Profile",
       title: "About Me",
@@ -120,6 +128,14 @@ export const translations = {
       viewAll: "Lihat Semua Proyek",
       showLess: "Tampilkan Sedikit",
       status: "Aktif",
+    },
+    certificates: {
+      badge: "Sertifikasi",
+      title: "Log Verifikasi",
+      subtitle: "Catatan otentik dari kemahiran teknis dan sertifikasi profesional.",
+      view: "Lihat Sertifikat",
+      issuer: "Penerbit",
+      date: "Tanggal",
     },
     about: {
       badge: "Profil",
