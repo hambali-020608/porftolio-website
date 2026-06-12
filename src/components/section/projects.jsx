@@ -67,41 +67,41 @@ export default function Projects() {
       <div className="absolute bottom-1/4 -right-64 w-96 h-96 bg-blue-500/5 rounded-full blur-[120px] pointer-events-none"></div>
 
       <div className="container mx-auto px-6 relative z-10">
-        <div className="flex flex-col md:flex-row justify-center mb-12 gap-8">
-          <SectionHeading 
-            index="02"
-            badge={t.badge}
-            title={t.title}
-            subtitle={t.subtitle}
-          />
+        <SectionHeading 
+          index="02"
+          badge={t.badge}
+          title={t.title}
+          subtitle={t.subtitle}
+        />
+
+        <div className="flex justify-center items-center gap-4 mb-12">
+          <motion.button
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+            onClick={prevSlide}
+            className="group relative p-4 bg-gray-950 border border-white/10 text-gray-500 hover:text-cyan-400 hover:border-cyan-500/30 transition-colors"
+            aria-label="Previous Project"
+          >
+            <div className="absolute top-0 left-0 w-2 h-2 border-t border-l border-white/20 group-hover:border-cyan-500/50"></div>
+            <FaChevronLeft size={14} />
+          </motion.button>
           
-         
-        </div>
- <div className="flex justify-center items-center gap-4 mb-4">
-            <motion.button
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              onClick={prevSlide}
-              className="group relative p-4 bg-gray-950 border border-white/10 text-gray-500 hover:text-cyan-400 hover:border-cyan-500/30 transition-colors"
-              aria-label="Previous Project"
-            >
-              <div className="absolute top-0 left-0 w-2 h-2 border-t border-l border-white/20 group-hover:border-cyan-500/50"></div>
-              <FaChevronLeft size={14} />
-            </motion.button>
-            <div className="text-[10px] font-mono text-gray-600 tracking-[0.3em] uppercase hidden sm:block">
-              Navigation_System
-            </div>
-            <motion.button
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              onClick={nextSlide}
-              className="group relative p-4 bg-gray-950 border border-white/10 text-gray-500 hover:text-cyan-400 hover:border-cyan-500/30 transition-colors"
-              aria-label="Next Project"
-            >
-              <div className="absolute top-0 right-0 w-2 h-2 border-t border-r border-white/20 group-hover:border-cyan-500/50"></div>
-              <FaChevronRight size={14} />
-            </motion.button>
+          <div className="text-[10px] font-mono text-gray-600 tracking-[0.3em] uppercase hidden sm:block">
+            Navigation_System
           </div>
+          
+          <motion.button
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+            onClick={nextSlide}
+            className="group relative p-4 bg-gray-950 border border-white/10 text-gray-500 hover:text-cyan-400 hover:border-cyan-500/30 transition-colors"
+            aria-label="Next Project"
+          >
+            <div className="absolute top-0 right-0 w-2 h-2 border-t border-r border-white/20 group-hover:border-cyan-500/50"></div>
+            <FaChevronRight size={14} />
+          </motion.button>
+        </div>
+
         <div className="relative overflow-hidden -mx-4 px-4">
           <motion.div
             className="flex"
