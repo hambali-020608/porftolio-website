@@ -49,6 +49,8 @@ export const translations = {
       title: "Verification Log",
       subtitle: "Authenticated records of technical proficiency and professional certifications.",
       view: "View Certificate",
+      download: "Download PDF",
+      back: "Back to Info",
       issuer: "Issuer",
       date: "Date",
     },

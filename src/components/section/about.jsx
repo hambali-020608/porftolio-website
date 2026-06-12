@@ -1,3 +1,5 @@
+"use client";
+
 import { FaRocket, FaEnvelope, FaMapMarkerAlt, FaFileDownload } from "react-icons/fa";
 import SectionHeading from "../shared/SectionHeading";
 import { stats } from "../../constants";

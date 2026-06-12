@@ -1,3 +1,5 @@
+"use client";
+
 import { useState } from "react";
 import SectionHeading from "../shared/SectionHeading";
 import { expertiseCards, skillCategories, skillsData } from "../../constants";

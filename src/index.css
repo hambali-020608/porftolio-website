@@ -1,8 +1,6 @@
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&family=Outfit:wght@100..900&display=swap');
 @import "tailwindcss";
 @plugin "daisyui";
-
-/* Import Google Fonts: Outfit (Modern/Clean) & Orbitron (Technical Identifiers) */
-@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&family=Outfit:wght@100..900&display=swap');
 
 :root {
     --font-body: 'Outfit', sans-serif;
@@ -84,15 +82,23 @@ body {
   100% { transform: translateY(100vh); opacity: 0; }
 }
 
-.scanline-effect {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 2px;
-  background: linear-gradient(to right, transparent, var(--color-accent), transparent);
-  opacity: 0.1;
-  pointer-events: none;
-  animation: scanline 8s linear infinite;
-  z-index: 99;
+/* Technical Flip Animation Utilities */
+.perspective-1000 {
+  perspective: 1000px;
+}
+
+.preserve-3d {
+  transform-style: preserve-3d;
+}
+
+.backface-hidden {
+  backface-visibility: hidden;
+}
+
+.rotate-x-180 {
+  transform: rotateX(180deg);
+}
+
+.group:hover .group-hover\:rotate-x-180 {
+  transform: rotateX(180deg);
 }

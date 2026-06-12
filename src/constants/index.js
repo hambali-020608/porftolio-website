@@ -30,21 +30,21 @@ export const certificates = [
     issuer: "DeepLearning.AI",
     date: "2024",
     id: "CERT-AI-882",
-    image: "/certificates/ai-cert.png", // Path to your images
+    pdf: "/certificates/ai-cert.pdf", 
   },
   {
     title: "Fullstack Web Architecture",
     issuer: "Meta",
     date: "2023",
     id: "CERT-FS-109",
-    image: "/certificates/meta-cert.png",
+    pdf: "/certificates/meta-cert.pdf",
   },
   {
     title: "Advanced Data Analysis",
     issuer: "Google",
     date: "2023",
     id: "CERT-DA-441",
-    image: "/certificates/google-cert.png",
+    pdf: "/certificates/google-cert.pdf",
   },
 ];
 

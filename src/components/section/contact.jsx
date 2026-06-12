@@ -1,3 +1,5 @@
+"use client";
+
 import { FaExternalLinkAlt } from "react-icons/fa";
 import SectionHeading from "../shared/SectionHeading";
 import { socialLinks } from "../../constants";

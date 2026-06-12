@@ -1,3 +1,5 @@
+"use client";
+
 import { FaChevronUp } from "react-icons/fa";
 import { navLinks, socialLinks } from "../../constants";
 

@@ -1,3 +1,5 @@
+"use client";
+
 import { useState, useEffect } from "react";
 import { FaBars, FaTimes, FaGlobe } from "react-icons/fa";
 import { navLinks } from "../../constants";

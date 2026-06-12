@@ -4,11 +4,10 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "build:css": "postcss ./src/index.css -o public/output.css",
-    "dev": "vite",
-    "build": "vite build",
-    "lint": "eslint .",
-    "preview": "vite preview"
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
   },
   "dependencies": {
     "@react-icons/all-files": "^4.1.0",
@@ -18,9 +17,10 @@
     "@types/three": "^0.182.0",
     "aos": "^2.3.4",
     "motion": "^12.23.26",
+    "next": "^16.2.9",
     "postcss-cli": "^11.0.0",
-    "react": "^18.3.1",
-    "react-dom": "^18.3.1",
+    "react": "^19.2.7",
+    "react-dom": "^19.2.7",
     "react-icons": "^5.4.0",
     "react-typed": "^2.0.12",
     "three": "^0.166.1"
@@ -29,7 +29,6 @@
     "@eslint/js": "^9.17.0",
     "@types/react": "^18.3.18",
     "@types/react-dom": "^18.3.5",
-    "@vitejs/plugin-react-swc": "^3.5.0",
     "autoprefixer": "^10.4.20",
     "daisyui": "^5.0.0-beta.6",
     "eslint": "^9.17.0",
@@ -38,7 +37,6 @@
     "eslint-plugin-react-refresh": "^0.4.16",
     "globals": "^15.14.0",
     "postcss": "^8.5.1",
-    "tailwindcss": "^4.0.3",
-    "vite": "^6.0.5"
+    "tailwindcss": "^4.0.3"
   }
 }

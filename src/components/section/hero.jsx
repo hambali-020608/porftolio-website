@@ -1,5 +1,6 @@
+"use client";
 import { ReactTyped } from "react-typed";
-import Hero3D from "../canvas/Hero3D";
+// import Hero3D from "../canvas/Hero3D";
 import { socialLinks } from "../../constants";
 import { useLanguage } from "../../context/LanguageContext";
 import { translations } from "../../constants/translations";
@@ -17,24 +18,24 @@ export default function Hero() {
       {/* Refined Background Elements */}
       <div className="absolute top-0 left-0 w-full h-full blueprint-grid-fine opacity-20 pointer-events-none"></div>
       
-      <div className="container mx-auto flex flex-col-reverse md:flex-row items-center justify-between z-10 w-full max-w-7xl pt-20">
+      <div className="container mx-auto flex flex-col items-center justify-center z-10 w-full max-w-5xl pt-20 text-center">
 
-        {/* Left Content: Text */}
+        {/* Content: Text */}
         <div
-          className="w-full md:w-1/2 text-center md:text-left mt-12 md:mt-0 space-y-8 md:space-y-10"
-          data-aos="fade-right"
+          className="w-full space-y-8 md:space-y-10"
+          data-aos="fade-up"
           data-aos-duration="1000"
         >
           <div className="space-y-4 md:space-y-6">
             
             <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-8xl font-black text-white leading-[1.0] font-orbitron tracking-tighter">
               {t.hi} <br />
-              <span className="text-cyan-400/90">Hambali</span>
+              <span className="text-cyan-400/90">Hambali Subastian</span>
             </h1>
           </div>
 
           <div className="h-16 md:h-12">
-            <p className="text-base md:text-xl font-medium text-gray-300 font-outfit tracking-wide">
+            <p className="text-base md:text-3xl font-medium text-gray-300 font-outfit tracking-wide">
               {t.iam}{" "}
               <ReactTyped
                 key={language}
@@ -47,12 +48,12 @@ export default function Hero() {
             </p>
           </div>
 
-          <p className="text-xs md:text-sm text-gray-400 max-w-md mx-auto md:mx-0 leading-relaxed font-light tracking-widest uppercase">
+          <p className="text-xs md:text-sm text-gray-400 max-w-md mx-auto leading-relaxed font-light tracking-widest uppercase">
             {t.desc}
           </p>
 
           {/* Action & Coordinates */}
-          <div className="flex flex-col sm:flex-row items-center gap-6 md:gap-10 mt-8 md:mt-12">
+          <div className="flex flex-col items-center gap-8 mt-8 md:mt-12">
             <a
               href="#projects"
               className="w-full sm:w-auto text-center group relative px-10 py-4 bg-transparent border border-cyan-500/40 text-cyan-400 font-bold text-[10px] tracking-[0.3em] uppercase transition-all duration-300 hover:bg-cyan-500 hover:text-white hover:border-cyan-500 overflow-hidden"
@@ -61,7 +62,7 @@ export default function Hero() {
               <div className="absolute inset-0 bg-cyan-500 -translate-x-full group-hover:translate-x-0 transition-transform duration-300"></div>
             </a>
 
-            <div className="flex items-center gap-6 border-l-0 sm:border-l border-gray-800 pl-0 sm:pl-8">
+            <div className="flex items-center gap-6">
               {socialLinks.map((link) => (
                 <a 
                   key={link.name}
@@ -74,27 +75,6 @@ export default function Hero() {
                 </a>
               ))}
             </div>
-          </div>
-        </div>
-
-        {/* Right Content: 3D Model Viewport */}
-        <div
-          className="w-full md:w-5/12 flex justify-center md:justify-end relative"
-          data-aos="fade-left"
-          data-aos-duration="1200"
-        >
-          <div className="relative w-full aspect-square max-w-[320px] md:max-w-[500px] border border-white/5 bg-gray-900/10 backdrop-blur-sm">
-            <div className="viewport-bracket viewport-bracket-tl -translate-x-2 -translate-y-2"></div>
-            <div className="viewport-bracket viewport-bracket-tr translate-x-2 -translate-y-2"></div>
-            <div className="viewport-bracket viewport-bracket-bl -translate-x-2 translate-y-2"></div>
-            <div className="viewport-bracket viewport-bracket-br translate-x-2 translate-y-2"></div>
-            
-            <div className="absolute top-3 left-3 font-mono text-[8px] text-gray-600 tracking-widest uppercase">
-              Module: Hero_3D<br/>
-              State: Active
-            </div>
-
-            <Hero3D />
           </div>
         </div>
       </div>
