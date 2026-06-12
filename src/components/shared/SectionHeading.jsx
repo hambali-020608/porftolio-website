@@ -6,24 +6,8 @@ const SectionHeading = ({ title, subtitle, badge, index }) => {
   return (  
     <div className="text-center mb-16 md:mb-24 relative">
       <div className="flex flex-col items-center justify-center gap-4">
-        {index && (
-          <span 
-            data-aos="fade-down"
-            className="font-mono text-[10px] tracking-[0.4em] text-cyan-500/60 uppercase"
-          >
-            [{index}]
-          </span>
-        )}
         
-        {badge && (
-          <span 
-            data-aos="fade-down"
-            data-aos-delay="100"
-            className="inline-block px-3 py-1 text-[10px] font-bold tracking-[0.2em] text-cyan-400 uppercase border border-cyan-500/20 bg-cyan-500/5 backdrop-blur-sm"
-          >
-            {badge}
-          </span>
-        )}
+       
       </div>
 
       <h2 

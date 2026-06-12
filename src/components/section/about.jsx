@@ -49,7 +49,7 @@ export default function About() {
 
               {/* Metadata */}
               <div className="absolute -bottom-4 -left-4 md:-bottom-6 md:-left-6 bg-gray-950 border border-white/10 p-3 md:p-4 font-mono text-[7px] md:text-[8px] tracking-[0.2em] text-gray-500 uppercase space-y-1">
-                <p>NAME: HAMBALI</p>
+                <p>NAME: HAMBALI SUBASTIAN</p>
                 <p>ROLE: DEVELOPER</p>
                 <p>CITY: INDONESIA</p>
               </div>

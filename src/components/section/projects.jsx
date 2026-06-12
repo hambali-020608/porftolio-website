@@ -1,112 +1,209 @@
 "use client";
 
-import { useState } from "react";
-import { FaGithub, FaExternalLinkAlt } from "react-icons/fa";
+import { useState, useEffect } from "react";
+import { FaGithub, FaExternalLinkAlt, FaChevronLeft, FaChevronRight } from "react-icons/fa";
+import { motion, AnimatePresence } from "motion/react";
 import SectionHeading from "../shared/SectionHeading";
 import { projects } from "../../constants";
 import { useLanguage } from "../../context/LanguageContext";
 import { translations } from "../../constants/translations";
+import { ExpandableCard } from "../card";
 
 export default function Projects() {
   const { language } = useLanguage();
   const t = translations[language].projects;
-  const [showAll, setShowAll] = useState(false);
-  const visibleProjects = showAll ? projects : projects.slice(0, 4);
+  
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const [cardsPerView, setCardsPerView] = useState(2);
+  const [isTransitioning, setIsTransitioning] = useState(false);
+
+  // Extend projects for smooth infinite loop
+  const extendedProjects = [...projects, ...projects.slice(0, cardsPerView)];
+
+  useEffect(() => {
+    const handleResize = () => {
+      if (window.innerWidth < 768) {
+        setCardsPerView(1);
+      } else {
+        setCardsPerView(2);
+      }
+    };
+    
+    handleResize();
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
+  const nextSlide = () => {
+    if (isTransitioning) return;
+    setIsTransitioning(true);
+    setCurrentIndex((prev) => prev + 1);
+  };
+
+  const prevSlide = () => {
+    if (isTransitioning) return;
+    setIsTransitioning(true);
+    if (currentIndex === 0) {
+      // If at start, jump to the end of first set first, then move back
+      // But for simplicity, let's just go back with wrap
+      setCurrentIndex(projects.length - 1);
+    } else {
+      setCurrentIndex((prev) => prev - 1);
+    }
+  };
+
+  const handleAnimationComplete = () => {
+    setIsTransitioning(false);
+    if (currentIndex >= projects.length) {
+      // Silent jump back to start
+      setCurrentIndex(0);
+    }
+  };
 
   return (
     <section id="projects" aria-label="Selected Projects" className="py-24 relative overflow-hidden">
+      {/* Background Decorative Elements */}
+      <div className="absolute top-1/4 -left-64 w-96 h-96 bg-cyan-500/5 rounded-full blur-[120px] pointer-events-none"></div>
+      <div className="absolute bottom-1/4 -right-64 w-96 h-96 bg-blue-500/5 rounded-full blur-[120px] pointer-events-none"></div>
+
       <div className="container mx-auto px-6 relative z-10">
-        <SectionHeading 
-          index="02"
-          badge={t.badge}
-          title={t.title}
-          subtitle={t.subtitle}
-        />
-
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-px border border-white/5 bg-white/5 max-w-7xl mx-auto overflow-hidden">
-          {visibleProjects.map((project, index) => (
-            <article
-              key={project.id}
-              data-aos="fade-up"
-              data-aos-delay={index * 100}
-              className="group relative bg-gray-950 p-6 sm:p-8 md:p-12 transition-all duration-500 hover:bg-white/[0.01]"
+        <div className="flex flex-col md:flex-row justify-center mb-12 gap-8">
+          <SectionHeading 
+            index="02"
+            badge={t.badge}
+            title={t.title}
+            subtitle={t.subtitle}
+          />
+          
+         
+        </div>
+ <div className="flex justify-center items-center gap-4 mb-4">
+            <motion.button
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              onClick={prevSlide}
+              className="group relative p-4 bg-gray-950 border border-white/10 text-gray-500 hover:text-cyan-400 hover:border-cyan-500/30 transition-colors"
+              aria-label="Previous Project"
             >
-              <div className="flex flex-col sm:flex-row lg:flex-col xl:flex-row gap-8 md:gap-10">
-                {/* Project Image Container */}
-                <div className="relative w-full sm:w-2/5 lg:w-full xl:w-2/5 aspect-[16/9] sm:aspect-[4/3] overflow-hidden border border-white/10 group-hover:border-cyan-500/30 transition-colors duration-500">
-                  <img 
-                    src={project.image} 
-                    alt={project.title}
-                    className="w-full h-full object-cover grayscale opacity-60 group-hover:grayscale-0 group-hover:opacity-100 transition-all duration-700 group-hover:scale-105"
-                  />
-                  <div className="absolute top-2 left-2 px-2 py-1 bg-gray-950/80 border border-white/10 text-[7px] md:text-[8px] font-mono font-bold text-gray-400 tracking-widest uppercase">
-                    ID: {project.id}
-                  </div>
-                </div>
-
-                {/* Project Content */}
-                <div className="flex-1 space-y-4 md:space-y-6">
-                  <div className="flex justify-between items-start gap-4">
-                    <div className="space-y-1">
-                      <div className="flex items-center gap-2">
-                        <span className="w-1.5 h-1.5 rounded-full bg-cyan-500 animate-pulse"></span>
-                        <span className="text-[8px] md:text-[9px] font-mono text-cyan-500/80 tracking-widest uppercase">{t.status}</span>
-                      </div>
-                      <h3 className="text-lg md:text-2xl font-bold text-white font-orbitron group-hover:text-cyan-400 transition-colors">
-                        {project.title}
-                      </h3>
-                    </div>
-                    <div className="flex gap-3 md:gap-4 shrink-0">
-                      <a 
-                        href={project.github} 
-                        target="_blank" 
-                        rel="noopener noreferrer"
-                        className="text-gray-500 hover:text-white transition-colors"
-                      >
-                        <FaGithub size={18}/>
-                      </a>
-                      <a 
-                        href={project.live} 
-                        target="_blank" 
-                        rel="noopener noreferrer"
-                        className="text-gray-500 hover:text-cyan-400 transition-colors"
-                      >
-                        <FaExternalLinkAlt size={16}/>
-                      </a>
-                    </div>
-                  </div>
-                  
-                  <p className="text-gray-400 text-xs md:text-sm leading-relaxed font-light line-clamp-2">
-                    {project.desc}
-                  </p>
-
-                  <div className="flex flex-wrap gap-2">
-                    {project.tags.map((tag) => (
-                      <span 
-                        key={tag} 
-                        className="px-2 py-0.5 bg-transparent border border-white/10 text-gray-500 text-[8px] md:text-[9px] font-bold uppercase tracking-widest"
-                      >
-                        {tag}
+              <div className="absolute top-0 left-0 w-2 h-2 border-t border-l border-white/20 group-hover:border-cyan-500/50"></div>
+              <FaChevronLeft size={14} />
+            </motion.button>
+            <div className="text-[10px] font-mono text-gray-600 tracking-[0.3em] uppercase hidden sm:block">
+              Navigation_System
+            </div>
+            <motion.button
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              onClick={nextSlide}
+              className="group relative p-4 bg-gray-950 border border-white/10 text-gray-500 hover:text-cyan-400 hover:border-cyan-500/30 transition-colors"
+              aria-label="Next Project"
+            >
+              <div className="absolute top-0 right-0 w-2 h-2 border-t border-r border-white/20 group-hover:border-cyan-500/50"></div>
+              <FaChevronRight size={14} />
+            </motion.button>
+          </div>
+        <div className="relative overflow-hidden -mx-4 px-4">
+          <motion.div
+            className="flex"
+            animate={{ 
+              x: `-${currentIndex * (100 / cardsPerView)}%` 
+            }}
+            transition={isTransitioning ? { 
+              type: "spring", 
+              stiffness: 180, 
+              damping: 24,
+              mass: 0.8
+            } : { duration: 0 }}
+            onAnimationComplete={handleAnimationComplete}
+          >
+            {extendedProjects.map((project, idx) => (
+              <div
+                key={`${project.id}-${idx}`}
+                style={{
+                  width: `${100 / cardsPerView}%`,
+                  flexShrink: 0
+                }}
+                className="px-4"
+              >
+                <ExpandableCard
+                  id={project.id}
+                  title={project.title}
+                  description={project.tags.slice(0, 2).join(" | ")}
+                  src={project.image}
+                >
+                  <div className="space-y-6">
+                    <div className="flex items-center gap-2">
+                      <span className="w-2 h-2 rounded-full bg-cyan-500 animate-pulse"></span>
+                      <span className="text-[10px] font-mono text-cyan-500 tracking-widest uppercase">
+                    
                       </span>
-                    ))}
+                    </div>
+
+                    <p className="text-gray-400 text-sm leading-relaxed">
+                      {project.desc}
+                    </p>
+
+                    <div className="flex flex-wrap gap-2">
+                      {project.tags.map((tag) => (
+                        <span 
+                          key={tag} 
+                          className="px-2 py-0.5 bg-white/5 border border-white/10 text-gray-500 text-[8px] font-bold uppercase tracking-widest"
+                        >
+                          {tag}
+                        </span>
+                      ))}
+                    </div>
+
+                    <div className="flex gap-4 pt-6 border-t border-white/5">
+                      {project.github !== "#" && (
+                        <a 
+                          href={project.github} 
+                          target="_blank" 
+                          rel="noopener noreferrer"
+                          className="flex items-center gap-2 text-gray-400 hover:text-white transition-colors text-[10px] font-mono tracking-widest"
+                        >
+                          <FaGithub size={14}/>
+                          SRC_CODE
+                        </a>
+                      )}
+                      {project.live !== "#" && (
+                        <a 
+                          href={project.live} 
+                          target="_blank" 
+                          rel="noopener noreferrer"
+                          className="flex items-center gap-2 text-cyan-500/70 hover:text-cyan-400 transition-colors text-[10px] font-mono tracking-widest"
+                        >
+                          <FaExternalLinkAlt size={12}/>
+                          LIVE_SYS
+                        </a>
+                      )}
+                    </div>
                   </div>
-                </div>
+                </ExpandableCard>
               </div>
-            </article>
-          ))}
+            ))}
+          </motion.div>
         </div>
 
-        {/* Action Button */}
-        {projects.length > 4 && (
-          <div className="mt-16 md:mt-20 text-center" data-aos="fade-up">
-            <button
-              onClick={() => setShowAll(!showAll)}
-              className="px-8 md:px-10 py-3 md:py-4 bg-transparent border border-white/10 text-gray-400 text-[9px] md:text-[10px] font-bold tracking-[0.4em] hover:border-cyan-500 hover:text-cyan-400 transition-all uppercase"
-            >
-              {showAll ? t.showLess : t.viewAll}
-            </button>
-          </div>
-        )}
+        {/* Progress Indicator */}
+        <div className="mt-12 flex justify-center gap-2">
+          {projects.map((_, index) => (
+            <button 
+              key={index}
+              onClick={() => {
+                if (isTransitioning) return;
+                setIsTransitioning(true);
+                setCurrentIndex(index);
+              }}
+              className={`h-[2px] transition-all duration-500 ${
+                index === (currentIndex % projects.length)
+                  ? "w-8 bg-cyan-500" 
+                  : "w-4 bg-white/10"
+              }`}
+              aria-label={`Go to project ${index + 1}`}
+            />
+          ))}
+        </div>
       </div>
     </section>
   );
