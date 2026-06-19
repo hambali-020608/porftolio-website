@@ -52,27 +52,7 @@ export default function Contact() {
             ))}
           </div>
 
-          <div
-            data-aos="fade-up"
-            data-aos-delay="300"
-            className="mt-16 md:mt-24 text-center p-8 md:p-12 border border-white/5 bg-gray-900/10 backdrop-blur-sm relative"
-          >
-            <div className="viewport-bracket viewport-bracket-tl -translate-x-1 -translate-y-1"></div>
-            <div className="viewport-bracket viewport-bracket-br translate-x-1 translate-y-1"></div>
-
-            <h3 className="text-xl md:text-2xl font-bold text-white mb-4 md:mb-6 font-orbitron tracking-widest uppercase">{t.workTogether}</h3>
-            <p className="text-gray-400 text-xs md:text-sm max-w-xl mx-auto leading-relaxed font-light tracking-wide uppercase">
-              {t.collabDesc}
-            </p>
-            <div className="mt-8 md:mt-10">
-              <a 
-                href="mailto:subastianhambali@gmail.com"
-                className="inline-block px-8 md:px-12 py-3 md:py-4 border border-cyan-500/40 text-cyan-400 text-[9px] md:text-[10px] font-bold uppercase tracking-[0.4em] hover:bg-cyan-500 hover:text-white transition-all"
-              >
-                {t.sendEmail}
-              </a>
-            </div>
-          </div>
+       
         </div>
       </div>
     </section>

@@ -1,27 +1,83 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import SectionHeading from "../shared/SectionHeading";
-import { expertiseCards, skillCategories, skillsData } from "../../constants";
+import { expertiseCards, skillCategories } from "../../constants";
 import { useLanguage } from "../../context/LanguageContext";
 import { translations } from "../../constants/translations";
+import OrbitalExpertise from "../orbital_skill";
+import { InfiniteSlider } from "../ui/infinite-slider";
+import { cn } from "../../lib/utils";
+import { db } from "../../constants/firebase_init";
+import { collection, getDocs, query } from "firebase/firestore";
+import * as SiIcons from "react-icons/si";
+import * as FaIcons from "react-icons/fa";
+import * as PiIcons from "react-icons/pi";
+
+const getIconComponent = (iconName) => {
+  if (!iconName) return FaIcons.FaCode;
+  if (typeof iconName !== 'string') return iconName;
+  if (SiIcons[iconName]) return SiIcons[iconName];
+  if (FaIcons[iconName]) return FaIcons[iconName];
+  if (PiIcons[iconName]) return PiIcons[iconName];
+  return FaIcons.FaCode;
+};
 
 export default function Skills() {
   const { language } = useLanguage();
   const t = translations[language].skills;
   const expT = translations[language].expertise;
   const [activeCategory, setActiveCategory] = useState("all");
+  const [expertiseCardsList, setExpertiseCardsList] = useState([]);
+  const [techStackList, setTechStackList] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchSkillsData = async () => {
+      try {
+        // Fetch from 'skills' (which stores expertise cards)
+        const qSkills = query(collection(db, "skills"));
+        const snapshotSkills = await getDocs(qSkills);
+        const skillsDataArr = snapshotSkills.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+        setExpertiseCardsList(skillsDataArr);
+
+        // Fetch from 'tech_stack' (which stores the sliding skills)
+        const qTech = query(collection(db, "tech_stack"));
+        const snapshotTech = await getDocs(qTech);
+        const techDataArr = snapshotTech.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+        setTechStackList(techDataArr);
+      } catch (err) {
+        console.error("Error fetching skills/tech stack data:", err);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchSkillsData();
+  }, []);
 
   const filteredSkills = activeCategory === "all"
-    ? skillsData
-    : skillsData.filter(skill => skill.category === activeCategory);
+    ? techStackList
+    : techStackList.filter(skill => skill.category === activeCategory);
 
-  const translatedExpertise = expertiseCards.map(card => {
-    if (card.role === "AI") return { ...card, ...expT.ai };
-    if (card.role === "FD") return { ...card, ...expT.fd };
-    if (card.role === "DA") return { ...card, ...expT.da };
-    return card;
+  const translatedExpertise = expertiseCardsList.map(card => {
+    const IconComponent = getIconComponent(card.icon);
+    const translation = card.role === "AI" ? expT.ai : card.role === "FD" ? expT.fd : card.role === "DA" ? expT.da : {};
+    return { 
+      ...card, 
+      ...translation,
+      icon: IconComponent 
+    };
   });
+
+  // Divide skills into 3 rows for the slider
+  const rowSize = Math.ceil(techStackList.length / 3);
+  const rows = [
+    techStackList.slice(0, rowSize),
+    techStackList.slice(rowSize, rowSize * 2),
+    techStackList.slice(rowSize * 2),
+  ];
+
+  if (loading || expertiseCardsList.length === 0 || techStackList.length === 0) return null;
 
   return (
     <section id="skills" aria-label="Skills and Expertise" className="py-24 relative overflow-hidden">
@@ -34,8 +90,13 @@ export default function Skills() {
           subtitle={t.subtitle}
         />
 
-        {/* Expertise Grid - Responsive Dashboard */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-px border border-white/5 bg-white/5 mb-32 overflow-hidden">
+        {/* Orbital Expertise View (Desktop) */}
+        <div className="hidden lg:block mb-32">
+          <OrbitalExpertise expertise={translatedExpertise} />
+        </div>
+
+        {/* Expertise Grid - Responsive Dashboard (Mobile/Tablet Fallback) */}
+        <div className="grid lg:hidden grid-cols-1 sm:grid-cols-2 gap-px border border-white/5 bg-white/5 mb-32 overflow-hidden">
           {translatedExpertise.map((card, idx) => (
             <div
               key={card.title}
@@ -90,26 +151,44 @@ export default function Skills() {
                     : "text-gray-500 border-white/10 hover:border-cyan-500/40 hover:text-cyan-400"
                   }`}
                 >
-                  {cat.label}
+             j     {cat.label}
                 </button>
               ))}
             </div>
           </div>
 
-          {/* Tech Grid */}
-          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-px border border-white/5 bg-white/5 overflow-hidden">
-            {filteredSkills.map((skill, idx) => (
-              <div
-                key={skill.name}
-                data-aos="zoom-in"
-                data-aos-delay={idx % 6 * 50}
-                className="group relative bg-gray-950 p-8 md:p-10 flex flex-col items-center justify-center gap-4 md:gap-6 transition-all duration-300 hover:bg-white/[0.02]"
+          {/* Sliding Tech Stack */}
+          <div 
+            className="space-y-4 md:space-y-6 [mask-image:linear-gradient(to_right,transparent,black_15%,black_85%,transparent)]"
+            data-aos="fade-up"
+          >
+            {rows.map((rowSkills, rowIndex) => (
+              <InfiniteSlider 
+                key={rowIndex}
+                gap={24} 
+                reverse={rowIndex === 1} 
+                speed={rowIndex === 1 ? 40 : 50}
+                speedOnHover={15}
+                className="py-2"
               >
-                <skill.icon className="text-3xl md:text-4xl text-gray-600 group-hover:text-cyan-400 transition-all duration-500 group-hover:scale-110" />
-                <span className="text-[9px] md:text-[10px] font-bold text-gray-500 group-hover:text-white transition-colors uppercase tracking-[0.2em]">
-                  {skill.name}
-                </span>
-              </div>
+                {rowSkills.map((skill, idx) => {
+                  // Filter logic within slider if category is not 'all'
+                  if (activeCategory !== "all" && skill.category !== activeCategory) return null;
+                  
+                  const IconComponent = getIconComponent(skill.icon);
+                  return (
+                    <div
+                      key={skill.name}
+                      className="group relative bg-gray-950/50 border border-white/5 p-4 md:p-6 min-w-[120px] md:min-w-[160px] flex items-center gap-4 transition-all duration-300 hover:bg-white/[0.05] hover:border-cyan-500/30"
+                    >
+                      <IconComponent className="text-2xl md:text-3xl text-gray-500 group-hover:text-cyan-400 transition-all duration-500 group-hover:scale-110" />
+                      <span className="text-[10px] md:text-[11px] font-bold text-gray-400 group-hover:text-white transition-colors uppercase tracking-widest">
+                        {skill.name}
+                      </span>
+                    </div>
+                  );
+                })}
+              </InfiniteSlider>
             ))}
           </div>
         </div>
@@ -117,3 +196,4 @@ export default function Skills() {
     </section>
   );
 }
+

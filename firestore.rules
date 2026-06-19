@@ -1,0 +1,14 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // Publik bisa membaca data
+    match /{document=**} {
+      allow read: if true;
+    }
+    
+    // Hanya Admin (anda) yang bisa menulis/mengubah data
+    match /{document=**} {
+      allow write: if request.auth != null && request.auth.token.email == 'subastianhambali@gmail.com';
+    }
+  }
+}

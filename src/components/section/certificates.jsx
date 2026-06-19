@@ -1,8 +1,9 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import SectionHeading from "../shared/SectionHeading";
-import { certificates } from "../../constants";
+import { db } from "../../constants/firebase_init";
+import { collection, getDocs, query } from "firebase/firestore";
 import { useLanguage } from "../../context/LanguageContext";
 import { translations } from "../../constants/translations";
 import { FaExternalLinkAlt, FaAward, FaFilePdf, FaDownload, FaArrowLeft } from "react-icons/fa";
@@ -11,6 +12,24 @@ export default function Certificates() {
   const { language } = useLanguage();
   const t = translations[language].certificates;
   const [flippedCards, setFlippedCards] = useState({});
+  const [certificatesData, setCertificatesData] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchCertificates = async () => {
+      try {
+        const q = query(collection(db, "certificates"));
+        const querySnapshot = await getDocs(q);
+        const data = querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+        setCertificatesData(data);
+      } catch (err) {
+        console.error("Error fetching certificates:", err);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchCertificates();
+  }, []);
 
   const toggleFlip = (index) => {
     setFlippedCards((prev) => ({
@@ -18,6 +37,8 @@ export default function Certificates() {
       [index]: !prev[index],
     }));
   };
+
+  if (loading) return null;
 
   return (
     <section id="certificates" aria-label="Certifications" className="py-24 relative overflow-hidden">
@@ -30,9 +51,9 @@ export default function Certificates() {
         />
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-7xl mx-auto">
-          {certificates.map((cert, index) => (
+          {certificatesData.map((cert, index) => (
             <div 
-              key={index}
+              key={cert.id}
               className="perspective-1000 h-[350px] w-full"
               data-aos="fade-up"
               data-aos-delay={index * 100}
@@ -48,7 +69,7 @@ export default function Certificates() {
                         <FaAward className="text-xl" />
                       </div>
                       <span className="font-mono text-[9px] text-gray-700 tracking-widest uppercase">
-                        ID: {cert.id}
+                        ID: {cert.id.slice(0, 8)}...
                       </span>
                     </div>
 
@@ -91,7 +112,7 @@ export default function Certificates() {
                     </div>
                     <div className="space-y-2">
                       <p className="font-mono text-[8px] text-cyan-500/60 tracking-[0.3em] uppercase">Ready_to_Download</p>
-                      <h4 className="text-sm font-bold text-white uppercase tracking-widest">{cert.id}.PDF</h4>
+                      <h4 className="text-sm font-bold text-white uppercase tracking-widest">CERTIFICATE.PDF</h4>
                     </div>
                   </div>
 

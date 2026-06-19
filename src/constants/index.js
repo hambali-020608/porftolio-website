@@ -2,6 +2,10 @@ import {
   FaGithub, FaTiktok, FaEnvelope, 
   FaCode, FaDatabase, FaBrain, FaChartBar, FaDesktop, FaServer, FaMagic
 } from "react-icons/fa";
+
+
+
+
 import { 
   SiReact, SiNextdotjs, SiTailwindcss, SiNodedotjs, 
   SiExpress, SiLaravel, SiMongodb, SiMysql,  SiPrisma, 
@@ -140,7 +144,7 @@ export const skillsData = [
   // { name: "Excel", icon: PiMicrosoftExcelLogoFill, category: "tools" },
 ];
 
-export const skillCategories = [
+export const  skillCategories = [
   { id: "all", label: "All_Skills", icon: "⚡" },
   { id: "web", label: "Frontend", icon: "🌐" },
   { id: "backend", label: "Backend", icon: "⚙️" },

@@ -1,14 +1,36 @@
 "use client";
 
+import { useState, useEffect } from "react";
 import { FaRocket, FaEnvelope, FaMapMarkerAlt, FaFileDownload } from "react-icons/fa";
 import SectionHeading from "../shared/SectionHeading";
 import { stats } from "../../constants";
 import { useLanguage } from "../../context/LanguageContext";
 import { translations } from "../../constants/translations";
+import { db } from "../../constants/firebase_init";
+import { collection, getDocs, query, limit } from "firebase/firestore";
 
 export default function About() {
   const { language } = useLanguage();
   const t = translations[language].about;
+  const [cvUrl, setCvUrl] = useState("/CV_HAMBALI_SUBASTIAN.pdf");
+
+  useEffect(() => {
+    const fetchCV = async () => {
+      try {
+        const q = query(collection(db, "cv"), limit(1));
+        const querySnapshot = await getDocs(q);
+        if (!querySnapshot.empty) {
+          const cvData = querySnapshot.docs[0].data();
+          if (cvData.url) {
+            setCvUrl(cvData.url);
+          }
+        }
+      } catch (err) {
+        console.error("Error fetching CV:", err);
+      }
+    };
+    fetchCV();
+  }, []);
 
   const translatedStats = stats.map(stat => {
     if (stat.label === "Years Experience" || stat.label === "Tahun Pengalaman") return { ...stat, label: t.stats.years };
@@ -98,8 +120,9 @@ export default function About() {
               {/* CV Download Button */}
               <div className="sm:border-l border-white/5 sm:pl-8 md:pl-12 flex items-center">
                 <a 
-                  href="/CV_HAMBALI_SUBASTIAN.pdf" 
-                  download="CV_Hambali_Subastian.pdf"
+                  href={cvUrl} 
+                  target="_blank"
+                  rel="noopener noreferrer"
                   className="w-full sm:w-auto group relative px-8 py-4 bg-transparent border border-cyan-500/30 text-cyan-400 flex items-center justify-center gap-3 transition-all hover:bg-cyan-500 hover:text-white"
                 >
                   <FaFileDownload className="text-sm" />

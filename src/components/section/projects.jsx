@@ -4,7 +4,8 @@ import { useState, useEffect } from "react";
 import { FaGithub, FaExternalLinkAlt, FaChevronLeft, FaChevronRight } from "react-icons/fa";
 import { motion, AnimatePresence } from "motion/react";
 import SectionHeading from "../shared/SectionHeading";
-import { projects } from "../../constants";
+import { db } from "../../constants/firebase_init";
+import { collection, getDocs, query } from "firebase/firestore";
 import { useLanguage } from "../../context/LanguageContext";
 import { translations } from "../../constants/translations";
 import { ExpandableCard } from "../card";
@@ -13,18 +14,35 @@ export default function Projects() {
   const { language } = useLanguage();
   const t = translations[language].projects;
   
+  const [projectsList, setProjectsList] = useState([]);
+  const [loading, setLoading] = useState(true);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [cardsPerView, setCardsPerView] = useState(2);
   const [isTransitioning, setIsTransitioning] = useState(false);
 
-  // Extend projects for smooth infinite loop
-  const extendedProjects = [...projects, ...projects.slice(0, cardsPerView)];
+  useEffect(() => {
+    const fetchProjects = async () => {
+      try {
+        const q = query(collection(db, "projects"));
+        const querySnapshot = await getDocs(q);
+        const data = querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+        setProjectsList(data);
+      } catch (err) {
+        console.error("Error fetching projects:", err);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchProjects();
+  }, []);
+
+  const extendedProjects = [...projectsList, ...projectsList.slice(0, cardsPerView)];
 
   useEffect(() => {
     const handleResize = () => {
       if (window.innerWidth < 768) {
         setCardsPerView(1);
-      } else {
+      } else {  
         setCardsPerView(2);
       }
     };
@@ -35,18 +53,18 @@ export default function Projects() {
   }, []);
 
   const nextSlide = () => {
-    if (isTransitioning) return;
+    if (isTransitioning || projectsList.length === 0) return;
     setIsTransitioning(true);
     setCurrentIndex((prev) => prev + 1);
   };
 
   const prevSlide = () => {
-    if (isTransitioning) return;
+    if (isTransitioning || projectsList.length === 0) return;
     setIsTransitioning(true);
     if (currentIndex === 0) {
       // If at start, jump to the end of first set first, then move back
       // But for simplicity, let's just go back with wrap
-      setCurrentIndex(projects.length - 1);
+      setCurrentIndex(projectsList.length - 1);
     } else {
       setCurrentIndex((prev) => prev - 1);
     }
@@ -54,11 +72,12 @@ export default function Projects() {
 
   const handleAnimationComplete = () => {
     setIsTransitioning(false);
-    if (currentIndex >= projects.length) {
-      // Silent jump back to start
+    if (currentIndex >= projectsList.length) {
       setCurrentIndex(0);
     }
   };
+
+  if (loading || projectsList.length === 0) return null;
 
   return (
     <section id="projects" aria-label="Selected Projects" className="py-24 relative overflow-hidden">
@@ -187,7 +206,7 @@ export default function Projects() {
 
         {/* Progress Indicator */}
         <div className="mt-12 flex justify-center gap-2">
-          {projects.map((_, index) => (
+          {projectsList.map((_, index) => (
             <button 
               key={index}
               onClick={() => {
@@ -196,7 +215,7 @@ export default function Projects() {
                 setCurrentIndex(index);
               }}
               className={`h-[2px] transition-all duration-500 ${
-                index === (currentIndex % projects.length)
+                index === (currentIndex % projectsList.length)
                   ? "w-8 bg-cyan-500" 
                   : "w-4 bg-white/10"
               }`}

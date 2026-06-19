@@ -4,7 +4,6 @@ import * as React from "react";
 import { useLanguage } from "../context/LanguageContext";
 import { translations } from "../constants/translations";
 
-// Simple utility for merging classes
 const cn = (...classes) => classes.filter(Boolean).join(" ");
 
 export function ExpandableCard({
