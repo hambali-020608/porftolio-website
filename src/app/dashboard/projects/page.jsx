@@ -13,6 +13,7 @@ import {
 } from "firebase/firestore";
 import { FaEdit, FaTrash, FaPlus, FaSync } from "react-icons/fa";
 import Input from "../components/Input";
+import Select from "../components/select";
 
 export default function ProjectsDashboard() {
   const [loading, setLoading] = useState(true);
@@ -25,7 +26,8 @@ export default function ProjectsDashboard() {
     github: "",
     live: "",
     tags: "",
-    desc: ""
+    desc: "",
+    status:"",
   });
 
   const fetchData = async () => {
@@ -69,7 +71,7 @@ export default function ProjectsDashboard() {
       }
       setIsAdding(false);
       setEditingId(null);
-      setFormData({ title: "", image: "", github: "", live: "", tags: "", desc: "" });
+      setFormData({ title: "", image: "", github: "", live: "", tags: "", desc: "",status:"" });
       fetchData();
     } catch (err) {
       console.error("Error saving project:", err);
@@ -92,7 +94,8 @@ export default function ProjectsDashboard() {
       github: editData.github || "",
       live: editData.live || "",
       tags: editData.tags,
-      desc: editData.desc || ""
+      desc: editData.desc || "",
+      status: editData.status || ""
     });
     setEditingId(item.id);
     setIsAdding(true);
@@ -149,6 +152,10 @@ export default function ProjectsDashboard() {
             <Input label="Github Link" name="github" value={formData.github} onChange={handleInputChange} />
             <Input label="Live Demo URL" name="live" value={formData.live} onChange={handleInputChange} />
             <Input label="Tags (comma separated)" name="tags" value={formData.tags} onChange={handleInputChange} className="col-span-2" />
+            <Select label="Project Status" name="status" value={formData.status} onChange={handleInputChange} className="col-span-2" >
+              <option value="active">Active</option>
+              <option value="inactive">Inactive</option>
+            </Select>
             <textarea 
               name="desc" 
               placeholder="DESCRIPTION"
@@ -186,6 +193,7 @@ export default function ProjectsDashboard() {
                 <th className="px-6 py-4 text-[10px] font-bold uppercase tracking-widest text-cyan-400">Tags</th>
                 <th className="px-6 py-4 text-[10px] font-bold uppercase tracking-widest text-cyan-400">Live Link</th>
                 <th className="px-6 py-4 text-[10px] font-bold uppercase tracking-widest text-cyan-400">Actions</th>
+                <th className="px-6 py-4 text-[10px] font-bold uppercase tracking-widest text-cyan-400">Status</th>
               </tr>
             </thead>
             <tbody className="divide-y divide-white/5">
@@ -222,6 +230,9 @@ export default function ProjectsDashboard() {
                         <FaTrash size={14} />
                       </button>
                     </div>
+                  </td>
+                  <td className="px-6 py-4 text-[10px] text-gray-400 truncate max-w-[150px]">
+                    {item.status}
                   </td>
                 </tr>
               ))}
