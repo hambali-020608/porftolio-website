@@ -6,6 +6,7 @@ import "aos/dist/aos.css";
 export const metadata = {
   title: "My Portfolio",
   description: "Web Portfolio of Hambali Subastian",
+  icons:'/soltech.jpeg'
 };
 
 export default function RootLayout({ children }) {
