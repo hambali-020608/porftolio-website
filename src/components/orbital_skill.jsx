@@ -3,6 +3,7 @@
 import React, { useState } from "react";
 import { motion } from "motion/react";
 import { FaBrain, FaDesktop, FaChartBar } from "react-icons/fa";
+import Image from "next/image";
 
 const OrbitalExpertise = ({ expertise }) => {
   const [rotation, setRotation] = useState(0);
@@ -122,8 +123,14 @@ const OrbitalExpertise = ({ expertise }) => {
                   ${isFocused ? 'bg-cyan-500 text-black border-cyan-400 shadow-[0_0_30px_rgba(34,211,238,0.3)]' : 'bg-gray-950 text-white border-white/10 hover:border-cyan-500/30'}
                   border backdrop-blur-xl transition-all duration-500 flex items-center justify-center relative
                 `}>
-                  <item.icon className={`text-xl md:text-3xl transition-colors duration-500 ${isFocused ? 'text-black' : 'text-gray-500 group-hover:text-cyan-400'}`} />
-                  
+                  {/* {console.log("icon",item.icon)} */}
+                  {/* <item.icon className={`text-xl md:text-3xl transition-colors duration-500 ${isFocused ? 'text-black' : 'text-gray-500 group-hover:text-cyan-400'}`} /> */}
+                    <Image src={item.icon}
+                    width={90}
+                    height={90}
+                    alt={item.title}
+                    className="text-gray-500"
+                    />
                   {/* Tech Corner Marker */}
                   <div className={`absolute -top-1 -right-1 w-2 h-2 ${isFocused ? 'bg-black' : 'bg-cyan-500'} transition-colors`}></div>
                 </div>

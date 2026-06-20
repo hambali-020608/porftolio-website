@@ -90,7 +90,7 @@ export default function Skills() {
 
         {/* Orbital Expertise View (Desktop) */}
         <div className="hidden lg:block mb-32">
-          <OrbitalExpertise expertise={translatedExpertise} />
+          <OrbitalExpertise expertise={expertiseCardsList} />
         </div>
 
         {/* Expertise Grid - Responsive Dashboard (Mobile/Tablet Fallback) */}
