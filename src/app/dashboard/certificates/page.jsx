@@ -18,7 +18,7 @@ export default function CertificatesDashboard() {
   const [loading, setLoading] = useState(true);
   const [items, setItems] = useState([]);
   const [isAdding, setIsAdding] = useState(false);
-  const [editingId, setEditingId] = useState(null);
+  const [editingId,   setEditingId] = useState(null);
   const [formData, setFormData] = useState({
     title: "",
     issuer: "",
@@ -54,7 +54,8 @@ export default function CertificatesDashboard() {
     setLoading(true);
     try {
       if (editingId) {
-        await updateDoc(doc(db, "certificates", editingId), formData);
+       const dataEdit = await updateDoc(doc(db, "certificates", editingId), formData);
+       console.log(dataEdit)
       } else {
         await addDoc(collection(db, "certificates"), formData);
       }

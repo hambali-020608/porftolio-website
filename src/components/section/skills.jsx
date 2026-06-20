@@ -35,13 +35,11 @@ export default function Skills() {
   useEffect(() => {
     const fetchSkillsData = async () => {
       try {
-        // Fetch from 'skills' (which stores expertise cards)
         const qSkills = query(collection(db, "skills"));
         const snapshotSkills = await getDocs(qSkills);
         const skillsDataArr = snapshotSkills.docs.map(doc => ({ id: doc.id, ...doc.data() }));
         setExpertiseCardsList(skillsDataArr);
 
-        // Fetch from 'tech_stack' (which stores the sliding skills)
         const qTech = query(collection(db, "tech_stack"));
         const snapshotTech = await getDocs(qTech);
         const techDataArr = snapshotTech.docs.map(doc => ({ id: doc.id, ...doc.data() }));
@@ -51,7 +49,7 @@ export default function Skills() {
       } finally {
         setLoading(false);
       }
-    };
+    };  
     fetchSkillsData();
   }, []);
 
@@ -123,7 +121,7 @@ export default function Skills() {
                   </p>
                 </div>
 
-                <div className="h-[1px] w-0 bg-cyan-500/40 transition-all duration-700 group-hover:w-full"></div>
+                <div className="h-[1px]  w-0 bg-cyan-500/40 transition-all duration-700 group-hover:w-full"></div>
               </div>
             </div>
           ))}
@@ -151,7 +149,7 @@ export default function Skills() {
                     : "text-gray-500 border-white/10 hover:border-cyan-500/40 hover:text-cyan-400"
                   }`}
                 >
-             j     {cat.label}
+             x     {cat.label}
                 </button>
               ))}
             </div>

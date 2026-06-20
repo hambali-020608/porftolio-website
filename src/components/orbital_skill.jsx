@@ -31,7 +31,7 @@ const OrbitalExpertise = ({ expertise }) => {
 
   return (
     <div 
-      className="relative w-full aspect-square max-w-[600px] mx-auto flex items-center justify-center overflow-visible py-20"
+      className="relative w-full aspect-square max-w-[600px] mx-auto flex items-center justify-center overflow-visible "
       
       onMouseLeave={() => {
         if (activeId === null) setIsPaused(false);
@@ -84,7 +84,6 @@ const OrbitalExpertise = ({ expertise }) => {
 
         return (
           <React.Fragment key={item.id}>
-            {/* The Path Ring (Static) */}
             <div 
               className="absolute border border-white/5 rounded-full pointer-events-none"
               style={{
@@ -93,7 +92,6 @@ const OrbitalExpertise = ({ expertise }) => {
               }}
             ></div>
 
-            {/* Connection line */}
             <motion.div 
               className="absolute h-[1px] bg-gradient-to-r from-cyan-500/40 to-transparent origin-left pointer-events-none"
               style={{
