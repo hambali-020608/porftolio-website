@@ -89,12 +89,12 @@ export default function Skills() {
         />
 
         {/* Orbital Expertise View (Desktop) */}
-        <div className="hidden lg:block mb-32">
+        <div className=" mb-32">
           <OrbitalExpertise expertise={expertiseCardsList} />
         </div>
 
         {/* Expertise Grid - Responsive Dashboard (Mobile/Tablet Fallback) */}
-        <div className="grid lg:hidden grid-cols-1 sm:grid-cols-2 gap-px border border-white/5 bg-white/5 mb-32 overflow-hidden">
+        {/* <div className="grid lg:hidden grid-cols-1 sm:grid-cols-2 gap-px border border-white/5 bg-white/5 mb-32 overflow-hidden">
           {translatedExpertise.map((card, idx) => (
             <div
               key={card.title}
@@ -125,7 +125,7 @@ export default function Skills() {
               </div>
             </div>
           ))}
-        </div>
+        </div> */}
 
         {/* Tech Stack Header */}
         <div className="space-y-12 md:space-y-16">
@@ -149,7 +149,7 @@ export default function Skills() {
                     : "text-gray-500 border-white/10 hover:border-cyan-500/40 hover:text-cyan-400"
                   }`}
                 >
-             x     {cat.label}
+                  {cat.label}
                 </button>
               ))}
             </div>
