@@ -51,9 +51,7 @@ export function ExpandableCard({
                 className="w-full h-full object-cover group-hover/flipping-card:grayscale-0 transition-all duration-700" 
               />
               <div className="absolute inset-0 bg-gradient-to-t from-gray-950 via-transparent to-transparent opacity-60"></div>
-              <div className="absolute top-3 left-3 px-2 py-1 bg-gray-900/90 border border-white/10 text-[8px] font-mono text-gray-500 tracking-widest uppercase">
-                ID_{projectId || "00"}
-              </div>
+           
             </div>
 
             <div className="p-6 bg-gray-950 border-t border-white/5 space-y-4">

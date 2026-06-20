@@ -5,7 +5,7 @@ import { FaGithub, FaExternalLinkAlt, FaChevronLeft, FaChevronRight } from "reac
 import { motion, AnimatePresence } from "motion/react";
 import SectionHeading from "../shared/SectionHeading";
 import { db } from "../../constants/firebase_init";
-import { collection, getDocs, query } from "firebase/firestore";
+import { collection, getDocs, query,where } from "firebase/firestore";
 import { useLanguage } from "../../context/LanguageContext";
 import { translations } from "../../constants/translations";
 import { ExpandableCard } from "../card";
@@ -23,9 +23,11 @@ export default function Projects() {
   useEffect(() => {
     const fetchProjects = async () => {
       try {
-        const q = query(collection(db, "projects"));
+        const q = query(collection(db, "projects"),where("status","==","active"));
         const querySnapshot = await getDocs(q);
+        
         const data = querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+    
         setProjectsList(data);
       } catch (err) {
         console.error("Error fetching projects:", err);
@@ -136,6 +138,7 @@ export default function Projects() {
             onAnimationComplete={handleAnimationComplete}
           >
             {extendedProjects.map((project, idx) => (
+              
               <div
                 key={`${project.id}-${idx}`}
                 style={{
@@ -144,6 +147,7 @@ export default function Projects() {
                 }}
                 className="px-4"
               >
+                
                 <ExpandableCard
                   id={project.id}
                   title={project.title}
