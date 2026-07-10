@@ -1,6 +1,5 @@
 import { LanguageProvider } from "../context/LanguageContext";
 import "../index.css"; 
-import "aos/dist/aos.css";
 
 export const metadata = {
   title: "Hambali Subastian | Portfolio",
@@ -14,7 +13,6 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      {/* Sangat disarankan menambahkan class atau style dasar di body jika diperlukan */}
       <body className="antialiased">
         <LanguageProvider>
           {children}

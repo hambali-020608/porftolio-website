@@ -3,9 +3,7 @@
 import * as React from "react";
 import { useLanguage } from "../context/LanguageContext";
 import { translations } from "../constants/translations";
-// Import Image bawaan Next.js untuk optimasi performa dan SEO
 import Image from "next/image";
-
 const cn = (...classes) => classes.filter(Boolean).join(" ");
 
 export function ExpandableCard({
@@ -24,7 +22,6 @@ export function ExpandableCard({
     if (e.target.closest('a')) return;
     setIsFlipped(!isFlipped);
   };
-
   return (
     <div 
       className={cn("group/flipping-card [perspective:1200px] h-[450px] w-full cursor-pointer", className)}
@@ -48,7 +45,7 @@ export function ExpandableCard({
               {/* Mengganti ke Next.js Image dengan properti fill agar responsif mengikuti container */}
               {src && (
                 <Image 
-                  src={src} 
+                  src={`${src}?tr=w-500,q-65` } 
                   alt={title} 
                   fill
                   sizes="(max-width: 768px) 100vw, 33vw"

@@ -34,7 +34,6 @@ const OrbitNode = memo(function OrbitNode({
         transform: "translate(-50%, -50%)",
       }}
     >
-      {/* Connector line */}
       <div
         className="absolute h-[1px] bg-gradient-to-r from-cyan-500/40 to-transparent origin-left pointer-events-none hidden lg:block"
         style={{
@@ -101,7 +100,6 @@ const OrbitNode = memo(function OrbitNode({
           >
             {item.title}
           </div>
-
           <motion.div
             className="absolute top-[calc(100%+20px)] md:top-[calc(100%+35px)] left-1/2 -translate-x-1/2 pointer-events-none z-50 origin-top"
             initial={{ opacity: 0, y: 15, scale: 0.9 }}
@@ -239,8 +237,6 @@ const OrbitalExpertise = ({ expertise }) => {
         <div className="absolute -top-2 md:p-3 -left-3 w-6 h-6 border-t-2 border-l-2 border-cyan-500/60" />
         <div className="absolute -bottom-3 -right-3 w-6 h-6 border-b-2 border-r-2 border-cyan-500/60" />
       </div>
-
-      {/* Background Decorative Grid */}
       <div className="absolute inset-0 blueprint-grid opacity-10 pointer-events-none rounded-full border border-white/5 scale-110" />
       <motion.div
         className="absolute w-full h-full flex items-center justify-center pointer-events-none scale-[0.82] sm:scale-[0.9] md:scale-100"
@@ -259,8 +255,6 @@ const OrbitalExpertise = ({ expertise }) => {
           />
         ))}
       </motion.div>
-
-      {/* Decorative center lines */}
       <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[1px] h-full bg-white/5 pointer-events-none z-10" />
       <div className="absolute top-1/2 left-0 -translate-y-1/2 w-full h-[1px] bg-white/5 pointer-events-none z-10" />
     </div>

@@ -8,6 +8,7 @@ import { db } from "../../constants/firebase_init";
 import { collection, getDocs, query } from "firebase/firestore";
 import { useLanguage } from "../../context/LanguageContext";
 import { translations } from "../../constants/translations";
+import { motion } from "motion/react";
 import { FaExternalLinkAlt, FaAward, FaFilePdf, FaDownload, FaArrowLeft, FaEye } from "react-icons/fa";
 pdfjs.GlobalWorkerOptions.workerSrc = new URL(
   "pdfjs-dist/build/pdf.worker.min.mjs",
@@ -58,11 +59,13 @@ export default function Certificates() {
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-7xl mx-auto">
           {certificatesData.map((cert, index) => (
-            <div 
+            <motion.div 
               key={cert.id}
               className="perspective-1000 h-[420px] w-full"
-              data-aos="fade-up"
-              data-aos-delay={index * 100}
+              initial={{ opacity: 0, y: 50 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: index * 0.1 }}
+              viewport={{ once: true }}
             >
               <div 
                 className={`relative w-full h-full flip-card-inner preserve-3d transition-transform duration-700 ${flippedCards[index] ? 'rotate-x-180' : ''}`}
@@ -160,7 +163,7 @@ export default function Certificates() {
                 </article>
 
               </div>
-            </div>
+            </motion.div>
           ))}
         </div>
       </div>

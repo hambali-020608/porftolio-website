@@ -2,6 +2,7 @@
 
 import { FaChevronUp } from "react-icons/fa";
 import { navLinks, socialLinks } from "../../constants";
+import { motion } from "motion/react";
 
 export default function Footer() {
   const scrollToTop = () => {
@@ -14,8 +15,11 @@ export default function Footer() {
         <div className="flex flex-col lg:flex-row justify-between items-center lg:items-start gap-12 md:gap-16 mb-16 md:mb-20">
 
           {/* Brand Section */}
-          <div
-            data-aos="fade-up"
+          <motion.div
+            initial={{ opacity: 0, y: 50 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5 }}
+            viewport={{ once: true }}
             className="text-center lg:text-left space-y-6 md:space-y-8 max-w-sm"
           >
             <a href="#home" className="inline-flex items-center gap-4 group justify-center lg:justify-start">
@@ -43,12 +47,14 @@ export default function Footer() {
                 </a>
               ))}
             </div>
-          </div>
+          </motion.div>
 
           {/* Navigation Links */}
-          <div
-            data-aos="fade-up"
-            data-aos-delay="200"
+          <motion.div
+            initial={{ opacity: 0, y: 50 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: 0.2 }}
+            viewport={{ once: true }}
             className="grid grid-cols-2 gap-x-12 md:gap-x-16 gap-y-8 text-center lg:text-left"
           >
             <div className="space-y-4 md:space-y-6">
@@ -72,12 +78,14 @@ export default function Footer() {
                 <li className="text-[9px] md:text-[10px] font-bold text-gray-600 uppercase tracking-[0.2em]">Data Analysis</li>
               </ul>
             </div>
-          </div>
+          </motion.div>
 
           {/* Status Hook */}
-          <div
-            data-aos="fade-up"
-            data-aos-delay="400"
+          <motion.div
+            initial={{ opacity: 0, y: 50 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: 0.4 }}
+            viewport={{ once: true }}
             className="text-center lg:text-right space-y-6"
           >
             <h3 className="font-mono text-[8px] md:text-[9px] text-gray-500 uppercase tracking-[0.4em]">Availability</h3>
@@ -90,7 +98,7 @@ export default function Footer() {
             >
               Contact Me
             </a>
-          </div>
+          </motion.div>
         </div>
 
         {/* Footer Bottom */}

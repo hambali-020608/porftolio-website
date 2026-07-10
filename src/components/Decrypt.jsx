@@ -15,7 +15,6 @@ const DecryptText = ({ text, speed = 40 }) => {
         if (entry.isIntersecting) {
           setStart(true);
         } else {
-          // Reset agar bisa berulang saat scroll balik
           setStart(false); 
           setDisplayText('');
         }

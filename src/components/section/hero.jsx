@@ -1,5 +1,6 @@
 "use client";
 import { ReactTyped } from "react-typed";
+import { motion } from "motion/react";
 // import Hero3D from "../canvas/Hero3D";
 import { socialLinks } from "../../constants";
 import { useLanguage } from "../../context/LanguageContext";
@@ -20,10 +21,12 @@ export default function Hero() {
       <div className="container mx-auto flex flex-col items-center justify-center z-10 w-full max-w-5xl pt-20 text-center">
 
         {/* Content: Text */}
-        <div
+        <motion.div
           className="w-full space-y-8 md:space-y-10"
-          data-aos="fade-up"
-          data-aos-duration="1000"
+          initial={{ opacity: 0, y: 50 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 1 }}
+          viewport={{ once: true }}
         >
           <div className="space-y-4 md:space-y-6">
             
@@ -74,7 +77,7 @@ export default function Hero() {
               ))}
             </div>
           </div>
-        </div>
+        </motion.div>
       </div>
 
       {/* Scroll Down Indicator */}

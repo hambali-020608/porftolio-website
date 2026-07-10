@@ -1,6 +1,7 @@
 "use client";
 
 import { FaExternalLinkAlt } from "react-icons/fa";
+import { motion } from "motion/react";
 import SectionHeading from "../shared/SectionHeading";
 import { socialLinks } from "../../constants";
 import { useLanguage } from "../../context/LanguageContext";
@@ -23,13 +24,15 @@ export default function Contact() {
         <div className="max-w-5xl mx-auto">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-px bg-white/5 border border-white/5">
             {socialLinks.map((info, idx) => (
-              <a
+              <motion.a
                 key={info.name}
                 href={info.href}
                 target="_blank"
                 rel="noopener noreferrer"
-                data-aos="fade-up"
-                data-aos-delay={idx * 100}
+                initial={{ opacity: 0, y: 50 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, delay: idx * 0.1 }}
+                viewport={{ once: true }}
                 className="group relative p-8 md:p-12 bg-gray-950 hover:bg-white/[0.01] transition-all duration-500 flex flex-col items-center text-center overflow-hidden"
               >
                 <div className="w-12 h-12 md:w-16 md:h-16 rounded border border-white/10 flex items-center justify-center mb-6 md:mb-10 text-gray-500 group-hover:text-cyan-400 group-hover:border-cyan-500/40 group-hover:scale-110 transition-all duration-500 shadow-xl">
@@ -48,7 +51,7 @@ export default function Contact() {
                     </div>
                   </div>
                 </div>
-              </a>
+              </motion.a>
             ))}
           </div>
 

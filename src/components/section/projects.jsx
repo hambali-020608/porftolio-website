@@ -64,8 +64,6 @@ export default function Projects() {
     if (isTransitioning || projectsList.length === 0) return;
     setIsTransitioning(true);
     if (currentIndex === 0) {
-      // If at start, jump to the end of first set first, then move back
-      // But for simplicity, let's just go back with wrap
       setCurrentIndex(projectsList.length - 1);
     } else {
       setCurrentIndex((prev) => prev - 1);

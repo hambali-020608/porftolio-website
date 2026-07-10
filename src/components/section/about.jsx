@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { FaRocket, FaEnvelope, FaMapMarkerAlt, FaFileDownload } from "react-icons/fa";
+import { motion } from "motion/react";
 import SectionHeading from "../shared/SectionHeading";
 import { stats } from "../../constants";
 import { useLanguage } from "../../context/LanguageContext";
@@ -52,8 +53,11 @@ export default function About() {
         <div className="flex flex-col lg:flex-row items-stretch gap-8 lg:gap-0 border border-white/5 bg-gray-900/10 backdrop-blur-sm">
 
           {/* Left Column: Image Area */}
-          <div
-            data-aos="fade-right"
+          <motion.div
+            initial={{ opacity: 0, x: -50 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.8 }}
+            viewport={{ once: true }}
             className="w-full lg:w-5/12 p-6 sm:p-8 md:p-12 lg:border-r border-white/5"
           >
             <div className="relative aspect-square w-full max-w-[320px] md:max-w-[400px] mx-auto bg-gray-900">
@@ -76,11 +80,14 @@ export default function About() {
                 <p>CITY: INDONESIA</p>
               </div>
             </div>
-          </div>
+          </motion.div>
 
           {/* Right Column: Content */}
-          <div
-            data-aos="fade-left"
+          <motion.div
+            initial={{ opacity: 0, x: 50 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.8 }}
+            viewport={{ once: true }}
             className="w-full lg:w-7/12 p-6 sm:p-8 md:p-12 space-y-8 md:space-y-12 flex flex-col justify-center"
           >
             <div className="space-y-4 md:space-y-6">
@@ -130,7 +137,7 @@ export default function About() {
                 </a>
               </div>
             </div>
-          </div>
+          </motion.div>
 
 
         </div>

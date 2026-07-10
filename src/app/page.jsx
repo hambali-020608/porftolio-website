@@ -1,7 +1,6 @@
 "use client";
 import { useEffect } from "react";
 import dynamic from "next/dynamic";
-import AOS from "aos";
 
 const NavBar = dynamic(() => import("../components/section/navbar"), { ssr: false });
 const Hero = dynamic(() => import("../components/section/hero"), { ssr: false });
@@ -13,13 +12,7 @@ const Contact = dynamic(() => import("../components/section/contact"), { ssr: fa
 const Footer = dynamic(() => import("../components/section/footer"), { ssr: false });
 
 export default function Home() {
-  useEffect(() => {
-    AOS.init({
-      duration: 800,
-      once: true,
-    });
-  }, []);
-
+  
   return (
     <>
       <div className="blueprint-grid min-h-screen relative">
@@ -31,9 +24,9 @@ export default function Home() {
 
         <main className="relative z-10">
           <Hero />
-          <Skills />
+          {/* <Skills />
           <Projects />
-          <Certificates />
+          <Certificates /> */}
           <About />
           <Contact />
         </main>

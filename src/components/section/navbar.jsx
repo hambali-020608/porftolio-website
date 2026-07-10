@@ -5,6 +5,7 @@ import { FaBars, FaTimes, FaGlobe } from "react-icons/fa";
 import { navLinks } from "../../constants";
 import { useLanguage } from "../../context/LanguageContext";
 import { translations } from "../../constants/translations";
+import { motion } from "motion/react";
 
 export default function NavBar() {
   const [isOpen, setIsOpen] = useState(false);
@@ -30,8 +31,10 @@ export default function NavBar() {
 
   return (
     <header>
-      <nav
-        data-aos="fade-down"
+      <motion.nav
+        initial={{ opacity: 0, y: -50 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5 }}
         className={`fixed top-0 left-0 w-full z-[100] transition-all duration-500 ${
           scrolled
             ? "py-3 bg-gray-950/80 backdrop-blur-md border-b border-white/5 shadow-2xl"
@@ -101,7 +104,7 @@ export default function NavBar() {
             </button>
           </div>
         </div>
-      </nav>
+      </motion.nav>
 
       {/* Mobile Menu Overlay */}
       <div
