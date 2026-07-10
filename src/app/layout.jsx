@@ -1,18 +1,21 @@
 import { LanguageProvider } from "../context/LanguageContext";
-import "../index.css";
-import "../App.css";
+import "../index.css"; 
 import "aos/dist/aos.css";
 
 export const metadata = {
-  title: "My Portfolio",
-  description: "Web Portfolio of Hambali Subastian",
-  icons:'/soltech.jpeg'
+  title: "Hambali Subastian | Portfolio",
+  description: "Web Portfolio of Hambali Subastian - Software Engineer, Data Analyst, and Cybersecurity Researcher",
+  icons: {
+    icon: "/soltech.jpeg", 
+    apple: "/soltech.jpeg",
+  },
 };
 
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <body>
+      {/* Sangat disarankan menambahkan class atau style dasar di body jika diperlukan */}
+      <body className="antialiased">
         <LanguageProvider>
           {children}
         </LanguageProvider>
