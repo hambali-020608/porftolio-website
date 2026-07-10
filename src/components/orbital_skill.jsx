@@ -15,11 +15,15 @@ const OrbitalExpertise = ({ expertise }) => {
     if (isPaused || activeId !== null) return;
     
     const interval = setInterval(() => {
-      setRotation(prev => (prev + 0.4) % 360);
+      const speed = typeof window !== "undefined" && window.innerWidth < 768 ? 0.22 : 0.4;
+      setRotation(prev => (prev + speed) % 360);
     }, 30);
     
     return () => clearInterval(interval);
   }, [isPaused, activeId]);
+
+  const isMobile = typeof window !== "undefined" && window.innerWidth < 768;
+  const orbitRadius = isMobile ? 130 : 190;
 
   const handleNodeClick = (id, idx, total) => {
     if (activeId === id) {
@@ -29,7 +33,6 @@ const OrbitalExpertise = ({ expertise }) => {
       setActiveId(id);
       setIsPaused(true);
 
-      // Hitung sudut penyeimbang agar node yang dipilih tepat berputar menuju arah jam 12 (-90 derajat)
       const baseAngle = idx * (360 / total);
       const targetRotation = -90 - baseAngle;
       setRotation(targetRotation);
@@ -38,7 +41,7 @@ const OrbitalExpertise = ({ expertise }) => {
 
   return (
     <div 
-      className="relative w-full aspect-square max-w-[400px] mx-auto flex items-center justify-center overflow-visible"
+      className="relative w-full aspect-square max-w-[360px] md:max-w-[400px] mx-auto flex items-center justify-center overflow-visible"
       onMouseLeave={() => {
         if (activeId === null) setIsPaused(false);
       }}
@@ -51,11 +54,11 @@ const OrbitalExpertise = ({ expertise }) => {
     >
       {/* Central Core - High Tech Visual */}
       <div className="relative group/core">
-        <div className="w-20 h-20 md:w-28 md:h-28 bg-gray-950 border border-cyan-500/40 flex flex-col items-center justify-center rounded-none shadow-[0_0_50px_rgba(34,211,238,0.15)] relative overflow-hidden">
+        <div className="w-16 h-16 md:w-28 md:h-28 bg-gray-950 border border-cyan-500/40 flex flex-col items-center justify-center rounded-none shadow-[0_0_50px_rgba(34,211,238,0.15)] relative overflow-hidden">
           <div className="absolute inset-0 bg-[radial-gradient(circle,rgba(34,211,238,0.1)_0%,transparent_70%)]"></div>
           <div className="absolute inset-0 bg-cyan-500/[0.02] animate-pulse"></div>
           
-          <div className="text-cyan-500 font-orbitron font-black text-xl md:text-2xl tracking-tighter  uppercase">
+          <div className="text-cyan-500 font-orbitron font-black text-base md:text-2xl tracking-tighter  uppercase">
             {activeId !== null ? "DATA" : isPaused ? "SCAN" : "SYS"}
           </div>
           <div className="text-[7px] font-mono text-cyan-500/50 tracking-[0.4em] uppercase  mt-1">
@@ -69,16 +72,16 @@ const OrbitalExpertise = ({ expertise }) => {
           ></motion.div>
         </div>
         
-        <div className="absolute -top-3 -left-3 w-6 h-6 border-t-2 border-l-2 border-cyan-500/60"></div>
+        <div className="absolute -top-2 md:p-3 -left-3 w-6 h-6 border-t-2 border-l-2 border-cyan-500/60"></div>
         <div className="absolute -bottom-3 -right-3 w-6 h-6 border-b-2 border-r-2 border-cyan-500/60"></div>
       </div>
 
       {/* Background Decorative Grid */}
       <div className="absolute inset-0 blueprint-grid opacity-10 pointer-events-none rounded-full border border-white/5 scale-110"></div>
 
-      {/* CONTAINER ORBIT UTAMA: Berputar secara dinamis menggunakan akselerasi pegas Framer Motion */}
+
       <motion.div 
-        className="absolute w-full h-full flex items-center justify-center pointer-events-none "
+        className="absolute w-full h-full flex items-center justify-center pointer-events-none scale-[0.82] sm:scale-[0.9] md:scale-100"
         animate={{ rotate: rotation }}
         transition={
           activeId !== null 
@@ -90,7 +93,7 @@ const OrbitalExpertise = ({ expertise }) => {
           const total = expertise.length;
           // Distribusi posisi melingkar statis 
           const baseAngle = idx * (360 / total);
-          const radius = typeof window !== 'undefined' && window.innerWidth < 768 ? 120 : 190;
+          const radius = orbitRadius;
           const radian = (baseAngle * Math.PI) / 180;
           
           const x = radius * Math.cos(radian);
@@ -110,7 +113,7 @@ const OrbitalExpertise = ({ expertise }) => {
             >
               {/* Node Garis Penghubung Sektoral */}
               <div 
-                className="absolute h-[1px] bg-gradient-to-r from-cyan-500/40 to-transparent origin-left pointer-events-none hidden md:block"
+                className="absolute h-[1px] bg-gradient-to-r from-cyan-500/40 to-transparent origin-left pointer-events-none hidden lg:block"
                 style={{
                   width: radius,
                   left: "50%",
@@ -144,7 +147,7 @@ const OrbitalExpertise = ({ expertise }) => {
                 >
                   {/* Node visual */}
                   <div className={`
-                    w-14 h-14 md:w-20 md:h-20 
+                    w-12 h-12 sm:w-14 sm:h-14 md:w-20 md:h-20 
                     ${isFocused ? 'bg-cyan-500 text-black border-cyan-400 shadow-[0_0_30px_rgba(34,211,238,0.3)]' : 'bg-gray-950 text-white border-white/10 hover:border-cyan-500/30'}
                     border backdrop-blur-xl transition-all duration-500 flex items-center justify-center relative
                   `}>
@@ -152,7 +155,7 @@ const OrbitalExpertise = ({ expertise }) => {
                       width={90}
                       height={90}
                       alt={item.title}
-                      className={isFocused ? "brightness-0 transition-all duration-500 p-3" : "text-gray-500 p-3"}
+                      className={isFocused ? "brightness-0 transition-all duration-500 p-2 md:p-3" : "text-gray-500 p-2 md:p-3"}
                     />
                     <div className={`absolute -top-1 -right-1 w-2 h-2 ${isFocused ? 'bg-black' : 'bg-cyan-500'} transition-colors`}></div>
                   </div>
@@ -160,7 +163,7 @@ const OrbitalExpertise = ({ expertise }) => {
                   {/* Persistent Title */}
                   <div className={`
                     absolute top-full mt-3 whitespace-nowrap
-                    text-[9px] md:text-[10px] font-orbitron font-bold tracking-[0.2em] uppercase
+                    text-[7px] sm:text-[8px] md:text-[10px] font-orbitron font-bold tracking-[0.2em] uppercase
                     transition-colors duration-500
                     ${isFocused ? 'text-cyan-400' : 'text-white/60 group-hover:text-white'}
                   `}>
@@ -169,7 +172,7 @@ const OrbitalExpertise = ({ expertise }) => {
 
                   {/* Detail Card (Visible only when focused) */}
                   <motion.div 
-                    className="absolute top-[calc(100%+35px)] pointer-events-none z-50 origin-top"
+                    className="absolute top-[calc(100%+20px)] md:top-[calc(100%+35px)] left-1/2 -translate-x-1/2 pointer-events-none z-50 origin-top"
                     initial={{ opacity: 0, y: 15, scale: 0.9 }}
                     animate={{ 
                       opacity: isFocused ? 1 : 0,
@@ -178,14 +181,14 @@ const OrbitalExpertise = ({ expertise }) => {
                     }}
                     transition={{ duration: 0.4, type: "spring", stiffness: 120, damping: 14 }}
                   >
-                    <div className="w-64 bg-gray-950/98 border border-cyan-500/40 p-5 backdrop-blur-xl shadow-[0_20px_50px_rgba(0,0,0,0.5)] relative text-left">
+                    <div className="w-[170px] sm:w-[210px] md:w-64 bg-gray-950/98 border border-cyan-500/40 p-3 md:p-5 backdrop-blur-xl shadow-[0_20px_50px_rgba(0,0,0,0.5)] relative text-left">
                      
 
-                      <h4 className="text-sm font-orbitron font-bold text-white mb-2 tracking-wide uppercase">
+                      <h4 className="text-xs md:text-sm font-orbitron font-bold text-white mb-2 tracking-wide uppercase">
                         {item.title}
                       </h4>
                       
-                      <p className="text-[9px] text-gray-400 leading-relaxed mb-4 font-light italic">
+                      <p className="text-[8px] md:text-[9px] text-gray-400 leading-relaxed mb-4 font-light italic z-50">
                         "{item.desc}"
                       </p>
 
