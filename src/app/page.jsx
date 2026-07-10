@@ -24,9 +24,9 @@ export default function Home() {
 
         <main className="relative z-10">
           <Hero />
-          {/* <Skills />
+          <Skills />
           <Projects />
-          <Certificates /> */}
+          <Certificates />
           <About />
           <Contact />
         </main>
