@@ -3,7 +3,7 @@ export default function robots(){
   return {
     rules: {
       userAgent: '*',
-      disallow: '/', // <--- Mengunci Google di seluruh halaman
+      allow: '/', // <--- Mengunci Google di seluruh halaman
     },
   }
 }
