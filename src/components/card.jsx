@@ -3,6 +3,8 @@
 import * as React from "react";
 import { useLanguage } from "../context/LanguageContext";
 import { translations } from "../constants/translations";
+// Import Image bawaan Next.js untuk optimasi performa dan SEO
+import Image from "next/image";
 
 const cn = (...classes) => classes.filter(Boolean).join(" ");
 
@@ -19,7 +21,6 @@ export function ExpandableCard({
   const [isFlipped, setIsFlipped] = React.useState(false);
 
   const handleFlip = (e) => {
-    // Prevent flip if clicking on links inside the card (back side)
     if (e.target.closest('a')) return;
     setIsFlipped(!isFlipped);
   };
@@ -35,9 +36,8 @@ export function ExpandableCard({
           isFlipped ? "[transform:rotateY(180deg)]" : "group-hover/flipping-card:[transform:rotateY(180deg)]"
         )}
       >
-        {/* Front Face: Visual Preview */}
+        {/* Front Face */}
         <div className="absolute inset-0 h-full w-full bg-gray-950 border border-white/10 [transform-style:preserve-3d] [backface-visibility:hidden] overflow-hidden">
-          {/* Decorative Brackets */}
           <div className="absolute top-0 left-0 w-6 h-6 border-t border-l border-white/20 z-20"></div>
           <div className="absolute top-0 right-0 w-6 h-6 border-t border-r border-white/20 z-20"></div>
           <div className="absolute bottom-0 left-0 w-6 h-6 border-b border-l border-white/20 z-20"></div>
@@ -45,16 +45,21 @@ export function ExpandableCard({
 
           <div className="relative h-full w-full flex flex-col [transform:translateZ(50px)]">
             <div className="relative flex-1 overflow-hidden">
-              <img 
-                src={src} 
-                alt={title} 
-                className="w-full h-full object-cover group-hover/flipping-card:grayscale-0 transition-all duration-700" 
-              />
+              {/* Mengganti ke Next.js Image dengan properti fill agar responsif mengikuti container */}
+              {src && (
+                <Image 
+                  src={src} 
+                  alt={title} 
+                  fill
+                  sizes="(max-width: 768px) 100vw, 33vw"
+                  priority={true} // Membantu LCP (Largest Contentful Paint) agar SEO naik
+                  className="object-cover group-hover/flipping-card:grayscale-0 transition-all duration-700" 
+                />
+              )}
               <div className="absolute inset-0 bg-gradient-to-t from-gray-950 via-transparent to-transparent opacity-60"></div>
-           
             </div>
 
-            <div className="p-6 bg-gray-950 border-t border-white/5 space-y-4">
+            <div className="p-6 bg-gray-950 border-t border-white/5 space-y-4 z-10">
               <div className="space-y-1">
                 <p className="text-[9px] font-mono text-cyan-500/60 tracking-widest uppercase">
                   {description}
@@ -77,22 +82,19 @@ export function ExpandableCard({
             </div>
           </div>
           
-          {/* Interior Scanline Effect */}
           <div className="absolute inset-0 bg-gradient-to-b from-transparent via-cyan-500/[0.02] to-transparent -translate-y-full group-hover/flipping-card:animate-[scanline_4s_linear_infinite] pointer-events-none"></div>
         </div>
 
-        {/* Back Face: Technical Details */}
+        {/* Back Face */}
         <div className="absolute inset-0 h-full w-full bg-gray-950 border border-cyan-500/30 [transform-style:preserve-3d] [backface-visibility:hidden] [transform:rotateY(180deg)] overflow-hidden shadow-[inset_0_0_40px_rgba(6,182,212,0.05)]">
-          {/* Active Brackets */}
           <div className="absolute top-0 left-0 w-8 h-8 border-t-2 border-l-2 border-cyan-500/40 z-20"></div>
           <div className="absolute top-0 right-0 w-8 h-8 border-t-2 border-r-2 border-cyan-500/40 z-20"></div>
           <div className="absolute bottom-0 left-0 w-8 h-8 border-b-2 border-l-2 border-cyan-500/40 z-20"></div>
           <div className="absolute bottom-0 right-0 w-8 h-8 border-b-2 border-r-2 border-cyan-500/40 z-20"></div>
 
           <div className="[transform:translateZ(80px)] h-full w-full p-8 md:p-10 flex flex-col justify-center">
-            {/* Close button for mobile back face */}
             <button 
-              className="absolute top-4 right-4 text-cyan-500/50 hover:text-cyan-400 p-2"
+              className="absolute top-4 right-4 text-cyan-500/50 hover:text-cyan-400 p-2 z-30"
               onClick={(e) => {
                 e.stopPropagation();
                 setIsFlipped(false);
@@ -101,7 +103,6 @@ export function ExpandableCard({
               <div className="text-[10px] font-mono">CLOSE_X</div>
             </button>
 
-            {/* Terminal Header */}
             <div className="flex items-center gap-3 mb-6">
               <div className="flex gap-1">
                 <div className="w-1.5 h-1.5 rounded-full bg-red-500/40"></div>
@@ -121,7 +122,6 @@ export function ExpandableCard({
             </div>
           </div>
           
-          {/* Subtle Grid Pattern Overlay */}
           <div className="absolute inset-0 blueprint-grid opacity-10 pointer-events-none"></div>
         </div>
       </div>
