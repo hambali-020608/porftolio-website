@@ -1,5 +1,7 @@
 "use client";
-
+import { Document,Page,pdfjs } from 'react-pdf'
+import "react-pdf/dist/Page/AnnotationLayer.css";
+import "react-pdf/dist/Page/TextLayer.css";
 import React, { useState, useEffect } from "react";
 import SectionHeading from "../shared/SectionHeading";
 import { db } from "../../constants/firebase_init";
@@ -7,7 +9,10 @@ import { collection, getDocs, query } from "firebase/firestore";
 import { useLanguage } from "../../context/LanguageContext";
 import { translations } from "../../constants/translations";
 import { FaExternalLinkAlt, FaAward, FaFilePdf, FaDownload, FaArrowLeft, FaEye } from "react-icons/fa";
-
+pdfjs.GlobalWorkerOptions.workerSrc = new URL(
+  "pdfjs-dist/build/pdf.worker.min.mjs",
+  import.meta.url
+).toString();
 export default function Certificates() {
   const { language } = useLanguage();
   const t = translations[language].certificates;
@@ -68,12 +73,9 @@ export default function Certificates() {
                   {/* PDF Viewer Container */}
                   <div className="relative w-full h-56 bg-black border-b border-white/5 overflow-hidden">
                     {cert.pdf ? (
-                      <iframe
-                        src={cert.pdf}
-                        title={`Preview ${cert.title}`}
-                        className="w-full h-full border-none opacity-90"
-                        loading="lazy"
-                      />
+                       <Document file={cert.pdf}>
+        <Page pageNumber={1} width={300} />
+      </Document>
                     ) : (
                       <div className="w-full h-full flex flex-col items-center justify-center text-gray-700">
                         <FaFilePdf size={32} className="opacity-30 mb-2" />
