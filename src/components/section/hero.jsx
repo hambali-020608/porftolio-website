@@ -8,7 +8,6 @@ import { translations } from "../../constants/translations";
 export default function Hero() {
   const { language } = useLanguage();
   const t = translations[language].hero;
-
   return (
     <section
       id="home"
@@ -51,7 +50,6 @@ export default function Hero() {
           <p className="text-xs md:text-sm text-gray-400 max-w-md mx-auto leading-relaxed font-light tracking-widest uppercase">
             {t.desc}
           </p>
-
           {/* Action & Coordinates */}
           <div className="flex flex-col items-center gap-8 mt-8 md:mt-12">
             <a
