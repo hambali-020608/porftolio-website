@@ -25,7 +25,7 @@ export default function Home() {
       <div className="blueprint-grid min-h-screen relative">
         <div className="scanline-effect"></div>
         
-        <div className="absolute top-[100vh] left-1/2 -translate-x-1/2 w-[1.5px] h-[calc(100%-100vh)] bg-white/10 z-[50] pointer-events-none"></div>
+        <div className="absolute top-[100vh] left-1/2 -translate-x-1/2 w-[1.2px] h-[calc(100%-100vh)] bg-white/10 z-[50] pointer-events-none"></div>
 
         <NavBar />
 

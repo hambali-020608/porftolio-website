@@ -61,11 +61,11 @@ export default function About() {
               <div className="viewport-bracket viewport-bracket-tl -translate-x-2 -translate-y-2"></div>
               <div className="viewport-bracket viewport-bracket-br translate-x-2 translate-y-2 opacity-50"></div>
               
-              <div className="relative w-full h-full overflow-hidden border border-white/10 group">
+              <div className="relative w-full h-[450px] overflow-hidden border border-white/10 group">
                 <img
-                  src="/my2.jpeg"
+                  src="/bastian.jpeg"
                   alt="Hambali Subastian"
-                  className="w-full h-full object-cover grayscale transition-all duration-700 group-hover:grayscale-0 group-hover:scale-110 opacity-80 group-hover:opacity-100"
+                  className="w object-cover grayscale transition-all duration-700 group-hover:grayscale-0 group-hover:scale-110 opacity-80 group-hover:opacity-100"
                 />
               </div>
 
