@@ -1,5 +1,6 @@
 import { LanguageProvider } from "../context/LanguageContext";
 import "../index.css"; 
+import Providers from "../components/providers";
 
 export const metadata = {
   title: "Hambali Subastian | Portfolio",
@@ -14,9 +15,12 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body className="antialiased">
+        <Providers>
+         
         <LanguageProvider>
           {children}
         </LanguageProvider>
+        </Providers>
       </body>
     </html>
   );

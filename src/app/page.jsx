@@ -1,15 +1,14 @@
 "use client";
 import { useEffect } from "react";
-import dynamic from "next/dynamic";
-
-const NavBar = dynamic(() => import("../components/section/navbar"), { ssr: false });
-const Hero = dynamic(() => import("../components/section/hero"), { ssr: false });
-const Skills = dynamic(() => import("../components/section/skills"), { ssr: false });
-const Projects = dynamic(() => import("../components/section/projects"), { ssr: false });
-const Certificates = dynamic(() => import("../components/section/certificates"), { ssr: false });
-const About = dynamic(() => import("../components/section/about"), { ssr: false });
-const Contact = dynamic(() => import("../components/section/contact"), { ssr: false });
-const Footer = dynamic(() => import("../components/section/footer"), { ssr: false });
+// 1. Mengimpor langsung secara statis (Tanpa dynamic)
+import NavBar from "../components/section/navbar";
+import Hero from "../components/section/hero";
+import Skills from "../components/section/skills";
+import Projects from "../components/section/projects";
+import Certificates from "../components/section/certificates";
+import About from "../components/section/about";
+import Contact from "../components/section/contact";
+import Footer from "../components/section/footer";
 
 export default function Home() {
   

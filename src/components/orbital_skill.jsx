@@ -3,6 +3,7 @@
 import React, { useState, useEffect, useRef, useMemo, useCallback, memo } from "react";
 import {
   motion,
+  AnimatePresence,
   useMotionValue,
   useAnimationFrame,
   useTransform,
@@ -43,6 +44,7 @@ const OrbitNode = memo(function OrbitNode({
           transform: `translate(-${x}px, -${y}px) rotate(${baseAngle}deg)`,
           opacity: isFocused ? 0.4 : 0.1,
           transformOrigin: "0% 50%",
+          willChange: "opacity",
         }}
       />
 
@@ -57,7 +59,12 @@ const OrbitNode = memo(function OrbitNode({
       >
         <motion.div
           className="relative group cursor-pointer text-center flex flex-col items-center"
-          style={{ rotate: counterRotate }}
+          style={{
+            rotate: counterRotate,
+            willChange: "transform",
+            transform: "translateZ(0)",
+            backfaceVisibility: "hidden",
+          }}
         >
           {/* Node visual */}
           <div
@@ -66,10 +73,11 @@ const OrbitNode = memo(function OrbitNode({
             ${
               isFocused
                 ? "bg-cyan-500 text-black border-cyan-400 shadow-[0_0_30px_rgba(34,211,238,0.3)]"
-                : "bg-gray-950 text-white border-white/10 hover:border-cyan-500/30"
+                : "bg-gray-950/95 text-white border-white/10 hover:border-cyan-500/30"
             }
-            border backdrop-blur-xl transition-all duration-500 flex items-center justify-center relative
+            border transition-colors duration-500 flex items-center justify-center relative
           `}
+            style={{ willChange: "transform", transform: "translateZ(0)" }}
           >
             <Image
               src={item.icon}
@@ -100,40 +108,41 @@ const OrbitNode = memo(function OrbitNode({
           >
             {item.title}
           </div>
-          <motion.div
-            className="absolute top-[calc(100%+20px)] md:top-[calc(100%+35px)] left-1/2 -translate-x-1/2 pointer-events-none z-50 origin-top"
-            initial={{ opacity: 0, y: 15, scale: 0.9 }}
-            animate={{
-              opacity: isFocused ? 1 : 0,
-              y: isFocused ? 0 : 15,
-              scale: isFocused ? 1 : 0.9,
-            }}
-            transition={{ duration: 0.4, type: "spring", stiffness: 120, damping: 14 }}
-          >
-            <div className="w-[170px] sm:w-[210px] md:w-64 bg-gray-950/98 border border-cyan-500/40 p-3 md:p-5 backdrop-blur-xl shadow-[0_20px_50px_rgba(0,0,0,0.5)] relative text-left">
-              <h4 className="text-xs md:text-sm font-orbitron font-bold text-white mb-2 tracking-wide uppercase">
-                {item.title}
-              </h4>
+          <AnimatePresence>
+            {isFocused && (
+              <motion.div
+                className="absolute top-[calc(100%+20px)] md:top-[calc(100%+35px)] left-1/2 -translate-x-1/2 pointer-events-none z-50 origin-top"
+                initial={{ opacity: 0, y: 15, scale: 0.9 }}
+                animate={{ opacity: 1, y: 0, scale: 1 }}
+                exit={{ opacity: 0, y: 15, scale: 0.9 }}
+                transition={{ duration: 0.4, type: "spring", stiffness: 120, damping: 14 }}
+              >
+                <div className="w-[170px] sm:w-[210px] md:w-64 bg-gray-950/98 border border-cyan-500/40 p-3 md:p-5 backdrop-blur-xl shadow-[0_20px_50px_rgba(0,0,0,0.5)] relative text-left">
+                  <h4 className="text-xs md:text-sm font-orbitron font-bold text-white mb-2 tracking-wide uppercase">
+                    {item.title}
+                  </h4>
 
-              <p className="text-[8px] md:text-[9px] text-gray-400 leading-relaxed mb-4 font-light italic z-50">
-                &quot;{item.desc}&quot;
-              </p>
+                  <p className="text-[8px] md:text-[9px] text-gray-400 leading-relaxed mb-4 font-light italic z-50">
+                    &quot;{item.desc}&quot;
+                  </p>
 
-              <div className="space-y-2">
-                <div className="h-[2px] w-full bg-white/5 overflow-hidden">
-                  <motion.div
-                    className="h-full bg-cyan-500 shadow-[0_0_10px_#22d3ee]"
-                    initial={{ width: 0 }}
-                    animate={{ width: "100%" }}
-                    transition={{ duration: 1.2, delay: 0.1 }}
-                  />
+                  <div className="space-y-2">
+                    <div className="h-[2px] w-full bg-white/5 overflow-hidden">
+                      <motion.div
+                        className="h-full bg-cyan-500 shadow-[0_0_10px_#22d3ee]"
+                        initial={{ width: 0 }}
+                        animate={{ width: "100%" }}
+                        transition={{ duration: 1.2, delay: 0.1 }}
+                      />
+                    </div>
+                  </div>
+
+                  <div className="absolute top-0 left-0 w-2 h-2 border-t border-l border-cyan-500" />
+                  <div className="absolute bottom-0 right-0 w-2 h-2 border-b border-r border-cyan-500" />
                 </div>
-              </div>
-
-              <div className="absolute top-0 left-0 w-2 h-2 border-t border-l border-cyan-500" />
-              <div className="absolute bottom-0 right-0 w-2 h-2 border-b border-r border-cyan-500" />
-            </div>
-          </motion.div>
+              </motion.div>
+            )}
+          </AnimatePresence>
         </motion.div>
       </motion.div>
     </div>
@@ -148,26 +157,91 @@ const OrbitalExpertise = ({ expertise }) => {
 
   const isPausedRef = useRef(isPaused);
   const activeIdRef = useRef(activeId);
+  const isVisibleRef = useRef(true);
+  const containerRef = useRef(null);
+  // Stays false until the browser has actually painted the initial,
+  // static layout. Rotation only starts after that — so the heavy first
+  // mount (all nodes + tooltips inserted into the DOM) isn't competing
+  // with a spring/rAF loop for the same frame budget.
+  const readyToSpinRef = useRef(false);
+  const [readyToSpin, setReadyToSpin] = useState(false);
   useEffect(() => {
     isPausedRef.current = isPaused;
   }, [isPaused]);
   useEffect(() => {
     activeIdRef.current = activeId;
   }, [activeId]);
+  useEffect(() => {
+    let raf1, raf2;
+    raf1 = requestAnimationFrame(() => {
+      raf2 = requestAnimationFrame(() => {
+        readyToSpinRef.current = true;
+        setReadyToSpin(true);
+      });
+    });
+    return () => {
+      cancelAnimationFrame(raf1);
+      cancelAnimationFrame(raf2);
+    };
+  }, []);
  useEffect(() => {
-    const checkMobile = () => setIsMobile(window.innerWidth < 768);
+    let resizeTimeout;
+    const checkMobile = () => {
+      clearTimeout(resizeTimeout);
+      resizeTimeout = setTimeout(
+        () => setIsMobile(window.innerWidth < 768),
+        150
+      );
+    };
     checkMobile();
     window.addEventListener("resize", checkMobile);
-    return () => window.removeEventListener("resize", checkMobile);
+    return () => {
+      clearTimeout(resizeTimeout);
+      window.removeEventListener("resize", checkMobile);
+    };
+  }, []);
+
+  // Pause the rAF loop entirely when the tab is backgrounded or the widget
+  // scrolls out of view — no point paying for a rotation nobody can see.
+  useEffect(() => {
+    const handleVisibility = () => {
+      isVisibleRef.current = !document.hidden;
+    };
+    document.addEventListener("visibilitychange", handleVisibility);
+
+    let observer;
+    if (containerRef.current && "IntersectionObserver" in window) {
+      observer = new IntersectionObserver(
+        ([entry]) => {
+          isVisibleRef.current = entry.isIntersecting && !document.hidden;
+        },
+        { threshold: 0.01 }
+      );
+      observer.observe(containerRef.current);
+    }
+
+    return () => {
+      document.removeEventListener("visibilitychange", handleVisibility);
+      if (observer) observer.disconnect();
+    };
   }, []);
 
   const orbitRadius = isMobile ? 130 : 190;
 
   useAnimationFrame((_t, delta) => {
-    if (isPausedRef.current || activeIdRef.current !== null) return;
+    if (
+      !readyToSpinRef.current ||
+      isPausedRef.current ||
+      activeIdRef.current !== null ||
+      !isVisibleRef.current
+    )
+      return;
+    // Cap delta so a dropped/backgrounded frame (e.g. tab switch) doesn't
+    // cause a big visible jump when the loop resumes.
+    const clampedDelta = Math.min(delta, 50);
     const speed = isMobile ? 0.22 : 0.4; // degrees per ~30ms (original tuning)
     const degreesPerMs = speed / 30;
-    rotation.set((rotation.get() + degreesPerMs * delta) % 360);
+    rotation.set((rotation.get() + degreesPerMs * clampedDelta) % 360);
   });
 
   const handleNodeClick = useCallback(
@@ -210,6 +284,7 @@ const OrbitalExpertise = ({ expertise }) => {
 
   return (
     <div
+      ref={containerRef}
       className="relative w-full aspect-square max-w-[360px] md:max-w-[400px] mx-auto flex items-center justify-center overflow-visible"
       onMouseLeave={handleMouseLeave}
       onClick={handleBackgroundClick}
@@ -229,8 +304,12 @@ const OrbitalExpertise = ({ expertise }) => {
 
           <motion.div
             className="absolute inset-2 border border-cyan-500/20 rounded-full border-dashed"
-            animate={{ rotate: 360 }}
-            transition={{ duration: 10, repeat: Infinity, ease: "linear" }}
+            animate={readyToSpin ? { rotate: 360 } : { rotate: 0 }}
+            transition={
+              readyToSpin
+                ? { duration: 10, repeat: Infinity, ease: "linear" }
+                : { duration: 0 }
+            }
           />
         </div>
 
@@ -240,7 +319,11 @@ const OrbitalExpertise = ({ expertise }) => {
       <div className="absolute inset-0 blueprint-grid opacity-10 pointer-events-none rounded-full border border-white/5 scale-110" />
       <motion.div
         className="absolute w-full h-full flex items-center justify-center pointer-events-none scale-[0.82] sm:scale-[0.9] md:scale-100"
-        style={{ rotate: rotation }}
+        style={{
+          rotate: rotation,
+          willChange: "transform",
+          transformStyle: "preserve-3d",
+        }}
       >
         {expertise.map((item, idx) => (
           <OrbitNode

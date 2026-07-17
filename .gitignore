@@ -14,7 +14,7 @@
 # next.js
 /.next/
 /out/
-
+firebase-credential.json
 # production
 /build
 

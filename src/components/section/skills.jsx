@@ -1,40 +1,41 @@
 "use client";
 
-import { useState, useEffect, useMemo, useCallback, memo, useRef } from "react";
+import { useState, useEffect, useMemo, useCallback, memo, useRef, useDeferredValue, startTransition } from "react";
 import { useSpring, useTransition, animated, config, useSprings } from "@react-spring/web";
+import { useQuery } from "@tanstack/react-query"; // 1. Import useQuery
 import SectionHeading from "../shared/SectionHeading";
 import { skillCategories } from "../../constants";
 import { useLanguage } from "../../context/LanguageContext";
 import { translations } from "../../constants/translations";
 import OrbitalExpertise from "../orbital_skill";
 import { InfiniteSlider } from "../ui/infinite-slider";
-import { db } from "../../constants/firebase_init";
-import { collection, getDocs, query } from "firebase/firestore";
 import * as SiIcons from "react-icons/si";
 import * as FaIcons from "react-icons/fa";
 import * as PiIcons from "react-icons/pi";
 
-// --- ICON MAP ---
-const iconMap = new Map();
-Object.entries(SiIcons).forEach(([key, val]) => iconMap.set(key, val));
-Object.entries(FaIcons).forEach(([key, val]) => iconMap.set(key, val));
-Object.entries(PiIcons).forEach(([key, val]) => iconMap.set(key, val));
+// --- ICON RESOLVER ---
+const resolvedIconCache = new Map();
 const DEFAULT_ICON = FaIcons.FaCode;
 
 const getIconComponent = (iconName) => {
   if (!iconName) return DEFAULT_ICON;
-  if (typeof iconName !== 'string') return iconName;
-  return iconMap.get(iconName) || DEFAULT_ICON;
+  if (typeof iconName !== "string") return iconName;
+
+  if (resolvedIconCache.has(iconName)) return resolvedIconCache.get(iconName);
+
+  const found =
+    SiIcons[iconName] || FaIcons[iconName] || PiIcons[iconName] || DEFAULT_ICON;
+  resolvedIconCache.set(iconName, found);
+  return found;
 };
 
-// --- SKELETON DENGAN REACT SPRING ANIMATION ---
+// --- SKELETON WITH REACT SPRING ANIMATION ---
 const SkillsSkeleton = memo(function SkillsSkeleton() {
   const mockNodes = useMemo(() => 
     Array.from({ length: 6 }, (_, i) => ({ angle: i * 60 })), 
     []
   );
 
-  // Spring animation untuk pulse effect
   const pulseSpring = useSpring({
     from: { opacity: 0.3, transform: 'scale(0.95)' },
     to: { opacity: 0.7, transform: 'scale(1.05)' },
@@ -42,7 +43,6 @@ const SkillsSkeleton = memo(function SkillsSkeleton() {
     loop: { reverse: true },
   });
 
-  // Spring animation untuk orbiting nodes
   const [nodeSprings] = useSprings(mockNodes.length, (index) => ({
     from: { 
       transform: `rotate(${index * 60}deg) translateX(110px) rotate(${-index * 60}deg)`,
@@ -59,25 +59,17 @@ const SkillsSkeleton = memo(function SkillsSkeleton() {
 
   return (
     <div className="w-full space-y-24 will-change-[opacity]">
-      {/* 1. Skeleton Orbital Centerpiece */}
       <div className="w-full max-w-[450px] mx-auto aspect-square flex items-center justify-center relative my-16 select-none pointer-events-none">
-        
-        {/* Core Tengah dengan Pulse Animation */}
         <animated.div 
           style={pulseSpring}
           className="w-20 h-20 md:w-24 md:h-24 bg-gray-900 border border-cyan-500/20 flex flex-col items-center justify-center relative"
         >
-          <div className="text-[8px] font-mono text-cyan-500/30 tracking-widest">
-            LOADING
-          </div>
-          <div className="text-[6px] font-mono text-gray-700 tracking-[0.2em] mt-1">
-            SYS_INIT
-          </div>
+          <div className="text-[8px] font-mono text-cyan-500/30 tracking-widest">LOADING</div>
+          <div className="text-[6px] font-mono text-gray-700 tracking-[0.2em] mt-1">SYS_INIT</div>
           <div className="absolute -top-1 -left-1 w-3 h-3 border-t border-l border-cyan-500/40"></div>
           <div className="absolute -bottom-1 -right-1 w-3 h-3 border-b border-r border-cyan-500/40"></div>
         </animated.div>
 
-        {/* Ring Orbit dengan React Spring */}
         <animated.div 
           style={{
             transform: useSpring({
@@ -90,26 +82,18 @@ const SkillsSkeleton = memo(function SkillsSkeleton() {
           className="absolute w-[60%] h-[60%] border border-dashed border-cyan-500/10 rounded-full"
         />
 
-        {/* Node-node dengan Spring Animation */}
-        {mockNodes.map((node, idx) => {
-          const radian = (node.angle * Math.PI) / 180;
-          const x = 110 * Math.cos(radian);
-          const y = 110 * Math.sin(radian);
-          
-          return (
-            <animated.div
-              key={idx}
-              style={nodeSprings[idx]}
-              className="absolute w-12 h-12 md:w-16 md:h-16 bg-gray-900/60 border border-white/5 flex items-center justify-center"
-            >
-              <div className="w-6 h-6 bg-white/5 rounded"></div>
-              <div className="absolute -top-0.5 -right-0.5 w-1 h-1 bg-cyan-500/30"></div>
-            </animated.div>
-          );
-        })}
+        {mockNodes.map((node, idx) => (
+          <animated.div
+            key={idx}
+            style={nodeSprings[idx]}
+            className="absolute w-12 h-12 md:w-16 md:h-16 bg-gray-900/60 border border-white/5 flex items-center justify-center"
+          >
+            <div className="w-6 h-6 bg-white/5 rounded"></div>
+            <div className="absolute -top-0.5 -right-0.5 w-1 h-1 bg-cyan-500/30"></div>
+          </animated.div>
+        ))}
       </div>
 
-      {/* 2. Skeleton Slider */}
       <div className="space-y-4 pt-12 border-t border-white/5">
         {[1, 2].map((row) => (
           <div key={row} className="flex gap-4 overflow-hidden w-full opacity-40 select-none pointer-events-none">
@@ -129,11 +113,10 @@ const SkillsSkeleton = memo(function SkillsSkeleton() {
   );
 });
 
-// --- TECH STACK ITEM DENGAN REACT SPRING ---
-const TechStackItem = memo(function TechStackItem({ skill, index, style }) {
+// --- TECH STACK ITEM ---
+const TechStackItem = memo(function TechStackItem({ skill, style }) {
   const IconComponent = useMemo(() => getIconComponent(skill.icon), [skill.icon]);
   
-  // Spring animation untuk hover effect
   const [spring, api] = useSpring(() => ({
     transform: 'scale(1)',
     boxShadow: '0 0 0px rgba(34,211,238,0)',
@@ -170,29 +153,32 @@ const TechStackItem = memo(function TechStackItem({ skill, index, style }) {
 });
 
 // --- TECH STACK ROW COMPONENT ---
-const TechStackRow = memo(function TechStackRow({ rowSkills, rowIndex, baseIndex }) {
-  // Spring untuk row entrance - sekarang di top level component
+const TechStackRow = memo(function TechStackRow({
+  rowSkills,
+  rowIndex,
+  baseIndex,
+  readyToAnimate,
+}) {
   const rowSpring = useSpring({
     from: { opacity: 0, transform: 'translateX(-20px)' },
-    to: { opacity: 1, transform: 'translateX(0px)' },
-    delay: rowIndex * 100 + 300,
+    to: readyToAnimate
+      ? { opacity: 1, transform: 'translateX(0px)' }
+      : { opacity: 0, transform: 'translateX(-20px)' },
+    delay: readyToAnimate ? rowIndex * 100 + 300 : 0,
     config: config.gentle,
+    immediate: !readyToAnimate,
   });
 
-  // Buat entrance animation untuk setiap item
   const itemSprings = useSprings(
     rowSkills.length,
     rowSkills.map((_, idx) => ({
-      from: { 
-        opacity: 0, 
-        transform: 'translateY(20px) scale(0.9)',
-      },
-      to: { 
-        opacity: 1, 
-        transform: 'translateY(0px) scale(1)',
-      },
-      delay: (baseIndex + idx) * 50,
+      from: { opacity: 0, transform: 'translateY(20px) scale(0.9)' },
+      to: readyToAnimate
+        ? { opacity: 1, transform: 'translateY(0px) scale(1)' }
+        : { opacity: 0, transform: 'translateY(20px) scale(0.9)' },
+      delay: readyToAnimate ? (baseIndex + idx) * 50 : 0,
       config: config.gentle,
+      immediate: !readyToAnimate,
     }))
   );
 
@@ -209,7 +195,6 @@ const TechStackRow = memo(function TechStackRow({ rowSkills, rowIndex, baseIndex
           <TechStackItem 
             key={skill.name} 
             skill={skill} 
-            index={baseIndex + idx}
             style={itemSprings[idx]}
           />
         ))}
@@ -218,55 +203,36 @@ const TechStackRow = memo(function TechStackRow({ rowSkills, rowIndex, baseIndex
   );
 });
 
-// --- MAIN COMPONENT ---
+// --- FETCH FUNCTION FOR TANSTACK QUERY ---
+const fetchSkills = async () => {
+  const res = await fetch("/api/skills");
+  if (!res.ok) throw new Error("Failed to fetch skills data");
+  return res.json(); // Mengasumsikan response berbentuk: { skills: [...], techStack: [...] }
+};
+
 export default function Skills() {
   const { language } = useLanguage();
   const t = translations[language].skills;
   const [activeCategory, setActiveCategory] = useState("all");
-  const [expertiseCardsList, setExpertiseCardsList] = useState([]);
-  const [techStackList, setTechStackList] = useState([]);
-  const [loading, setLoading] = useState(true);
   const containerRef = useRef(null);
 
-  // --- FETCH DATA ---
-  useEffect(() => {
-    const abortController = new AbortController();
-    let isMounted = true;
+  // 2. Menggunakan TanStack Query useQuery
+  const { data, isLoading, isError } = useQuery({
+    queryKey: ["skillsData"],
+    queryFn: fetchSkills,
+    staleTime: 1000 * 60 * 5, // Cache data selama 5 menit
+  });
 
-    const fetchSkillsData = async () => {
-      try {
-        const [skillsSnapshot, techSnapshot] = await Promise.all([
-          getDocs(query(collection(db, "skills"))),
-          getDocs(query(collection(db, "tech_stack")))
-        ]);
+  // Ambil list dari data query dengan fallback array kosong
+  const expertiseCardsList = data?.skills ?? [];
+  const techStackList = data?.techStack ?? [];
 
-        if (!isMounted || abortController.signal.aborted) return;
-
-        const skillsDataArr = skillsSnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
-        const techDataArr = techSnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
-        
-        setExpertiseCardsList(skillsDataArr);
-        setTechStackList(techDataArr);
-        setLoading(false);
-      } catch (err) {
-        console.error("Error fetching skills/tech stack data:", err);
-        if (isMounted) setLoading(false);
-      }
-    };
-
-    fetchSkillsData();
-
-    return () => {
-      isMounted = false;
-      abortController.abort();
-    };
-  }, []);
-
-  // --- FILTERING ---
+  const deferredTechStackList = useDeferredValue(techStackList);
+  
   const filteredSkills = useMemo(() => {
-    if (activeCategory === "all") return techStackList;
-    return techStackList.filter(skill => skill.category === activeCategory);
-  }, [activeCategory, techStackList]);
+    if (activeCategory === "all") return deferredTechStackList;
+    return deferredTechStackList.filter(skill => skill.category === activeCategory);
+  }, [activeCategory, deferredTechStackList]);
 
   // --- ROW SLICING ---
   const rows = useMemo(() => {
@@ -279,10 +245,23 @@ export default function Skills() {
     return result;
   }, [filteredSkills]);
 
-  // --- HANDLE CATEGORY CHANGE ---
   const handleCategoryChange = useCallback((categoryId) => {
     setActiveCategory(categoryId);
   }, []);
+
+  // --- READY TO ANIMATE CONTROL ---
+  const [readyToAnimate, setReadyToAnimate] = useState(false);
+  useEffect(() => {
+    if (isLoading) return;
+    let raf1, raf2;
+    raf1 = requestAnimationFrame(() => {
+      raf2 = requestAnimationFrame(() => setReadyToAnimate(true));
+    });
+    return () => {
+      cancelAnimationFrame(raf1);
+      cancelAnimationFrame(raf2);
+    };
+  }, [isLoading]);
 
   // --- SECTION ENTRANCE ANIMATION ---
   const sectionSpring = useSpring({
@@ -301,6 +280,14 @@ export default function Skills() {
     trail: 50,
   });
 
+  if (isError) {
+    return (
+      <div className="py-24 text-center font-mono text-red-500">
+        ERROR: FAILED_TO_INITIALIZE_SKILLS_DATA
+      </div>
+    );
+  }
+
   return (
     <animated.section 
       ref={containerRef}
@@ -317,7 +304,7 @@ export default function Skills() {
           subtitle={t.subtitle}
         />
 
-        {loading || expertiseCardsList.length === 0 || techStackList.length === 0 ? (
+        {isLoading || expertiseCardsList.length === 0 || techStackList.length === 0 ? (
           <SkillsSkeleton />
         ) : (
           <>
@@ -353,11 +340,13 @@ export default function Skills() {
               </div>
 
               {/* Sliding Tech Stack */}
-              <div className="space-y-4 md:space-y-6 [mask-image:linear-gradient(to_right,transparent,black_15%,black_85%,transparent)]">
+              <div
+                className="space-y-4 md:space-y-6 [mask-image:linear-gradient(to_right,transparent,black_15%,black_85%,transparent)]"
+                style={{ contentVisibility: "auto", containIntrinsicSize: "0 500px" }}
+              >
                 {rows.map((rowSkills, rowIndex) => {
                   if (rowSkills.length === 0) return null;
                   
-                  // Hitung base index untuk stagger effect
                   const baseIndex = rows
                     .slice(0, rowIndex)
                     .reduce((acc, row) => acc + row.length, 0);
@@ -368,6 +357,7 @@ export default function Skills() {
                       rowSkills={rowSkills}
                       rowIndex={rowIndex}
                       baseIndex={baseIndex}
+                      readyToAnimate={readyToAnimate}
                     />
                   );
                 })}

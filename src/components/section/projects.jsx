@@ -1,45 +1,37 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo, useCallback } from "react";
 import { FaGithub, FaExternalLinkAlt, FaChevronLeft, FaChevronRight } from "react-icons/fa";
-import { motion, AnimatePresence } from "motion/react";
+import { motion } from "motion/react"; // Jika menggunakan Framer Motion v11+, disarankan import dari 'framer-motion'
+import { useQuery } from "@tanstack/react-query";
 import SectionHeading from "../shared/SectionHeading";
-import { db } from "../../constants/firebase_init";
-import { collection, getDocs, query,where } from "firebase/firestore";
 import { useLanguage } from "../../context/LanguageContext";
 import { translations } from "../../constants/translations";
 import { ExpandableCard } from "../card";
+
+// --- FETCH FUNCTION FOR TANSTACK QUERY ---
+const fetchProjects = async () => {
+  const res = await fetch("/api/projects");
+  if (!res.ok) throw new Error("Failed to fetch projects data");
+  return res.json(); // Mengasumsikan endpoint mengembalikan array project secara langsung
+};
 
 export default function Projects() {
   const { language } = useLanguage();
   const t = translations[language].projects;
   
-  const [projectsList, setProjectsList] = useState([]);
-  const [loading, setLoading] = useState(true);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [cardsPerView, setCardsPerView] = useState(2);
   const [isTransitioning, setIsTransitioning] = useState(false);
 
-  useEffect(() => {
-    const fetchProjects = async () => {
-      try {
-        const q = query(collection(db, "projects"),where("status","==","active"));
-        const querySnapshot = await getDocs(q);
-        
-        const data = querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
-    
-        setProjectsList(data);
-      } catch (err) {
-        console.error("Error fetching projects:", err);
-      } finally {
-        setLoading(false);
-      }
-    };
-    fetchProjects();
-  }, []);
+  // 1. Integrasi TanStack Query
+  const { data: projectsList = [], isLoading } = useQuery({
+    queryKey: ["projectsData"],
+    queryFn: fetchProjects,
+    staleTime: 1000 * 60 * 10, // Cache data selama 10 menit
+  });
 
-  const extendedProjects = [...projectsList, ...projectsList.slice(0, cardsPerView)];
-
+  // 2. Responsive Cards Per View
   useEffect(() => {
     const handleResize = () => {
       if (window.innerWidth < 768) {
@@ -54,13 +46,20 @@ export default function Projects() {
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
-  const nextSlide = () => {
+  // 3. Menghitung data loop tak terbatas untuk slider carousel
+  const extendedProjects = useMemo(() => {
+    if (projectsList.length === 0) return [];
+    return [...projectsList, ...projectsList.slice(0, cardsPerView)];
+  }, [projectsList, cardsPerView]);
+
+  // 4. Navigasi Slider (Menggunakan useCallback untuk optimasi performa)
+  const nextSlide = useCallback(() => {
     if (isTransitioning || projectsList.length === 0) return;
     setIsTransitioning(true);
     setCurrentIndex((prev) => prev + 1);
-  };
+  }, [isTransitioning, projectsList.length]);
 
-  const prevSlide = () => {
+  const prevSlide = useCallback(() => {
     if (isTransitioning || projectsList.length === 0) return;
     setIsTransitioning(true);
     if (currentIndex === 0) {
@@ -68,16 +67,23 @@ export default function Projects() {
     } else {
       setCurrentIndex((prev) => prev - 1);
     }
-  };
+  }, [isTransitioning, currentIndex, projectsList.length]);
 
-  const handleAnimationComplete = () => {
+  const handleAnimationComplete = useCallback(() => {
     setIsTransitioning(false);
     if (currentIndex >= projectsList.length) {
       setCurrentIndex(0);
     }
-  };
+  }, [currentIndex, projectsList.length]);
 
-  if (loading || projectsList.length === 0) return null;
+  const handleDotClick = useCallback((index) => {
+    if (isTransitioning) return;
+    setIsTransitioning(true);
+    setCurrentIndex(index);
+  }, [isTransitioning]);
+
+  // Tampilkan null atau Skeleton jika data sedang loading atau kosong
+  if (isLoading || projectsList.length === 0) return null;
 
   return (
     <section id="projects" aria-label="Selected Projects" className="py-24 relative overflow-hidden">
@@ -93,6 +99,7 @@ export default function Projects() {
           subtitle={t.subtitle}
         />
 
+        {/* Navigation System */}
         <div className="flex justify-center items-center gap-4 mb-12">
           <motion.button
             whileHover={{ scale: 1.05 }}
@@ -121,6 +128,7 @@ export default function Projects() {
           </motion.button>
         </div>
 
+        {/* Carousel Window */}
         <div className="relative overflow-hidden -mx-4 px-4">
           <motion.div
             className="flex"
@@ -136,7 +144,6 @@ export default function Projects() {
             onAnimationComplete={handleAnimationComplete}
           >
             {extendedProjects.map((project, idx) => (
-              
               <div
                 key={`${project.id}-${idx}`}
                 style={{
@@ -145,18 +152,17 @@ export default function Projects() {
                 }}
                 className="px-4"
               >
-                
                 <ExpandableCard
                   id={project.id}
                   title={project.title}
-                  description={project.tags.slice(0, 2).join(" | ")}
+                  description={project.tags?.slice(0, 2).join(" | ") || ""}
                   src={project.image}
                 >
                   <div className="space-y-6">
                     <div className="flex items-center gap-2">
                       <span className="w-2 h-2 rounded-full bg-cyan-500 animate-pulse"></span>
                       <span className="text-[10px] font-mono text-cyan-500 tracking-widest uppercase">
-                    
+                        Active_Project
                       </span>
                     </div>
 
@@ -165,7 +171,7 @@ export default function Projects() {
                     </p>
 
                     <div className="flex flex-wrap gap-2">
-                      {project.tags.map((tag) => (
+                      {project.tags?.map((tag) => (
                         <span 
                           key={tag} 
                           className="px-2 py-0.5 bg-white/5 border border-white/10 text-gray-500 text-[8px] font-bold uppercase tracking-widest"
@@ -176,7 +182,7 @@ export default function Projects() {
                     </div>
 
                     <div className="flex gap-4 pt-6 border-t border-white/5">
-                      {project.github !== "#" && (
+                      {project.github && project.github !== "#" && (
                         <a 
                           href={project.github} 
                           target="_blank" 
@@ -187,7 +193,7 @@ export default function Projects() {
                           SRC_CODE
                         </a>
                       )}
-                      {project.live !== "#" && (
+                      {project.live && project.live !== "#" && (
                         <a 
                           href={project.live} 
                           target="_blank" 
@@ -206,16 +212,12 @@ export default function Projects() {
           </motion.div>
         </div>
 
-        {/* Progress Indicator */}
+        {/* Progress Dots Indicator */}
         <div className="mt-12 flex justify-center gap-2">
           {projectsList.map((_, index) => (
             <button 
               key={index}
-              onClick={() => {
-                if (isTransitioning) return;
-                setIsTransitioning(true);
-                setCurrentIndex(index);
-              }}
+              onClick={() => handleDotClick(index)}
               className={`h-[2px] transition-all duration-500 ${
                 index === (currentIndex % projectsList.length)
                   ? "w-8 bg-cyan-500" 
