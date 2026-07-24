@@ -2,18 +2,17 @@
 
 import { useState, useEffect, useMemo, useCallback } from "react";
 import { FaGithub, FaExternalLinkAlt, FaChevronLeft, FaChevronRight } from "react-icons/fa";
-import { motion } from "motion/react"; // Jika menggunakan Framer Motion v11+, disarankan import dari 'framer-motion'
-import { useQuery } from "@tanstack/react-query";
+import { motion } from "motion/react"; 
 import SectionHeading from "../shared/SectionHeading";
 import { useLanguage } from "../../context/LanguageContext";
 import { translations } from "../../constants/translations";
 import { ExpandableCard } from "../card";
+import { useQuery } from "@tanstack/react-query";
 
-// --- FETCH FUNCTION FOR TANSTACK QUERY ---
 const fetchProjects = async () => {
   const res = await fetch("/api/projects");
   if (!res.ok) throw new Error("Failed to fetch projects data");
-  return res.json(); // Mengasumsikan endpoint mengembalikan array project secara langsung
+  return res.json(); 
 };
 
 export default function Projects() {
@@ -24,14 +23,12 @@ export default function Projects() {
   const [cardsPerView, setCardsPerView] = useState(2);
   const [isTransitioning, setIsTransitioning] = useState(false);
 
-  // 1. Integrasi TanStack Query
   const { data: projectsList = [], isLoading } = useQuery({
     queryKey: ["projectsData"],
     queryFn: fetchProjects,
-    staleTime: 1000 * 60 * 10, // Cache data selama 10 menit
+    staleTime: 1000 * 60 * 10, 
   });
 
-  // 2. Responsive Cards Per View
   useEffect(() => {
     const handleResize = () => {
       if (window.innerWidth < 768) {
@@ -46,13 +43,11 @@ export default function Projects() {
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
-  // 3. Menghitung data loop tak terbatas untuk slider carousel
   const extendedProjects = useMemo(() => {
     if (projectsList.length === 0) return [];
     return [...projectsList, ...projectsList.slice(0, cardsPerView)];
   }, [projectsList, cardsPerView]);
 
-  // 4. Navigasi Slider (Menggunakan useCallback untuk optimasi performa)
   const nextSlide = useCallback(() => {
     if (isTransitioning || projectsList.length === 0) return;
     setIsTransitioning(true);
@@ -82,7 +77,7 @@ export default function Projects() {
     setCurrentIndex(index);
   }, [isTransitioning]);
 
-  // Tampilkan null atau Skeleton jika data sedang loading atau kosong
+  
   if (isLoading || projectsList.length === 0) return null;
 
   return (
@@ -212,7 +207,6 @@ export default function Projects() {
           </motion.div>
         </div>
 
-        {/* Progress Dots Indicator */}
         <div className="mt-12 flex justify-center gap-2">
           {projectsList.map((_, index) => (
             <button 

@@ -9,6 +9,7 @@ import { useLanguage } from "../../context/LanguageContext";
 import { translations } from "../../constants/translations";
 import { db } from "../../constants/firebase_init";
 import { collection, getDocs, query, limit } from "firebase/firestore";
+import Image from "next/image";
 
 export default function About() {
   const { language } = useLanguage();
@@ -66,11 +67,14 @@ export default function About() {
               <div className="viewport-bracket viewport-bracket-br translate-x-2 translate-y-2 opacity-50"></div>
               
               <div className="relative w-full h-[450px] overflow-hidden border border-white/10 group">
-                <img
-                  src="/bastian.jpeg"
-                  alt="Hambali Subastian"
-                  className="w object-cover grayscale transition-all duration-700 group-hover:grayscale-0 group-hover:scale-110 opacity-80 group-hover:opacity-100"
-                />
+             <Image
+    src="/bastian.webp" // Menggunakan format WebP yang jauh lebih ringan
+    alt="Hambali Subastian"
+    width={393}        
+    height={700}
+    priority           
+    className="w-full h-full object-cover grayscale transition-all duration-700 group-hover:grayscale-0 group-hover:scale-110 opacity-80 group-hover:opacity-100"
+  />
               </div>
 
               {/* Metadata */}

@@ -49,7 +49,8 @@ export function ExpandableCard({
                   alt={title} 
                   fill
                   sizes="(max-width: 768px) 100vw, 33vw"
-                  priority={true} // Membantu LCP (Largest Contentful Paint) agar SEO naik
+                  // priority={true}
+                  loading="lazy"
                   className="object-cover group-hover/flipping-card:grayscale-0 transition-all duration-700" 
                 />
               )}

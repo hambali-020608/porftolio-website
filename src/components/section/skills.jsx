@@ -29,7 +29,6 @@ const getIconComponent = (iconName) => {
   return found;
 };
 
-// --- SKELETON WITH REACT SPRING ANIMATION ---
 const SkillsSkeleton = memo(function SkillsSkeleton() {
   const mockNodes = useMemo(() => 
     Array.from({ length: 6 }, (_, i) => ({ angle: i * 60 })), 
@@ -113,7 +112,6 @@ const SkillsSkeleton = memo(function SkillsSkeleton() {
   );
 });
 
-// --- TECH STACK ITEM ---
 const TechStackItem = memo(function TechStackItem({ skill, style }) {
   const IconComponent = useMemo(() => getIconComponent(skill.icon), [skill.icon]);
   

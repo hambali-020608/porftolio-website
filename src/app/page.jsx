@@ -1,6 +1,5 @@
 "use client";
 import { useEffect } from "react";
-// 1. Mengimpor langsung secara statis (Tanpa dynamic)
 import NavBar from "../components/section/navbar";
 import Hero from "../components/section/hero";
 import Skills from "../components/section/skills";

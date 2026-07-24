@@ -10,6 +10,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@imagekit/next": "^2.1.5",
     "@opentelemetry/api": "^1.9.1",
     "@react-icons/all-files": "^4.1.0",
     "@react-spring/web": "^10.1.2",
