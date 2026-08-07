@@ -26,6 +26,7 @@ export const navLinks = [
   { name: "Certificates", href: "#certificates" },
   { name: "About", href: "#about" },
   { name: "Contact", href: "#contact" },
+  { name: "Archive", href: "/archive" },
 ];
 
 export const certificates = [

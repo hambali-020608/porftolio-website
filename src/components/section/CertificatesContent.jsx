@@ -5,6 +5,7 @@ import { Document, Page, pdfjs } from "react-pdf";
 import "react-pdf/dist/Page/AnnotationLayer.css";
 import "react-pdf/dist/Page/TextLayer.css";
 import { motion, AnimatePresence } from "motion/react";
+import Link from "next/link";
 import { FaExternalLinkAlt, FaFilePdf, FaDownload, FaArrowLeft, FaEye, FaTimes } from "react-icons/fa";
 
 import SectionHeading from "../shared/SectionHeading";
@@ -14,7 +15,7 @@ pdfjs.GlobalWorkerOptions.workerSrc = new URL(
   import.meta.url
 ).toString();
 
-export default function CertificatesContent({ certificatesData, t }) {
+export default function CertificatesContent({ certificatesData, t, viewAllLink }) {
   const [flippedCards, setFlippedCards] = useState({});
   const [activePdfUrl, setActivePdfUrl] = useState(null);
 
@@ -30,12 +31,23 @@ export default function CertificatesContent({ certificatesData, t }) {
       <div className="absolute top-1/3 -right-64 w-96 h-96 bg-cyan-500/5 rounded-full blur-[120px] pointer-events-none"></div>
 
       <div className="container mx-auto px-6 md:px-12 relative z-10">
-        <SectionHeading 
+        <SectionHeading
           index="03"
           badge={t.badge}
           title={t.title}
           subtitle={t.subtitle}
         />
+
+        {viewAllLink && (
+          <div className="flex justify-end -mt-10 mb-8">
+            <Link
+              href={viewAllLink}
+              className="px-5 py-3 text-[9px] font-bold uppercase tracking-widest text-cyan-400 border border-cyan-500/40 hover:bg-cyan-500 hover:text-white transition-all duration-300"
+            >
+              {t.viewAll}
+            </Link>
+          </div>
+        )}
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-7xl mx-auto">
           {certificatesData.map((cert, index) => (

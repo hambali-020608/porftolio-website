@@ -21,6 +21,7 @@ export const translations = {
       title: "What I Do",
       subtitle: "I specialize in building websites, managing databases, and analyzing data to solve problems.",
       techStack: "Tech_Stack",
+      viewAll: "View All",
     },
     expertise: {
       ai: {
@@ -54,6 +55,7 @@ export const translations = {
       back: "Back to Info",
       issuer: "Issuer",
       date: "Date",
+      viewAll: "View All",
     },
     about: {
       badge: "Profile",
@@ -109,6 +111,7 @@ export const translations = {
       title: "Apa Yang Saya Lakukan",
       subtitle: "Saya ahli dalam membangun website, mengelola database, dan menganalisis data untuk memecahkan masalah.",
       techStack: "Teknologi",
+      viewAll: "Lihat Semua",
     },
     expertise: {
       ai: {
@@ -140,6 +143,7 @@ export const translations = {
       view: "Lihat Sertifikat",
       issuer: "Penerbit",
       date: "Tanggal",
+      viewAll: "Lihat Semua",
     },
     about: {
       badge: "Profil",

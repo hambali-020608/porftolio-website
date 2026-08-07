@@ -1,33 +1,15 @@
 "use client";
 
-import { useState, useEffect, useMemo, useCallback, memo, useRef, useDeferredValue, startTransition } from "react";
+import { useState, useEffect, useMemo, useCallback, memo, useRef, useDeferredValue } from "react";
+import Link from "next/link";
 import { useSpring, useTransition, animated, config, useSprings } from "@react-spring/web";
-import { useQuery } from "@tanstack/react-query"; // 1. Import useQuery
 import SectionHeading from "../shared/SectionHeading";
 import { skillCategories } from "../../constants";
 import { useLanguage } from "../../context/LanguageContext";
 import { translations } from "../../constants/translations";
 import OrbitalExpertise from "../orbital_skill";
 import { InfiniteSlider } from "../ui/infinite-slider";
-import * as SiIcons from "react-icons/si";
-import * as FaIcons from "react-icons/fa";
-import * as PiIcons from "react-icons/pi";
-
-// --- ICON RESOLVER ---
-const resolvedIconCache = new Map();
-const DEFAULT_ICON = FaIcons.FaCode;
-
-const getIconComponent = (iconName) => {
-  if (!iconName) return DEFAULT_ICON;
-  if (typeof iconName !== "string") return iconName;
-
-  if (resolvedIconCache.has(iconName)) return resolvedIconCache.get(iconName);
-
-  const found =
-    SiIcons[iconName] || FaIcons[iconName] || PiIcons[iconName] || DEFAULT_ICON;
-  resolvedIconCache.set(iconName, found);
-  return found;
-};
+import { getIconComponent } from "../../lib/icon-mapper";
 
 const SkillsSkeleton = memo(function SkillsSkeleton() {
   const mockNodes = useMemo(() => 
@@ -201,31 +183,13 @@ const TechStackRow = memo(function TechStackRow({
   );
 });
 
-// --- FETCH FUNCTION FOR TANSTACK QUERY ---
-const fetchSkills = async () => {
-  const res = await fetch("/api/skills");
-  if (!res.ok) throw new Error("Failed to fetch skills data");
-  return res.json(); // Mengasumsikan response berbentuk: { skills: [...], techStack: [...] }
-};
-
-export default function Skills() {
+export default function Skills({ expertise = [], techStack = [] }) {
   const { language } = useLanguage();
   const t = translations[language].skills;
   const [activeCategory, setActiveCategory] = useState("all");
   const containerRef = useRef(null);
 
-  // 2. Menggunakan TanStack Query useQuery
-  const { data, isLoading, isError } = useQuery({
-    queryKey: ["skillsData"],
-    queryFn: fetchSkills,
-    staleTime: 1000 * 60 * 5, // Cache data selama 5 menit
-  });
-
-  // Ambil list dari data query dengan fallback array kosong
-  const expertiseCardsList = data?.skills ?? [];
-  const techStackList = data?.techStack ?? [];
-
-  const deferredTechStackList = useDeferredValue(techStackList);
+  const deferredTechStackList = useDeferredValue(techStack);
   
   const filteredSkills = useMemo(() => {
     if (activeCategory === "all") return deferredTechStackList;
@@ -250,7 +214,6 @@ export default function Skills() {
   // --- READY TO ANIMATE CONTROL ---
   const [readyToAnimate, setReadyToAnimate] = useState(false);
   useEffect(() => {
-    if (isLoading) return;
     let raf1, raf2;
     raf1 = requestAnimationFrame(() => {
       raf2 = requestAnimationFrame(() => setReadyToAnimate(true));
@@ -259,7 +222,7 @@ export default function Skills() {
       cancelAnimationFrame(raf1);
       cancelAnimationFrame(raf2);
     };
-  }, [isLoading]);
+  }, []);
 
   // --- SECTION ENTRANCE ANIMATION ---
   const sectionSpring = useSpring({
@@ -278,14 +241,6 @@ export default function Skills() {
     trail: 50,
   });
 
-  if (isError) {
-    return (
-      <div className="py-24 text-center font-mono text-red-500">
-        ERROR: FAILED_TO_INITIALIZE_SKILLS_DATA
-      </div>
-    );
-  }
-
   return (
     <animated.section 
       ref={containerRef}
@@ -302,13 +257,13 @@ export default function Skills() {
           subtitle={t.subtitle}
         />
 
-        {isLoading || expertiseCardsList.length === 0 || techStackList.length === 0 ? (
+        {expertise.length === 0 || techStack.length === 0 ? (
           <SkillsSkeleton />
         ) : (
           <>
             {/* Orbital Expertise View */}
             <div className="mb-32">
-              <OrbitalExpertise expertise={expertiseCardsList} />
+              <OrbitalExpertise expertise={expertise} />
             </div>
 
             {/* Tech Stack Header */}
@@ -319,21 +274,27 @@ export default function Skills() {
                   {t.techStack}
                 </h3>
                 
-                <div className="flex flex-wrap justify-center gap-2">
+                <div className="flex flex-wrap justify-center items-center gap-2">
                   {categoryTransition((style, cat) => (
                     <animated.button
                       key={cat.id}
                       style={style}
                       onClick={() => handleCategoryChange(cat.id)}
                       className={`px-3 md:px-4 py-1.5 text-[9px] md:text-[10px] font-bold uppercase tracking-widest transition-all duration-300 border ${
-                        activeCategory === cat.id 
-                        ? "bg-cyan-500 text-white border-cyan-500 shadow-[0_0_15px_rgba(34,211,238,0.2)]" 
+                        activeCategory === cat.id
+                        ? "bg-cyan-500 text-white border-cyan-500 shadow-[0_0_15px_rgba(34,211,238,0.2)]"
                         : "text-gray-500 border-white/10 hover:border-cyan-500/40 hover:text-cyan-400"
                       }`}
                     >
                       {cat.label}
                     </animated.button>
                   ))}
+                  <Link
+                    href="/archive?tab=tech"
+                    className="ml-2 px-4 py-1.5 text-[9px] font-bold uppercase tracking-widest text-cyan-400 border border-cyan-500/40 hover:bg-cyan-500 hover:text-white transition-all duration-300"
+                  >
+                    {t.viewAll}
+                  </Link>
                 </div>
               </div>
 

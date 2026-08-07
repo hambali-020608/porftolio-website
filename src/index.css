@@ -1,11 +1,10 @@
-@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&family=Outfit:wght@100..900&display=swap');
 @import "tailwindcss";
 @plugin "daisyui";
 
 :root {
-    --font-body: 'Outfit', sans-serif;
+    --font-body: var(--font-outfit), 'Outfit', sans-serif;
     --font-mono: 'JetBrains Mono', 'Fira Code', monospace;
-    --font-heading: 'Orbitron', sans-serif;
+    --font-heading: var(--font-orbitron), 'Orbitron', sans-serif;
 
     /* Industrial Refined Tokens */
     --color-bg: #020617;
@@ -42,6 +41,7 @@ body {
 
 /* Utility Classes */
 .font-orbitron { font-family: var(--font-heading); }
+.font-outfit { font-family: var(--font-body); }
 .font-mono { font-family: var(--font-mono); }
 
 /* Refined Scrollbar */

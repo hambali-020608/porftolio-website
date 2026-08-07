@@ -2,32 +2,20 @@
 
 import { useState, useEffect, useMemo, useCallback } from "react";
 import { FaGithub, FaExternalLinkAlt, FaChevronLeft, FaChevronRight } from "react-icons/fa";
-import { motion } from "motion/react"; 
+import { motion } from "motion/react";
+import Link from "next/link";
 import SectionHeading from "../shared/SectionHeading";
 import { useLanguage } from "../../context/LanguageContext";
 import { translations } from "../../constants/translations";
 import { ExpandableCard } from "../card";
-import { useQuery } from "@tanstack/react-query";
 
-const fetchProjects = async () => {
-  const res = await fetch("/api/projects");
-  if (!res.ok) throw new Error("Failed to fetch projects data");
-  return res.json(); 
-};
-
-export default function Projects() {
+export default function Projects({ projects: projectsList = [], total = projectsList.length }) {
   const { language } = useLanguage();
   const t = translations[language].projects;
-  
+
   const [currentIndex, setCurrentIndex] = useState(0);
   const [cardsPerView, setCardsPerView] = useState(2);
   const [isTransitioning, setIsTransitioning] = useState(false);
-
-  const { data: projectsList = [], isLoading } = useQuery({
-    queryKey: ["projectsData"],
-    queryFn: fetchProjects,
-    staleTime: 1000 * 60 * 10, 
-  });
 
   useEffect(() => {
     const handleResize = () => {
@@ -77,8 +65,8 @@ export default function Projects() {
     setCurrentIndex(index);
   }, [isTransitioning]);
 
-  
-  if (isLoading || projectsList.length === 0) return null;
+
+  if (projectsList.length === 0) return null;
 
   return (
     <section id="projects" aria-label="Selected Projects" className="py-24 relative overflow-hidden">
@@ -110,7 +98,7 @@ export default function Projects() {
           <div className="text-[10px] font-mono text-gray-600 tracking-[0.3em] uppercase hidden sm:block">
             Navigation_System
           </div>
-          
+
           <motion.button
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
@@ -121,6 +109,13 @@ export default function Projects() {
             <div className="absolute top-0 right-0 w-2 h-2 border-t border-r border-white/20 group-hover:border-cyan-500/50"></div>
             <FaChevronRight size={14} />
           </motion.button>
+
+          <Link
+            href="/archive?tab=projects"
+            className="px-5 py-4 text-[9px] font-bold uppercase tracking-widest text-cyan-400 border border-cyan-500/40 hover:bg-cyan-500 hover:text-white transition-all duration-300"
+          >
+            {t.viewAll}
+          </Link>
         </div>
 
         {/* Carousel Window */}

@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { FaBars, FaTimes, FaGlobe } from "react-icons/fa";
+import Link from "next/link";
 import { navLinks } from "../../constants";
 import { useLanguage } from "../../context/LanguageContext";
 import { translations } from "../../constants/translations";
@@ -43,26 +44,36 @@ export default function NavBar() {
       >
         <div className="container mx-auto px-6 md:px-12 flex justify-between items-center">
           {/* Logo */}
-          <a href="#home" className="relative group flex items-center gap-2">
+          <Link href="/" className="relative group flex items-center gap-2">
             <div className="w-8 h-8 bg-transparent border border-cyan-500/40 rounded flex items-center justify-center text-cyan-400 font-bold text-sm group-hover:bg-cyan-500/10 transition-all">
               H
             </div>
             <span className="text-sm font-orbitron font-black text-white tracking-[0.2em] uppercase hidden sm:block">
               HAM<span className="text-cyan-400/80">BALI</span>
             </span>
-          </a>
+          </Link>
 
           {/* Desktop Menu */}
           <ul className="hidden md:flex space-x-10 lg:space-x-12 items-center">
             {menuLinks.map((link) => (
               <li key={link.name}>
-                <a
-                  href={link.href}
-                  className="relative text-[10px] font-bold text-gray-400 hover:text-white transition-colors duration-300 uppercase tracking-[0.3em] group"
-                >
-                  {link.name}
-                  <span className="absolute -bottom-1 left-0 w-0 h-[1px] bg-cyan-500/60 transition-all duration-300 group-hover:w-full"></span>
-                </a>
+                {link.href === "/archive" ? (
+                  <Link
+                    href="/archive"
+                    className="relative text-[10px] font-bold text-gray-400 hover:text-white transition-colors duration-300 uppercase tracking-[0.3em] group"
+                  >
+                    {link.name}
+                    <span className="absolute -bottom-1 left-0 w-0 h-[1px] bg-cyan-500/60 transition-all duration-300 group-hover:w-full"></span>
+                  </Link>
+                ) : (
+                  <a
+                    href={link.href}
+                    className="relative text-[10px] font-bold text-gray-400 hover:text-white transition-colors duration-300 uppercase tracking-[0.3em] group"
+                  >
+                    {link.name}
+                    <span className="absolute -bottom-1 left-0 w-0 h-[1px] bg-cyan-500/60 transition-all duration-300 group-hover:w-full"></span>
+                  </a>
+                )}
               </li>
             ))}
             
@@ -113,17 +124,31 @@ export default function NavBar() {
         }`}
       >
         {menuLinks.map((link, idx) => (
-          <a
-            key={link.name}
-            href={link.href}
-            onClick={() => setIsOpen(false)}
-            style={{ transitionDelay: `${idx * 100}ms` }}
-            className={`text-3xl font-orbitron font-bold text-white hover:text-cyan-400 tracking-widest transition-all ${
-              isOpen ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
-            }`}
-          >
-            {link.name}
-          </a>
+          link.href === "/archive" ? (
+            <Link
+              key={link.name}
+              href="/archive"
+              onClick={() => setIsOpen(false)}
+              style={{ transitionDelay: `${idx * 100}ms` }}
+              className={`text-3xl font-orbitron font-bold text-white hover:text-cyan-400 tracking-widest transition-all ${
+                isOpen ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
+              }`}
+            >
+              {link.name}
+            </Link>
+          ) : (
+            <a
+              key={link.name}
+              href={link.href}
+              onClick={() => setIsOpen(false)}
+              style={{ transitionDelay: `${idx * 100}ms` }}
+              className={`text-3xl font-orbitron font-bold text-white hover:text-cyan-400 tracking-widest transition-all ${
+                isOpen ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
+              }`}
+            >
+              {link.name}
+            </a>
+          )
         ))}
         <a
           href="#contact"

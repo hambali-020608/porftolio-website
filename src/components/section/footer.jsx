@@ -1,6 +1,7 @@
 "use client";
 
 import { FaChevronUp } from "react-icons/fa";
+import Link from "next/link";
 import { navLinks, socialLinks } from "../../constants";
 import { motion } from "motion/react";
 
@@ -22,14 +23,14 @@ export default function Footer() {
             viewport={{ once: true }}
             className="text-center lg:text-left space-y-6 md:space-y-8 max-w-sm"
           >
-            <a href="#home" className="inline-flex items-center gap-4 group justify-center lg:justify-start">
+            <Link href="/" className="inline-flex items-center gap-4 group justify-center lg:justify-start">
               <div className="w-8 h-8 md:w-10 md:h-10 border border-cyan-500/40 flex items-center justify-center text-cyan-400 group-hover:bg-cyan-500/10 transition-all duration-500 font-black text-lg md:text-xl font-orbitron">
                 H
               </div>
               <h2 className="text-xl md:text-2xl font-orbitron font-black text-white tracking-[0.2em] uppercase">
                 HAM<span className="text-cyan-400/80">BALI</span>
               </h2>
-            </a>
+            </Link>
             <p className="text-gray-500 text-[9px] md:text-[10px] leading-relaxed font-light tracking-widest uppercase">
               Building clean and reliable software solutions with a focus on quality and performance.
             </p>
@@ -62,9 +63,15 @@ export default function Footer() {
               <ul className="space-y-3 md:space-y-4">
                 {navLinks.map((link) => (
                   <li key={link.name}>
-                    <a href={link.href} className="text-[9px] md:text-[10px] font-bold text-gray-400 hover:text-cyan-400 transition-colors uppercase tracking-[0.2em]">
-                      {link.name}
-                    </a>
+                    {link.href === "/archive" ? (
+                      <Link href="/archive" className="text-[9px] md:text-[10px] font-bold text-gray-400 hover:text-cyan-400 transition-colors uppercase tracking-[0.2em]">
+                        {link.name}
+                      </Link>
+                    ) : (
+                      <a href={link.href} className="text-[9px] md:text-[10px] font-bold text-gray-400 hover:text-cyan-400 transition-colors uppercase tracking-[0.2em]">
+                        {link.name}
+                      </a>
+                    )}
                   </li>
                 ))}
               </ul>
