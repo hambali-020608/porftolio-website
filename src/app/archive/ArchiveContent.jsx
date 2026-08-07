@@ -1,17 +1,23 @@
 "use client";
 
-import { useState, useMemo, useCallback } from "react";
+import { useState, useMemo } from "react";
 import Link from "next/link";
+import dynamic from "next/dynamic";
 import NavBar from "../../components/section/navbar";
 import Footer from "../../components/section/footer";
 import { ExpandableCard } from "../../components/card";
-import CertificatesContent from "../../components/section/CertificatesContent";
 import { skillCategories } from "../../constants";
 import { getIconComponent } from "../../lib/icon-mapper";
 import { useLanguage } from "../../context/LanguageContext";
 import { translations } from "../../constants/translations";
 import { FaGithub, FaExternalLinkAlt, FaArrowLeft } from "react-icons/fa";
 import { motion } from "motion/react";
+
+// react-pdf needs DOMMatrix (client-only) — load lazily, never on the server.
+const CertificatesContent = dynamic(
+  () => import("../../components/section/CertificatesContent"),
+  { ssr: false, loading: () => null }
+);
 
 const TABS = ["projects", "certificates", "tech"];
 
